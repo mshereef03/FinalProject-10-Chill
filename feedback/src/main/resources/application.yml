@@ -1,0 +1,21 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: Feedback Microservice
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      uri: mongodb://mongo_user:1234@localhost:27018/mydb?authSource=admin
+      database: mydb
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+

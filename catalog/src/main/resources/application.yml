@@ -1,0 +1,16 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: Seller Catalog Microservice
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      uri: mongodb://mongo_user:1234@localhost:27017/mydb?authSource=admin
+      database: mydb
+
+
+

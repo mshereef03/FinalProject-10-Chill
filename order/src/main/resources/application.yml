@@ -1,0 +1,32 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: Order and Payment Microservice
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/mydb
+    username: postgres_user
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+
+  # JPA & Hibernate Configuration
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+
