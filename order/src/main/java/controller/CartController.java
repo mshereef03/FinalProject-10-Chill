@@ -37,6 +37,10 @@ public class CartController {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cart to update not found!");
     }
 
+    @DeleteMapping("/{cartId}")
+    public void deleteCartByID(@PathVariable int cartId) {
+        cartService.deleteCart(cartId);
+    }
 
 
 }
