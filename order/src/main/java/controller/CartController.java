@@ -1,0 +1,42 @@
+package controller;
+import model.Cart;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import service.CartService;
+
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/cart")
+public class CartController {
+    @Autowired
+    private CartService cartService;
+
+    @GetMapping("/{cartId}")
+    public Cart getCartById(@PathVariable int cartId) {
+        Optional<Cart> cart= cartService.findCartById(cartId);
+        if(cart.isPresent()) {
+            return cart.get();
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cart Id not found!");
+
+    }
+    @PostMapping
+    public Cart addCart(Cart cart) {
+        return cartService.addCart(cart);
+    }
+    @PutMapping
+    public Cart updateCart(@RequestBody Cart cart) {
+         int id=cart.getId();
+         Optional<Cart> cart1= cartService.findCartById(id);
+         if(cart1.isPresent()) {
+             return cartService.updateCart(cart);
+         }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cart to update not found!");
+    }
+
+
+
+}
