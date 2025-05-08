@@ -13,6 +13,8 @@ public class Cart {
     private int id;
     @OneToMany(mappedBy = "cart")
     private List<Product> products = new ArrayList<>();
+    @OneToOne(mappedBy = "cart")
+    private Order order;
 
     public Cart() {
 
