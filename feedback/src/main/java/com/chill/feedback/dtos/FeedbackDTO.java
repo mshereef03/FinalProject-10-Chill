@@ -11,11 +11,10 @@ public class FeedbackDTO {
     private UUID vendorId;
     private UUID orderId;
     String comment;
-    // Complaint
     Tag tag;
-    // Review
+
     int rating;
-    // Thread
+
     UUID parentId;
 
     // Constructors

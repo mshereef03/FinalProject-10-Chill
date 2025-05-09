@@ -1,16 +1,24 @@
 package com.chill.feedback.factories;
 
-import com.chill.feedback.dtos.FeedbackDTO;
 import com.chill.feedback.models.Feedback;
 import com.chill.feedback.models.Review;
+import org.springframework.stereotype.Component;
 
-public class ReviewFactory extends FeedbackFactory{
-
-    public ReviewFactory() {}
+@Component
+public class ReviewFactory extends FeedbackFactory {
 
     @Override
-    public Feedback createFeedback(FeedbackDTO feedbackDTO) {
-        return new Review(feedbackDTO.getUserId(), feedbackDTO.getVendorId(), feedbackDTO.getOrderId(), feedbackDTO.getComment(), feedbackDTO.getRating());
+    public boolean supports(Feedback feedback) {
+        return feedback instanceof Review;
     }
 
+    @Override
+    public Feedback createFeedback(Feedback feedback) {
+        Review review = (Review) feedback;
+        int rating = review.getRating();
+        if (rating < 1 || rating > 5) {
+            throw new IllegalArgumentException("Rating must be between 1 and 5");
+        }
+        return review;
+    }
 }
