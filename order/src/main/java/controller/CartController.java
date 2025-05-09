@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import service.CartService;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -14,6 +15,10 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    @GetMapping
+    public List<Cart> getAllCarts(){
+        return cartService.findAllCarts();
+    }
     @GetMapping("/{cartId}")
     public Cart getCartById(@PathVariable int cartId) {
         Optional<Cart> cart= cartService.findCartById(cartId);
