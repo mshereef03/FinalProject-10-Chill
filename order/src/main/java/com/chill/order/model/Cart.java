@@ -1,5 +1,6 @@
 package com.chill.order.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToMany(mappedBy = "cart")
+    @JsonIgnore
     private List<Product> products = new ArrayList<>();
     @OneToOne(mappedBy = "cart")
     private Order order;
@@ -19,9 +21,26 @@ public class Cart {
     public Cart() {
 
     }
+    public Cart(List<Product> products) {
+      this.products = products;
+    }
+
+    public Cart(List<Product> products, Order order) {
+        this.products = products;
+        this.order = order;
+    }
+
 
     public int getId() {
         return id;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public void setId(int id) {
