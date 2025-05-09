@@ -1,10 +1,10 @@
-package controller;
-import model.Cart;
+package com.chill.order.controller;
+import com.chill.order.model.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import service.CartService;
+import com.chill.order.service.CartService;
 
 import java.util.List;
 import java.util.Optional;

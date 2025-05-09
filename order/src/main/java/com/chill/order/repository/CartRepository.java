@@ -1,10 +1,8 @@
-package repository;
+package com.chill.order.repository;
 
-import model.Cart;
+import com.chill.order.model.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart,Integer> {

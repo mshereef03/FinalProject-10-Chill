@@ -1,8 +1,8 @@
-package service;
-import model.Cart;
+package com.chill.order.service;
+import com.chill.order.model.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.CartRepository;
+import com.chill.order.repository.CartRepository;
 
 import java.util.List;
 import java.util.Optional;
