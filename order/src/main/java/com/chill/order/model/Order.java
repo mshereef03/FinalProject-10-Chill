@@ -1,5 +1,6 @@
 package com.chill.order.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +13,7 @@ public class Order {
     private double price;
     @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    @JsonIgnore
     private Cart cart;
 
     public Order() {
