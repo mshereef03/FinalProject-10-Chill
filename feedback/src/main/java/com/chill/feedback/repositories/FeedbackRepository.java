@@ -14,6 +14,8 @@ public interface FeedbackRepository extends MongoRepository<Feedback, UUID> {
     List<Feedback> findByOrderId(UUID orderId);
     List<Feedback> findByVendorId(UUID vendorId);
 
+
+
     @Query("{ 'vendorId': ?0, '_class': 'com.chill.feedback.models.Review' }")
     List<Review> findReviewsByVendor(UUID vendorId);
 
