@@ -23,6 +23,9 @@ public class OrderService { // this acts as my receiver for the command pattern
         System.out.println("Order placed: " + order);
         return orderRepository.save(order);
     }
+    public Order updateOrder(Order order) {
+        return orderRepository.save(order);
+    }
 
     public Order getOrderById(int orderId) {
         return orderRepository.findById(orderId).orElse(null);
