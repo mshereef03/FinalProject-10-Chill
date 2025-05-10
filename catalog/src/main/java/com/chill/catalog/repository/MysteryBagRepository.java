@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface MysteryBagRepository extends MongoRepository<MysteryBag, String> {
 
-    /* activate bags whose releaseAt ≤ now */
+    // activate bags whose releaseAt ≤ now
     List<MysteryBag> findByStatusAndReleaseAtBefore(MysteryBag.Status status, Instant now);
 }
