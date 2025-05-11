@@ -30,6 +30,14 @@ public class MenuItem {
         this.category = category;
     }
     
+    // Constructor without id
+    public MenuItem(String name, String description, double price, String category) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+    }
+    
     // Getters and Setters
     public String getId() {
         return id;

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chill.catalog.model.MenuItem;
@@ -73,5 +74,15 @@ public class MenuItemController {
         }
     }
     
-
+    @GetMapping("/search")
+    public ResponseEntity<List<MenuItem>> searchMenuItemsByName(@RequestParam String name) {
+        List<MenuItem> menuItems = menuItemService.searchMenuItemsByName(name);
+        return new ResponseEntity<>(menuItems, HttpStatus.OK);
+    }
+    
+    @GetMapping("/filter")
+    public ResponseEntity<List<MenuItem>> filterMenuItemsByCategory(@RequestParam String category) {
+        List<MenuItem> menuItems = menuItemService.filterMenuItemsByCategory(category);
+        return new ResponseEntity<>(menuItems, HttpStatus.OK);
+    }
 } 

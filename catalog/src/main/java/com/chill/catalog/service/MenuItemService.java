@@ -44,4 +44,13 @@ public class MenuItemService {
         menuItemRepository.deleteById(id);
     }
 
+    // Find menu items by category
+    public List<MenuItem> filterMenuItemsByCategory(String category) {
+        return menuItemRepository.findByCategory(category);
+    }
+
+    // Find menu items by name
+    public List<MenuItem> searchMenuItemsByName(String name) {
+        return menuItemRepository.findByNameContainingIgnoreCase(name);
+    }
 } 
