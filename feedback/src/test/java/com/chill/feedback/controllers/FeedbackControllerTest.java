@@ -1,0 +1,244 @@
+package com.chill.feedback.controllers;
+
+import com.chill.feedback.models.Feedback;
+import com.chill.feedback.models.Review;
+import com.chill.feedback.models.Thread;
+import com.chill.feedback.models.Complaint;
+import com.chill.feedback.services.FeedbackService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrint;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.TestConstructor;
+import org.springframework.test.context.TestConstructor.AutowireMode;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
+import java.util.UUID;
+
+import static org.mockito.BDDMockito.given;
+import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@WebMvcTest(
+        controllers = FeedbackController.class,
+        excludeAutoConfiguration = {
+                DataSourceAutoConfiguration.class,
+                HibernateJpaAutoConfiguration.class,
+                SecurityAutoConfiguration.class,
+                SecurityFilterAutoConfiguration.class
+        })
+@TestConstructor(autowireMode = AutowireMode.ALL)
+@AutoConfigureMockMvc( addFilters = false,print = MockMvcPrint.NONE)
+class FeedbackControllerTest {
+
+    @Autowired
+    private MockMvc mvc;
+
+    @Autowired
+    private ObjectMapper mapper;
+
+    @MockitoBean
+    private FeedbackService service;
+
+    @Test
+    void GET_allFeedbacks_returnsList() throws Exception {
+        Review r1 = new Review();
+        r1.setId(UUID.randomUUID());
+        r1.setComment("FB1");
+        Review r2 = new Review();
+        r2.setId(UUID.randomUUID());
+        r2.setComment("FB2");
+
+        given(service.getAllOfType(Feedback.class)).willReturn(List.of(r1, r2));
+
+        mvc.perform(get("/feedbacks"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].comment").value("FB1"))
+                .andExpect(jsonPath("$[1].comment").value("FB2"));
+    }
+
+    @Test
+    void GET_reviews_returnsOnlyReviews() throws Exception {
+        Review r = new Review();
+        r.setId(UUID.randomUUID());
+        r.setComment("Review comment");
+        r.setRating(5);
+
+        given(service.getAllOfType(Review.class)).willReturn(List.of(r));
+
+        mvc.perform(get("/feedbacks/reviews"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].comment").value("Review comment"))
+                .andExpect(jsonPath("$[0].rating").value(5));
+    }
+
+    @Test
+    void GET_threads_returnsOnlyThreads() throws Exception {
+        Thread t = new Thread();
+        t.setId(UUID.randomUUID());
+        t.setComment("Thread comment");
+
+        given(service.getAllOfType(Thread.class)).willReturn(List.of(t));
+
+        mvc.perform(get("/feedbacks/threads"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].comment").value("Thread comment"));
+    }
+
+    @Test
+    void GET_complaints_returnsOnlyComplaints() throws Exception {
+        Complaint c = new Complaint();
+        c.setId(UUID.randomUUID());
+        c.setComment("Complaint comment");
+
+        given(service.getAllOfType(Complaint.class)).willReturn(List.of(c));
+
+        mvc.perform(get("/feedbacks/complaints"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].comment").value("Complaint comment"));
+    }
+
+    @Test
+    void GET_feedbackById_found() throws Exception {
+        UUID id = UUID.randomUUID();
+        Review r = new Review();
+        r.setId(id);
+        r.setComment("Found");
+
+        given(service.getFeedbackById(id)).willReturn(r);
+
+        mvc.perform(get("/feedbacks/{id}", id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(id.toString()))
+                .andExpect(jsonPath("$.comment").value("Found"));
+    }
+
+    @Test
+    void GET_feedbackById_notFound_returns404() throws Exception {
+        UUID id = UUID.randomUUID();
+
+        given(service.getFeedbackById(id))
+                .willThrow(new org.springframework.web.server.ResponseStatusException(
+                        org.springframework.http.HttpStatus.NOT_FOUND, "Feedback not found"
+                ));
+
+        mvc.perform(get("/feedbacks/{id}", id))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void POST_createFeedback_returnsCreated() throws Exception {
+        ObjectNode payload = mapper.createObjectNode()
+                .put("type",    "review")
+                .put("comment", "New feedback")
+                .put("rating",  4);
+
+        Review saved = new Review();
+        saved.setId(UUID.randomUUID());
+        saved.setComment("New feedback");
+        saved.setRating(4);
+
+        given(service.createFeedback(any(Review.class))).willReturn(saved);
+
+        mvc.perform(post("/feedbacks")
+                        .contentType(APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(payload)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.type").value("review"))
+                .andExpect(jsonPath("$.id").value(saved.getId().toString()))
+                .andExpect(jsonPath("$.comment").value("New feedback"))
+                .andExpect(jsonPath("$.rating").value(4));
+    }
+
+    @Test
+    void PUT_updateFeedback_appliesChanges() throws Exception {
+        UUID id = UUID.randomUUID();
+        ObjectNode payload = mapper.createObjectNode()
+                .put("type",    "review")
+                .put("comment", "Updated")
+                .put("rating",  3);
+
+        Review updated = new Review();
+        updated.setId(id);
+        updated.setComment("Updated");
+        updated.setRating(3);
+
+        given(service.updateFeedback(any(Review.class))).willReturn(updated);
+
+        mvc.perform(put("/feedbacks/{id}", id)
+                        .contentType(APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(payload)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.type").value("review"))
+                .andExpect(jsonPath("$.comment").value("Updated"))
+                .andExpect(jsonPath("$.rating").value(3));
+    }
+
+
+    @Test
+    void DELETE_feedback_returnsDeleted() throws Exception {
+        UUID id = UUID.randomUUID();
+        Review r = new Review();
+        r.setId(id);
+        r.setComment("To delete");
+
+        given(service.deleteFeedbackById(id)).willReturn(r);
+
+        mvc.perform(delete("/feedbacks/{id}", id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(id.toString()));
+    }
+
+
+
+//    @Test
+//    void POST_upvoteFeedback_returnsUpvoted() throws Exception {
+//        UUID id = UUID.randomUUID();
+//        UUID userId = UUID.randomUUID();
+//        Review upvoted = new Review();
+//        upvoted.setId(id);
+//        upvoted.setComment("Upvoted comment");
+//        upvoted.setRating(5);
+//
+//        given(service.upvoteFeedback(id, userId)).willReturn(upvoted);
+//
+//        mvc.perform(post("/feedbacks/{id}/upvote", id)
+//                        .header("X-User-Id", userId.toString()))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.id").value(id.toString()))
+//                .andExpect(jsonPath("$.comment").value("Upvoted comment"))
+//                .andExpect(jsonPath("$.rating").value(5));
+//    }
+//
+//    @Test
+//    void POST_downvoteFeedback_returnsDownvoted() throws Exception {
+//        UUID id = UUID.randomUUID();
+//        UUID userId = UUID.randomUUID();
+//        Review downvoted = new Review();
+//        downvoted.setId(id);
+//        downvoted.setComment("Downvoted comment");
+//        downvoted.setRating(4);
+//
+//        given(service.downvoteFeedback(id, userId)).willReturn(downvoted);
+//
+//        mvc.perform(post("/feedbacks/{id}/downvote", id)
+//                        .header("X-User-Id", userId.toString()))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.id").value(id.toString()))
+//                .andExpect(jsonPath("$.comment").value("Downvoted comment"))
+//                .andExpect(jsonPath("$.rating").value(4));
+//    }
+
+}

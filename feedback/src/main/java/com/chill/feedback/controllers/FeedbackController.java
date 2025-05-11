@@ -28,8 +28,23 @@ public class FeedbackController {
     }
 
     @GetMapping
-    public List<Feedback> getAllFeedback() {
+    public List<Feedback> getAllFeedbacks() {
         return feedbackService.getAllOfType(Feedback.class);
+    }
+
+    @GetMapping("/reviews")
+    public List<Review> getAllReviews() {
+        return feedbackService.getAllOfType(Review.class);
+    }
+
+    @GetMapping("/threads")
+    public List<Thread> getAllThreads() {
+        return feedbackService.getAllOfType(Thread.class);
+    }
+
+    @GetMapping("/complaints")
+    public List<Complaint> getAllComplaints() {
+        return feedbackService.getAllOfType(Complaint.class);
     }
 
 
@@ -39,7 +54,11 @@ public class FeedbackController {
     }
 
     @PutMapping("/{id}")
-    public Feedback updateFeedback(@RequestBody Feedback feedback) {
+    public Feedback updateFeedback(
+            @PathVariable UUID id,
+            @RequestBody  Feedback feedback
+    ) {
+        feedback.setId(id);
         return feedbackService.updateFeedback(feedback);
     }
 
@@ -48,18 +67,16 @@ public class FeedbackController {
         return feedbackService.deleteFeedbackById(id);
     }
 
-    @GetMapping("/review")
-    public List<Review> getAllReviews() {
-        return feedbackService.getAllOfType(Review.class);
+    @PostMapping("/{id}/upvote")
+    public Feedback upvoteFeedback(@PathVariable UUID id, @RequestHeader("X-User-Id") UUID userId) {
+        return feedbackService.upvoteFeedback(id,userId);
     }
 
-    @GetMapping("/thread")
-    public List<Thread> getAllThreads() {
-        return feedbackService.getAllOfType(Thread.class);
+    @PostMapping("/{id}/upvote")
+    public Feedback downvoteFeedback(@PathVariable UUID id, @RequestHeader("X-User-Id") UUID userId) {
+        return feedbackService.downvoteFeedback(id,userId);
     }
 
-    @GetMapping("/complaint")
-    public List<Complaint> getAllComplaints() {
-        return feedbackService.getAllOfType(Complaint.class);
-    }
+
+
 }

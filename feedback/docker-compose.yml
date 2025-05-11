@@ -4,11 +4,11 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8082:8082"
     depends_on:
       - mongo
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://root:example@mongo:27017/feedbackdb
+      SPRING_DATA_MONGODB_URI: mongodb://root:example@mongo:27017/feedbackdb?authSource=admin
     restart: always
 
   mongo:

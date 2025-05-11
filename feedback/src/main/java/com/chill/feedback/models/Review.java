@@ -1,82 +1,20 @@
 package com.chill.feedback.models;
 
-import com.chill.feedback.dtos.FeedbackDTO;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
-@Document(collection = "review")
-public class Review extends Feedback {
-    @Id
-    private UUID id;
-
-    @Column(name="userId")
-    private UUID userId;
-
-    @Column(name="vendorId")
-    private UUID vendorId;
-
-    @Column(name="orderId")
-    private UUID orderId;
-
-    @Column(name="comment")
-    private String comment;
-
-    @Column(name = "rating")
+@Document("feedbacks")
+public class Review extends Feedback implements Votable {
     private int rating;
 
-    // Constructors
+    // record of who voted
+    private Set<UUID> upvotedBy   = new HashSet<>();
+    private Set<UUID> downvotedBy = new HashSet<>();
+
     public Review() { }
-    public Review(UUID userId, UUID vendorId, UUID orderId, String comment, int rating) {
-        this.userId = userId;
-        this.vendorId = vendorId;
-        this.orderId = orderId;
-        this.comment = comment;
-        this.rating = rating;
-    }
-
-    // Getters and Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public UUID getVendorId() {
-        return vendorId;
-    }
-
-    public void setVendorId(UUID vendorId) {
-        this.vendorId = vendorId;
-    }
-
-    public UUID getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(UUID orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
 
     public int getRating() {
         return rating;
@@ -87,13 +25,25 @@ public class Review extends Feedback {
     }
 
     @Override
-    public Feedback update(FeedbackDTO feedbackDTO) {
-        this.userId = feedbackDTO.getUserId();
-        this.vendorId = feedbackDTO.getVendorId();
-        this.orderId = feedbackDTO.getOrderId();
-        this.comment = feedbackDTO.getComment();
-        this.rating = feedbackDTO.getRating();
+    public void upvote(UUID userId) {
+        if (upvotedBy.add(userId)) {
+            // remove any prior downvote
+            downvotedBy.remove(userId);
+        }
+    }
 
-        return this;
+    @Override
+    public void downvote(UUID userId) {
+        if (downvotedBy.add(userId)) {
+            upvotedBy.remove(userId);
+        }
+    }
+
+    public int getUpvoteCount() {
+        return upvotedBy.size();
+    }
+
+    public int getDownvoteCount() {
+        return downvotedBy.size();
     }
 }

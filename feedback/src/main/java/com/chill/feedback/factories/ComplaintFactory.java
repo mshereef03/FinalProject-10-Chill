@@ -15,9 +15,9 @@ public class ComplaintFactory extends FeedbackFactory {
     @Override
     public Feedback createFeedback(Feedback feedback) {
         Complaint c = (Complaint) feedback;
-        if (c.getTag() == null) {
-            throw new IllegalArgumentException("Complaint must have a tag");
-        }
+//        if (c.getTag() == null) {
+//            throw new IllegalArgumentException("Complaint must have a tag");
+//        }
         return c;
     }
 }
