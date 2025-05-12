@@ -17,8 +17,12 @@ public class FeedbackCommandDispatcher {
     private final Map<String, FeedbackCommand> commandMap;
 
     @Autowired
-    public FeedbackCommandDispatcher(Map<String, FeedbackCommand> commandMap) {
-        this.commandMap = commandMap;
+    public FeedbackCommandDispatcher(List<FeedbackCommand> commands) {
+        this.commandMap = commands.stream()
+                .collect(Collectors.toMap(
+                        c -> c.getName().toLowerCase(),
+                        c -> c
+                ));
     }
 
     public Feedback dispatch(String commandName, UUID feedbackId, UUID userId) {

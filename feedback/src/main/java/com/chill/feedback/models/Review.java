@@ -10,7 +10,6 @@ import java.util.UUID;
 public class Review extends Feedback implements Votable {
     private int rating;
 
-    // record of who voted
     private Set<UUID> upvotedBy   = new HashSet<>();
     private Set<UUID> downvotedBy = new HashSet<>();
 

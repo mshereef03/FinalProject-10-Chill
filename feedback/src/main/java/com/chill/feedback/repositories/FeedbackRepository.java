@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public interface FeedbackRepository extends MongoRepository<Feedback, UUID> {
-    List<Feedback> findByOrderId(UUID orderId);
+//    List<Feedback> findByOrderId(UUID orderId);
     List<Feedback> findByVendorId(UUID vendorId);
 
     default <T extends Feedback> List<T> findByType(Class<T> type) {
@@ -22,14 +22,23 @@ public interface FeedbackRepository extends MongoRepository<Feedback, UUID> {
                 .collect(Collectors.toList());
     }
 
-    @Query("{ 'vendorId': ?0, '_class': 'com.chill.feedback.models.Review' }")
-    List<Review> findReviewsByVendor(UUID vendorId);
+    @Query("{ 'vendorId': ?0, '_class': 'com.chill.feedback.models.Complaint' }")
+    List<Complaint> findComplaintsByVendorId(UUID vendorId);
 
-    @Query("{ 'parentId': null, '_class': 'com.chill.feedback.models.ThreadFeedback' }")
-    List<Thread> findRootThreads();
 
-    List<Thread> findByParentId(UUID parentId);
 
-    List<Complaint> findByTag(Tag tag);
+
+    List<Review> findByVendorIdOrderByRatingDesc(UUID vendorId);
+
+    @Query("{ 'userId': ?0, '_class': 'com.chill.feedback.models.Complaint' }")
+    List<Complaint> findComplaintsByUserId(UUID userId);
+
+
+//    @Query("{ 'parentId': null, '_class': 'com.chill.feedback.models.ThreadFeedback' }")
+//    List<Thread> findRootThreads();
+//
+//    List<Thread> findByParentId(UUID parentId);
+//
+//    List<Complaint> findByTag(Tag tag);
 }
 

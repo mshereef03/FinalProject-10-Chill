@@ -37,6 +37,11 @@ public class FeedbackController {
         return feedbackService.getAllOfType(Review.class);
     }
 
+    @GetMapping("/reviews/vendor/{vendorId}/top")
+    public List<Review> getTopReviewsForVendor(@PathVariable("vendorId") UUID vendorId) {
+        return feedbackService.getTopReviewsForVendor(vendorId);
+    }
+
     @GetMapping("/threads")
     public List<Thread> getAllThreads() {
         return feedbackService.getAllOfType(Thread.class);
@@ -47,11 +52,24 @@ public class FeedbackController {
         return feedbackService.getAllOfType(Complaint.class);
     }
 
+    @GetMapping("/complaints/vendor/{vendorId}")
+    public List<Complaint> getComplaintsForVendor(@PathVariable UUID vendorId) {
+        return feedbackService.getComplaintsForVendor(vendorId);
+    }
+
+
+    @GetMapping("/complaints/user/{userId}")
+    public List<Complaint> getComplaintsForUser(@PathVariable UUID userId) {
+        return feedbackService.getComplaintsForUser(userId);
+    }
+
 
     @GetMapping("/{id}")
     public Feedback getFeedbackById(@PathVariable UUID id) {
         return feedbackService.getFeedbackById(id);
     }
+
+
 
     @PutMapping("/{id}")
     public Feedback updateFeedback(
@@ -72,10 +90,22 @@ public class FeedbackController {
         return feedbackService.upvoteFeedback(id,userId);
     }
 
-    @PostMapping("/{id}/upvote")
+    @PostMapping("/{id}/downvote")
     public Feedback downvoteFeedback(@PathVariable UUID id, @RequestHeader("X-User-Id") UUID userId) {
         return feedbackService.downvoteFeedback(id,userId);
     }
+
+
+    @PostMapping("/{id}/reply")
+    public Feedback replyToFeedback(
+            @PathVariable("id") UUID parentId,
+            @RequestBody Feedback replyPayload
+    ) {
+        return feedbackService.replyToFeedback(parentId, replyPayload);
+    }
+
+
+
 
 
 
