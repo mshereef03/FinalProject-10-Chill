@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.chill.catalog.model.MysteryBag;
+import com.chill.catalog.repository.MysteryBagRepository;
+import com.chill.catalog.service.MysteryBagService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +22,8 @@ public class DatabaseSeeder {
 
     @Bean
     @Profile("!prod") // Don't run in production
-    public CommandLineRunner initDatabase(MenuItemRepository menuItemRepository) {
+    public CommandLineRunner initDatabase(MenuItemRepository menuItemRepository, MysteryBagRepository mysteryBagRepository,
+                                          MysteryBagService mysteryBagService) {
         return args -> {
             // Clear existing data to avoid duplicates
             menuItemRepository.deleteAll();
@@ -68,6 +72,33 @@ public class DatabaseSeeder {
             
             logger.info("Sample menu items have been added to the database 'catalog'");
             logger.info("Added " + menuItemRepository.count() + " menu items");
+
+            // -- Seed a MysteryBag that references a few of those items ---
+            mysteryBagRepository.deleteAll();
+            // pick a few of the just-saved items:
+            List<String> someIds = menuItemRepository.findAll().subList(0, 3)
+                    .stream().map(MenuItem::getId).toList();
+
+            MysteryBag bag = new MysteryBag();
+            bag.setItemIds(someIds);
+            bag.setBasePrice(9.99);
+            bag.setSize(MysteryBag.Size.MEDIUM);
+            // status is PENDING by default
+            bag = mysteryBagRepository.save(bag);
+            logger.info(">>> Seeded MysteryBag with ID " + bag.getId() + " referring to items " + someIds);
+
+            // --- 3) Test publishing it right away ---
+            MysteryBag published = mysteryBagService.publishMysteryBag(bag.getId());
+            logger.info(">>> Published bag " + published.getId() + " at " + published.getReleaseAt());
+            logger.info(">>> Post-publish status: " + published.getStatus());
+
+            // --- 4) Log remaining quantities of those items ---
+            someIds.forEach(itemId -> {
+                menuItemRepository.findById(itemId).ifPresent(i ->
+                        logger.info("    • " + i.getName() + " now has qty=" + i.getQuantity())
+                );
+            });
+        
         };
     }
 } 
