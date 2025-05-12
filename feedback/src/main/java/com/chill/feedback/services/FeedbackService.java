@@ -3,7 +3,9 @@
     import com.chill.feedback.command.FeedbackCommand;
     import com.chill.feedback.command.FeedbackCommandDispatcher;
     import com.chill.feedback.factories.FeedbackFactory;
+    import com.chill.feedback.models.Complaint;
     import com.chill.feedback.models.Feedback;
+    import com.chill.feedback.models.Replyable;
     import com.chill.feedback.models.Review;
     import com.chill.feedback.repositories.FeedbackRepository;
     import org.springframework.beans.factory.annotation.Autowired;
@@ -85,31 +87,40 @@
             return dispatcher.dispatch("downvote", feedbackId, userId);
         }
 
-//        public void replyToFeedback(UUID feedbackId, Feedback reply) {
-//            Feedback parent = getFeedbackById(feedbackId);
-//            if (!(parent instanceof Thread)) {
-//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Target is replayable: " + feedbackId);
-//            }
-//            Thread replyThread = (Thread) reply;
-//            replyThread.setParentId(feedbackId);
-//            feedbackRepository.save(replyThread);
-//            ((Thread) parent).setAnswered(true);
-//            feedbackRepository.save(parent);
-//        }
-    
-//        public List<Feedback> sortFeedbacks(String strategy) {
-//            List<Feedback> list = feedbackRepository.findAll();
-//            if ("newest".equalsIgnoreCase(strategy)) {
-//                list.sort(Comparator.comparing(Feedback::getCreatedAt).reversed());
-//            } else if ("highest-rated".equalsIgnoreCase(strategy)) {
-//                list.sort((a, b) -> {
-//                    int ra = a instanceof Review ? ((Review) a).getRating() : 0;
-//                    int rb = b instanceof Review ? ((Review) b).getRating() : 0;
-//                    return Integer.compare(rb, ra);
-//                });
-//            }
-//            return list;
-//        }
+
+        public Feedback replyToFeedback(UUID parentId, Feedback replyPayload) {
+            Feedback parent = findOrFail(parentId);
+            if (!(parent instanceof Replyable)) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Cannot reply to feedback of type: " + parent.getClass().getSimpleName()
+                );
+            }
+
+            if (!(replyPayload instanceof Replyable)) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Reply payload must implement Replyable"
+                );
+            }
+
+            ((Replyable) replyPayload).setParentId(parentId);
+            return feedbackRepository.save(replyPayload);
+        }
+
+        public List<Review> getTopReviewsForVendor(UUID vendorId) {
+            return feedbackRepository.findByVendorIdOrderByRatingDesc(vendorId);
+        }
+
+
+        public List<Complaint> getComplaintsForVendor(UUID vendorId) {
+            return feedbackRepository.findComplaintsByVendorId(vendorId);
+        }
+
+
+        public List<Complaint> getComplaintsForUser(UUID userId) {
+            return feedbackRepository.findComplaintsByUserId(userId);
+        }
 
 
 
@@ -121,6 +132,10 @@
                             "Feedback not found: " + id
                     ));
         }
+
+
+
+
     
     
     
