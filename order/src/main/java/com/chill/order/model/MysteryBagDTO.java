@@ -1,39 +1,30 @@
 package com.chill.order.model;
 
 public class MysteryBagDTO {
-    private int id;
-    private String name;
-    private int price;
+    private String id;
+    private double basePrice;
 
     public MysteryBagDTO() {
     }
 
-    public MysteryBagDTO(String name, int price) {
-        this.name = name;
-        this.price = price;
+    public MysteryBagDTO( int price) {
+        this.basePrice = price;
     }
 
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public double getPrice() {
+        return basePrice;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
+    public void setPrice(double price) {
+        this.basePrice = price;
     }
 }

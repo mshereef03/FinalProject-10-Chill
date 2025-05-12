@@ -11,7 +11,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToMany(mappedBy = "cart")
-    @JsonIgnore
+
     private List<MysteryBagDTO> products = new ArrayList<>();
     @OneToOne(mappedBy = "cart")
     private Order order;
