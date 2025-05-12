@@ -11,8 +11,6 @@ spring:
       port: 27017
       uri: mongodb://mongo_user:1234@localhost:27017/mydb?authSource=admin
       database: mydb
-  user-service:
-    url: http://localhost:8081    # point this at your User microservice
 
 
 
