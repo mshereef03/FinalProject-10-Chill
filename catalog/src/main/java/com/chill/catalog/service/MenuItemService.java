@@ -3,6 +3,8 @@ package com.chill.catalog.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.chill.catalog.model.MysteryBag;
+import com.chill.catalog.observer.MysteryBagObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import com.chill.catalog.model.MenuItem;
 import com.chill.catalog.repository.MenuItemRepository;
 
 @Service
-public class MenuItemService {
+public class MenuItemService implements MysteryBagObserver {
 
     private final MenuItemRepository menuItemRepository;
 
@@ -52,5 +54,15 @@ public class MenuItemService {
     // Find menu items by name
     public List<MenuItem> searchMenuItemsByName(String name) {
         return menuItemRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    @Override
+    public void onPublish(MysteryBag bag) {
+        bag.getItemIds().forEach(itemId ->
+                menuItemRepository.findById(itemId).ifPresent(menuItem -> {
+                    menuItem.setQuantity(menuItem.getQuantity() - 1);
+                    menuItemRepository.save(menuItem);
+                })
+        );
     }
 } 

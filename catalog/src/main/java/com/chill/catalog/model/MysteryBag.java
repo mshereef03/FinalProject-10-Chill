@@ -20,6 +20,13 @@ public class MysteryBag {
     @Id
     private String id;
     private List<String> itemIds;
+    private double basePrice;
+    private Instant releaseAt;
+    private Status status = Status.PENDING;
+    private Size size;
+
+    public enum Status   { PENDING, ACTIVE, SOLD_OUT }
+    public enum Size { SMALL, MEDIUM, BIG }
 
     // Empty constructor
     public MysteryBag() {
@@ -92,13 +99,7 @@ public class MysteryBag {
     public void setSize(Size size) {
         this.size = size;
     }
-    private double basePrice;
-    private Instant releaseAt;
-    private Status status = Status.PENDING;
-    private Size size;
 
-    public enum Status   { PENDING, ACTIVE, SOLD_OUT }
-    public enum Size { SMALL, MEDIUM, BIG }
 
 }
 
