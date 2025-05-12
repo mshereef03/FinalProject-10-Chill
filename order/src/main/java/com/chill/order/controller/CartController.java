@@ -1,10 +1,10 @@
 package com.chill.order.controller;
 import com.chill.order.model.Cart;
+import com.chill.order.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import com.chill.order.service.CartService;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +44,14 @@ public class CartController {
 
     @DeleteMapping("/{cartId}")
     public void deleteCartByID(@PathVariable int cartId) {
+        Cart cart = getCartById(cartId);
+        if(cart!=null) {
+
         cartService.deleteCart(cartId);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cart to delete not found!");
+        }
     }
 
 
