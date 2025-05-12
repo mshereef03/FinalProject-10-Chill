@@ -1,0 +1,35 @@
+package com.chill.order.model;
+
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "promocode")
+public class PromoCode {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String code;
+    int discount;
+    public PromoCode() {
+
+    }
+    public PromoCode(int discount) {
+        this.discount = discount;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+}

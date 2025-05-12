@@ -1,21 +1,20 @@
 package com.chill.order.controller;
 
-import com.chill.order.model.Cart;
 import com.chill.order.model.Order;
+import com.chill.order.model.PromoCode;
 import com.chill.order.service.CommandPattern.Invoker;
 import com.chill.order.service.CommandPattern.PlaceOrderCommand;
 import com.chill.order.service.OrderService;
+import com.chill.order.service.PromoCodeService;
 import com.chill.order.service.StrategyPattern.DiscountContext;
-import com.chill.order.service.StrategyPattern.FlatDiscountStrategy;
-import com.chill.order.service.StrategyPattern.NoDiscountStrategy;
-import com.chill.order.service.StrategyPattern.PercentageDiscountStrategy;
+import com.chill.order.service.StrategyPattern.BulkDiscountStrategy;
+import com.chill.order.service.StrategyPattern.PromoCodeStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/order")
@@ -24,9 +23,7 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-
     private Invoker invoker;
-
     private DiscountContext discountContext;
 
     public OrderController(OrderService orderService) {
@@ -73,30 +70,41 @@ public class OrderController {
         return order;
     }
 
-    // very very temp need to decide how to do it
-    @PutMapping("/{orderId}/apply-discount")
-    public Order applyDiscount(@PathVariable int orderId, @RequestParam String strategy, @RequestParam double discount) {
+    // discount is percentage
+    @PutMapping("/{orderId}/applyPromo}")
+    public Order applyPromo(@PathVariable int orderId, @RequestBody String code) {
         Order order = orderService.getOrderById(orderId);
         if (order == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found!");
         }
-
-
-        switch (strategy.toLowerCase()) {
-            case "percentage":
-                discountContext = new DiscountContext(new PercentageDiscountStrategy());
-                break;
-            case "flat":
-                discountContext = new DiscountContext(new FlatDiscountStrategy());
-                break;
-            case "none":
-            default:
-                discountContext = new DiscountContext(new NoDiscountStrategy());
-                break;
+        PromoCodeService promoCodeService = new PromoCodeService();
+        int discount;
+        try{
+            discount= promoCodeService.getDiscountByPromoCode(code);
+            discountContext = new DiscountContext(new PromoCodeStrategy());
+            double discountedPrice = discountContext.applyDiscount(order, discount);
+            order.setPrice(discountedPrice);
+            return orderService.updateOrder(order);
         }
-        double discountedPrice = discountContext.applyDiscount(order.getPrice(), discount);
-        order.setPrice(discountedPrice);
-        return orderService.updateOrder(order);
+        catch(Exception e){
+             System.out.println(e.getMessage());
+             return order;
+        }
+
+
+    }
+    // discount is fixed number (money)
+    @PutMapping("/{orderId}/applyBulk}")
+    public Order applyPromo(@PathVariable int orderId) {
+        Order order = orderService.getOrderById(orderId);
+        if (order == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found!");
+        }
+            discountContext = new DiscountContext(new BulkDiscountStrategy());
+            double discountedPrice = discountContext.applyDiscount(order, 25);
+            order.setPrice(discountedPrice);
+            return orderService.updateOrder(order);
+
     }
 
 

@@ -1,8 +1,6 @@
 package com.chill.order.model;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,18 +12,18 @@ public class Cart {
     private int id;
     @OneToMany(mappedBy = "cart")
     @JsonIgnore
-    private List<Product> products = new ArrayList<>();
+    private List<MysteryBagDTO> products = new ArrayList<>();
     @OneToOne(mappedBy = "cart")
     private Order order;
 
     public Cart() {
 
     }
-    public Cart(List<Product> products) {
+    public Cart(List<MysteryBagDTO> products) {
       this.products = products;
     }
 
-    public Cart(List<Product> products, Order order) {
+    public Cart(List<MysteryBagDTO> products, Order order) {
         this.products = products;
         this.order = order;
     }
@@ -47,11 +45,11 @@ public class Cart {
         this.id = id;
     }
 
-    public List<Product> getProducts() {
+    public List<MysteryBagDTO> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<MysteryBagDTO> products) {
         this.products = products;
     }
 

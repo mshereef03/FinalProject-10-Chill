@@ -1,5 +1,7 @@
 package com.chill.order.service.StrategyPattern;
 
+import com.chill.order.model.Order;
+
 public interface DiscountStrategy {
-    double applyDiscount(double price, double discount);
+    double applyDiscount(Order order, double discount);
 }
