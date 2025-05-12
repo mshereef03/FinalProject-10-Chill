@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "product")
-public class Product {
+public class MysteryBagDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -24,10 +24,10 @@ public class Product {
         this.cart = cart;
     }
 
-    public Product() {
+    public MysteryBagDTO() {
     }
 
-    public Product(String name, int price) {
+    public MysteryBagDTO(String name, int price) {
         this.name = name;
         this.price = price;
     }
