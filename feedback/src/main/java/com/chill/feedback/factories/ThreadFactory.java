@@ -17,6 +17,7 @@ public class ThreadFactory extends FeedbackFactory {
         Thread thread = (Thread) feedback;
         if (thread.getParentId() == null) {
             // top-level question: fine
+
         }
         return thread;
     }
