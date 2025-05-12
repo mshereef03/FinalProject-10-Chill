@@ -1,6 +1,11 @@
 package com.chill.order.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,21 +15,21 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToMany(mappedBy = "cart")
-    @JsonIgnore
-    private List<MysteryBagDTO> products = new ArrayList<>();
+    @Column(name = "mysteryBags", columnDefinition = "jsonb")  // Use jsonb to store the list as JSON
+    private String productsJson;
     @OneToOne(mappedBy = "cart")
     private Order order;
 
     public Cart() {
 
     }
-    public Cart(List<MysteryBagDTO> products) {
-      this.products = products;
+
+    public Cart(String productJson) {
+        this.productsJson = productJson;
     }
 
-    public Cart(List<MysteryBagDTO> products, Order order) {
-        this.products = products;
+    public Cart(String productJson, Order order) {
+        this.productsJson = productJson;
         this.order = order;
     }
 
@@ -45,13 +50,25 @@ public class Cart {
         this.id = id;
     }
 
-    public List<MysteryBagDTO> getProducts() {
-        return products;
+
+    private String convertListToJson(List<MysteryBagDTO> products) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.writeValueAsString(products);  // Convert List<MysteryBagDTO> to JSON string
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public void setProducts(List<MysteryBagDTO> products) {
-        this.products = products;
+    private List<MysteryBagDTO> convertJsonToList(String productsJson) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(productsJson, new TypeReference<List<MysteryBagDTO>>() {
+            });  // Convert JSON string back to List<MysteryBagDTO>
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
-
-
 }
