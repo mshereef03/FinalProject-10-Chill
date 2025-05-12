@@ -48,9 +48,16 @@ eureka:
 
 # Set general Spring Cloud Gateway logging to DEBUG
 logging:
+  file:
+    name=chill.log
   level:
+    com:
+      chill:
+        api_gateway=INFO
     org:
       springframework:
+        web:
+          gateway=DEBUG
         cloud:
           gateway=DEBUG
     reactor:
