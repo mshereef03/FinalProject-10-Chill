@@ -1,5 +1,13 @@
 package com.chill.catalog.controller;
 
+import com.chill.catalog.model.MysteryBag;
+import com.chill.catalog.service.MysteryBagService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 @RestController
 @RequestMapping("/seller/mystery-bags")
 public class MysteryBagController {

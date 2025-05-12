@@ -1,3 +1,12 @@
+package com.chill.catalog.service;
+
+import com.chill.catalog.model.MysteryBag;
+import com.chill.catalog.publishing.MysteryBagPublisher;
+import com.chill.catalog.repository.MysteryBagRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+
 @Service
 public class MysteryBagService {
     private final MysteryBagRepository repo;
@@ -21,7 +30,7 @@ public class MysteryBagService {
             throw new IllegalStateException("Cannot publish before " + bag.getReleaseAt());
         }
 
-        bag.setStatus(Status.ACTIVE);
+        bag.setStatus(MysteryBag.Status.ACTIVE);
         MysteryBag saved = repo.save(bag);
 
         // fire observers
