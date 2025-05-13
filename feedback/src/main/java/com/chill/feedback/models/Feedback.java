@@ -1,18 +1,13 @@
 package com.chill.feedback.models;
 
-import com.chill.feedback.dtos.FeedbackDTO;
+import jakarta.persistence.Column;
+import org.springframework.data.annotation.Id;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 import java.util.Date;
-
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -42,15 +37,22 @@ public abstract class Feedback {
     private String comment;
 
     @Column(name = "createdAt")
-    private Date createdAt = new Date();
+    private Date createdAt;
 
+    // Constructors
     public Feedback() {
         this.id = UUID.randomUUID();
     }
+    public Feedback(UUID userId, UUID vendorId, UUID orderId, String comment) {
+        super();
+        this.userId = userId;
+        this.vendorId = vendorId;
+        this.orderId = orderId;
+        this.comment = comment;
+        this.createdAt = new Date();
+    }
 
-
-//    public abstract Feedback update(FeedbackDTO feedbackDTO);
-
+    // Getters & Setters
     public UUID getId() {
         return id;
     }

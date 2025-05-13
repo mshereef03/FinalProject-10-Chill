@@ -8,13 +8,22 @@ import java.util.UUID;
 
 @Document("feedbacks")
 public class Review extends Feedback implements Votable {
-    private int rating;
+    private int rating = 1; // default rating
+    private Set<UUID> upvotedSet   = new HashSet<>();
+    private Set<UUID> downvotedSet = new HashSet<>();
 
-    private Set<UUID> upvotedBy   = new HashSet<>();
-    private Set<UUID> downvotedBy = new HashSet<>();
-
+    // Constructors
     public Review() { }
+    public Review(UUID userId, UUID vendorId, UUID orderId, String comment, int rating) {
+        super(userId, vendorId, orderId, comment);
+        this.rating = rating;
+    }
+    public Review(UUID userId, UUID vendorId, UUID orderId, String comment) {
+        super(userId, vendorId, orderId, comment);
+        this.rating = 1;
+    }
 
+    // Getters & Setters
     public int getRating() {
         return rating;
     }
@@ -25,24 +34,23 @@ public class Review extends Feedback implements Votable {
 
     @Override
     public void upvote(UUID userId) {
-        if (upvotedBy.add(userId)) {
-            // remove any prior downvote
-            downvotedBy.remove(userId);
+        if (upvotedSet.add(userId)) {
+            downvotedSet.remove(userId);
         }
     }
 
     @Override
     public void downvote(UUID userId) {
-        if (downvotedBy.add(userId)) {
-            upvotedBy.remove(userId);
+        if (downvotedSet.add(userId)) {
+            upvotedSet.remove(userId);
         }
     }
 
     public int getUpvoteCount() {
-        return upvotedBy.size();
+        return upvotedSet.size();
     }
 
     public int getDownvoteCount() {
-        return downvotedBy.size();
+        return downvotedSet.size();
     }
 }

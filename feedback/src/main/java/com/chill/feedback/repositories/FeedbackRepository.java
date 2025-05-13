@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 
 @Repository
 public interface FeedbackRepository extends MongoRepository<Feedback, UUID> {
-//    List<Feedback> findByOrderId(UUID orderId);
-    List<Feedback> findByVendorId(UUID vendorId);
 
     default <T extends Feedback> List<T> findByType(Class<T> type) {
         return findAll().stream()
@@ -22,23 +20,62 @@ public interface FeedbackRepository extends MongoRepository<Feedback, UUID> {
                 .collect(Collectors.toList());
     }
 
-    @Query("{ 'vendorId': ?0, '_class': 'com.chill.feedback.models.Complaint' }")
-    List<Complaint> findComplaintsByVendorId(UUID vendorId);
-
-
-
-
-    List<Review> findByVendorIdOrderByRatingDesc(UUID vendorId);
-
-    @Query("{ 'userId': ?0, '_class': 'com.chill.feedback.models.Complaint' }")
+    @Query(
+        value = "{ 'userId': ?0, '_class': 'com.chill.feedback.models.Complaint' }"
+    )
     List<Complaint> findComplaintsByUserId(UUID userId);
 
+    @Query(
+        value = "{ 'vendorId': ?0, '_class': 'com.chill.feedback.models.Complaint' }"
+    )
+    List<Complaint> findComplaintsByVendorId(UUID vendorId);
 
-//    @Query("{ 'parentId': null, '_class': 'com.chill.feedback.models.ThreadFeedback' }")
-//    List<Thread> findRootThreads();
-//
-//    List<Thread> findByParentId(UUID parentId);
-//
-//    List<Complaint> findByTag(Tag tag);
+    @Query(
+        value = "{ 'vendorId': ?0, '_class': 'com.chill.feedback.models.Review' }",
+        sort  = "{ 'rating': -1 }"
+    )
+    List<Review> findByVendorIdOrderByRatingDesc(UUID vendorId);
+
+    @Query(
+        value = "{ 'vendorId': ?0, '_class': 'com.chill.feedback.models.Review' }",
+        sort  = "{ 'rating': 1 }"
+    )
+    List<Review> findByVendorIdOrderByRatingAsc(UUID vendorId);
+
+    @Query(
+        value = "{ 'userId' :  ?0, '_class':  'com.chill.feedback.models.Review'}"
+    )
+    List<Review> findReviewsByUserId(UUID userId);
+
+    @Query(
+        value = "{ 'userId' :  ?0, '_class':  'com.chill.feedback.models.Review'}",
+        sort  = "{ 'rating': -1 }"
+    )
+    List<Review> findReviewsByUserIdOrderByRatingDesc(UUID userId);
+
+    @Query(
+        value = "{ 'userId' :  ?0, '_class':  'com.chill.feedback.models.Review'}",
+        sort  = "{ 'rating': 1 }"
+    )
+    List<Review> findReviewsByUserIdOrderByRatingAsc(UUID userId);
+
+    @Query(
+        value = "{ 'userId' :  ?0, '_class':  'com.chill.feedback.models.Thread'}"
+    )
+    List<Thread> findThreadsByUserId(UUID userId);
+
+    @Query(
+        value = "{ 'userId': ?0, '_class': 'com.chill.feedback.models.Thread', 'parentId': null }"
+    )
+    List<Thread> findRootThreadsByUserId(UUID userId);
+
+    @Query(
+        value = "{ 'userId': ?0, '_class': 'com.chill.feedback.models.Thread', 'parentId': { $ne: null } }"
+    )
+    List<Thread> findSubThreadsByUserId(UUID userId);
+
+    @Query(
+        value = "{ '_class': 'com.chill.feedback.models.Thread', 'parentId': ?0 }"
+    )
+    List<Thread> findSubThreadsByParentId(UUID id);
 }
-

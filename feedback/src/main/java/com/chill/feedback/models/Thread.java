@@ -10,38 +10,35 @@ import java.util.UUID;
 public class Thread extends Feedback implements Votable, Replyable {
     private UUID parentId;
 
-    private Set<UUID> upvotedBy   = new HashSet<>();
-    private Set<UUID> downvotedBy = new HashSet<>();
+    private Set<UUID> upvotedSet   = new HashSet<>();
+    private Set<UUID> downvotedSet = new HashSet<>();
 
     public Thread() { }
 
     @Override
     public void upvote(UUID userId)
     {
-        if (upvotedBy.add(userId)) {
-            // remove any prior downvote
-            downvotedBy.remove(userId);
+        if (upvotedSet.add(userId)) {
+            downvotedSet.remove(userId);
         }
     }
-
-
 
     @Override
     public void downvote(UUID userId)
     {
-        if (downvotedBy.add(userId)) {
-            upvotedBy.remove(userId);
+        if (downvotedSet.add(userId)) {
+            upvotedSet.remove(userId);
         }
     }
 
     public int getUpvoteCount()
     {
-        return upvotedBy.size();
+        return upvotedSet.size();
     }
 
     public int getDownvoteCount()
     {
-        return downvotedBy.size();
+        return downvotedSet.size();
     }
 
     public UUID getParentId()
@@ -52,8 +49,5 @@ public class Thread extends Feedback implements Votable, Replyable {
     public void setParentId(UUID parentId) {
         this.parentId = parentId;
     }
-
-
-
 
 }

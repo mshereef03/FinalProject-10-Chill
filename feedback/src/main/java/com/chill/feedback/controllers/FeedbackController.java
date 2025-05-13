@@ -29,17 +29,12 @@ public class FeedbackController {
 
     @GetMapping
     public List<Feedback> getAllFeedbacks() {
-        return feedbackService.getAllOfType(Feedback.class);
+        return feedbackService.getAll();
     }
 
     @GetMapping("/reviews")
     public List<Review> getAllReviews() {
         return feedbackService.getAllOfType(Review.class);
-    }
-
-    @GetMapping("/reviews/vendor/{vendorId}/top")
-    public List<Review> getTopReviewsForVendor(@PathVariable("vendorId") UUID vendorId) {
-        return feedbackService.getTopReviewsForVendor(vendorId);
     }
 
     @GetMapping("/threads")
@@ -52,24 +47,55 @@ public class FeedbackController {
         return feedbackService.getAllOfType(Complaint.class);
     }
 
+    @GetMapping("/reviews/user/{userId}/")
+    public List<Review> getReviewsByUser(@PathVariable("userId") UUID userId) {
+        return feedbackService.getReviewsByUser(userId);
+    }
+
+    @GetMapping("/reviews/user/{userId}/top")
+    public List<Review> getTopReviewsByUser(@PathVariable("userId") UUID userId) {
+        return feedbackService.getTopReviewsByUser(userId);
+    }
+
+    @GetMapping("/reviews/user/{userId}/least")
+    public List<Review> getLeastReviewsByUser(@PathVariable("userId") UUID userId) {
+        return feedbackService.getLeastReviewsByUser(userId);
+    }
+
+    @GetMapping("/threads/root/user/{userId}")
+    public List<Thread> getMainThreadsByUser(@PathVariable("userId") UUID userId) {
+        return feedbackService.getRootThreadsByUser(userId);
+    }
+
+    @GetMapping("/threads/sub/user/{userId}")
+    public List<Thread> getSubThreadsByUser(@PathVariable("userId") UUID userId) {
+        return feedbackService.getSubThreadsByUser(userId);
+    }
+
     @GetMapping("/complaints/vendor/{vendorId}")
     public List<Complaint> getComplaintsForVendor(@PathVariable UUID vendorId) {
         return feedbackService.getComplaintsForVendor(vendorId);
     }
-
 
     @GetMapping("/complaints/user/{userId}")
     public List<Complaint> getComplaintsForUser(@PathVariable UUID userId) {
         return feedbackService.getComplaintsForUser(userId);
     }
 
+    @GetMapping("/reviews/vendor/{vendorId}/top")
+    public List<Review> getTopReviewsForVendor(@PathVariable("vendorId") UUID vendorId) {
+        return feedbackService.getTopReviewsForVendor(vendorId);
+    }
+
+    @GetMapping("/reviews/vendor/{vendorId}/least")
+    public List<Review> getLeastReviewsForVendor(@PathVariable("vendorId") UUID vendorId) {
+        return feedbackService.getLeastReviewsForVendor(vendorId);
+    }
 
     @GetMapping("/{id}")
     public Feedback getFeedbackById(@PathVariable UUID id) {
         return feedbackService.getFeedbackById(id);
     }
-
-
 
     @PutMapping("/{id}")
     public Feedback updateFeedback(
@@ -95,7 +121,6 @@ public class FeedbackController {
         return feedbackService.downvoteFeedback(id,userId);
     }
 
-
     @PostMapping("/{id}/reply")
     public Feedback replyToFeedback(
             @PathVariable("id") UUID parentId,
@@ -103,10 +128,5 @@ public class FeedbackController {
     ) {
         return feedbackService.replyToFeedback(parentId, replyPayload);
     }
-
-
-
-
-
 
 }

@@ -1,8 +1,10 @@
     package com.chill.feedback.services;
     
-    import com.chill.feedback.command.FeedbackCommand;
     import com.chill.feedback.command.FeedbackCommandDispatcher;
+    import com.chill.feedback.factories.ComplaintFactory;
     import com.chill.feedback.factories.FeedbackFactory;
+    import com.chill.feedback.factories.ReviewFactory;
+    import com.chill.feedback.factories.ThreadFactory;
     import com.chill.feedback.models.Complaint;
     import com.chill.feedback.models.Feedback;
     import com.chill.feedback.models.Replyable;
@@ -14,55 +16,65 @@
     import org.springframework.web.server.ResponseStatusException;
     
     import java.util.List;
-    import java.util.Map;
     import java.util.UUID;
-    import java.util.stream.Collectors;
+
+    import com.chill.feedback.models.Feedback;
+    import com.chill.feedback.models.Review;
+    import com.chill.feedback.models.Thread;
+    import com.chill.feedback.models.Complaint;
 
     @Service
     public class FeedbackService {
     
-    
         private final FeedbackRepository feedbackRepository;
-        private final List<FeedbackFactory> feedbackFactories;
         private final FeedbackCommandDispatcher dispatcher;
+
         @Autowired
-        public FeedbackService(FeedbackRepository feedbackRepository,
-                               List<FeedbackFactory> feedbackFactories,
-                               FeedbackCommandDispatcher dispatcher) {
-            this.feedbackRepository       = feedbackRepository;
-            this.feedbackFactories  = feedbackFactories;
+        public FeedbackService(FeedbackRepository feedbackRepository, FeedbackCommandDispatcher dispatcher) {
+            this.feedbackRepository = feedbackRepository;
             this.dispatcher = dispatcher;
         }
     
-    
-        public Feedback createFeedback(Feedback feedback) {
-            FeedbackFactory factory = feedbackFactories.stream()
-                    .filter(f -> f.supports(feedback))
-                    .findFirst()
-                    .orElseThrow(() ->
-                            new ResponseStatusException(
-                                    HttpStatus.BAD_REQUEST,
-                                    "Unsupported feedback type: " + feedback.getClass().getSimpleName()
-                            )
-                    );
-            Feedback f = factory.createFeedback(feedback);
-            return feedbackRepository.save(f);
+        public static FeedbackFactory initialize(Feedback feedback) throws Exception {
+            if (feedback instanceof Thread) {
+                return new ThreadFactory();
+            } else if (feedback instanceof Complaint) {
+                return new ComplaintFactory();
+            } else if (feedback instanceof Review) {
+                return new ReviewFactory();
+            } else {
+                throw new Exception("Error! Unknown feedback type!");
+            }
         }
-    
-    
+
+        public Feedback createFeedback(Feedback feedback) {
+            try {
+                FeedbackFactory feedbackFactory = initialize(feedback);
+                Feedback f = feedbackFactory.createFeedback(feedback);
+                return feedbackRepository.save(f);
+            } catch (Exception e) {
+                throw new ResponseStatusException(
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        feedback.getClass().getSimpleName() + " can not be created!"
+                );
+            }
+        }
+
+        public  List<Feedback> getAll() {
+            return feedbackRepository.findAll();
+        }
+
         public Feedback getFeedbackById(UUID feedbackId) {
             return findOrFail(feedbackId);
         }
 
-    
         public <T extends Feedback> List<T> getAllOfType(Class<T> type) {
             if (!Feedback.class.isAssignableFrom(type)) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid feedback type: " + type.getSimpleName());
             }
             return feedbackRepository.findByType(type);
         }
-    
-    
+
         public Feedback updateFeedback(Feedback feedback) {
             Feedback existing = findOrFail(feedback.getId());
             existing.setComment(feedback.getComment());
@@ -71,14 +83,29 @@
             }
             return feedbackRepository.save(existing);
         }
-    
-    
+
+        private void deleteThreadRecursively(Thread thread) {
+            List<Thread> children = feedbackRepository.findSubThreadsByParentId(thread.getId());
+
+            for (Thread child : children) {
+                deleteThreadRecursively(child);
+            }
+
+            feedbackRepository.delete(thread);
+        }
+
         public Feedback deleteFeedbackById(UUID feedbackId) {
             Feedback deleted = findOrFail(feedbackId);
-            feedbackRepository.delete(deleted);
+
+            if (deleted instanceof Thread) {
+                deleteThreadRecursively((Thread) deleted);
+            } else {
+                feedbackRepository.delete(deleted);
+            }
+
             return deleted;
         }
-    
+
         public Feedback upvoteFeedback(UUID feedbackId, UUID userId) {
             return dispatcher.dispatch("upvote", feedbackId, userId);
         }
@@ -86,7 +113,6 @@
         public Feedback downvoteFeedback(UUID feedbackId, UUID userId) {
             return dispatcher.dispatch("downvote", feedbackId, userId);
         }
-
 
         public Feedback replyToFeedback(UUID parentId, Feedback replyPayload) {
             Feedback parent = findOrFail(parentId);
@@ -112,18 +138,37 @@
             return feedbackRepository.findByVendorIdOrderByRatingDesc(vendorId);
         }
 
+        public List<Review> getLeastReviewsForVendor(UUID vendorId) {
+            return feedbackRepository.findByVendorIdOrderByRatingAsc(vendorId);
+        }
 
         public List<Complaint> getComplaintsForVendor(UUID vendorId) {
             return feedbackRepository.findComplaintsByVendorId(vendorId);
         }
 
-
         public List<Complaint> getComplaintsForUser(UUID userId) {
             return feedbackRepository.findComplaintsByUserId(userId);
         }
 
+        public List<Review> getReviewsByUser(UUID userId) {
+            return feedbackRepository.findReviewsByUserId(userId);
+        }
 
+        public List<Review> getTopReviewsByUser(UUID userId) {
+            return feedbackRepository.findReviewsByUserIdOrderByRatingDesc(userId);
+        }
 
+        public List<Review> getLeastReviewsByUser(UUID userId) {
+            return feedbackRepository.findReviewsByUserIdOrderByRatingAsc(userId);
+        }
+
+        public List<Thread> getRootThreadsByUser(UUID userId) {
+            return feedbackRepository.findRootThreadsByUserId(userId);
+        }
+
+        public List<Thread> getSubThreadsByUser(UUID userId) {
+            return feedbackRepository.findSubThreadsByUserId(userId);
+        }
     
         private Feedback findOrFail(UUID id) {
             return feedbackRepository.findById(id)
@@ -133,10 +178,4 @@
                     ));
         }
 
-
-
-
-    
-    
-    
     }

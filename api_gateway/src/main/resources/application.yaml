@@ -1,0 +1,56 @@
+server:
+  port: 8080
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      httpserver:
+        wiretap: true
+      httpclient:
+        wiretap: true
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+#        - id: user-service
+#          uri: lb://user-service
+#          predicates:
+#            - Path=/users/**
+        - id: feedback-service
+          uri: lb://feedback-service
+          predicates:
+            - Path=/feedbacks/**
+#        - id: catalog-service
+#          uri: lb://catalog-service
+#          predicates:
+#            - Path=/catalog-service/**
+#        - id: order-service
+#          uri: lb://order-service
+#          predicates:
+#            - Path=/order-service/**
+#        - id: seller-service
+#          uri: lb://seller-service
+#          predicates:
+#            - Path=/seller-service/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+
+logging:
+  level:
+    com.chill.api_gateway.filter: INFO
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.server: DEBUG
+    reactor.netty.http.client: DEBUG
+  file:
+    name: api_gateway.log

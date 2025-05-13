@@ -8,6 +8,5 @@ public interface FeedbackCommand {
 
     String getName();
 
-
     Feedback execute(UUID feedbackId, UUID userId);
 }

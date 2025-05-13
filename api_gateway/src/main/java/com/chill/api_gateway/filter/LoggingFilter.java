@@ -1,3 +1,6 @@
+package com.chill.api_gateway.filter;
+
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -9,18 +12,18 @@ import reactor.core.publisher.Mono;
 @Component
 @Slf4j
 public class LoggingFilter implements GlobalFilter {
-    private static final Logger log = LoggerFactory.getLogger(LoggingFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggingFilter.class);
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getRawPath();
 
-        log.info("Incoming request: {} {}", exchange.getRequest().getMethod(), path);
+        logger.info("Incoming request: {} {}", exchange.getRequest().getMethod(), path);
 
         return chain.filter(exchange).then(
                 Mono.fromRunnable(() -> {
                     int status = exchange.getResponse().getStatusCode().value();
-                    log.info("Response status for {}: {}", path, status);
+                    logger.info("Response status for {}: {}", path, status);
                 })
         );
     }

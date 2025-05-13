@@ -1,4 +1,9 @@
 package com.chill.feedback.factories;
 
-public class FeedbackFactory {
+import com.chill.feedback.models.Feedback;
+
+public abstract class FeedbackFactory {
+    public abstract Feedback createFeedback(Feedback feedback);
 }
+
+

@@ -8,17 +8,7 @@ import org.springframework.stereotype.Component;
 public class ThreadFactory extends FeedbackFactory {
 
     @Override
-    public boolean supports(Feedback feedback) {
-        return feedback instanceof Thread;
-    }
-
-    @Override
     public Feedback createFeedback(Feedback feedback) {
-        Thread thread = (Thread) feedback;
-        if (thread.getParentId() == null) {
-            // top-level question: fine
-
-        }
-        return thread;
+        return (Thread) feedback;
     }
 }

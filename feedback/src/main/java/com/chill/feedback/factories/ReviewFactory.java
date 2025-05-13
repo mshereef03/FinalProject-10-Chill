@@ -6,12 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ReviewFactory extends FeedbackFactory {
-
-    @Override
-    public boolean supports(Feedback feedback) {
-        return feedback instanceof Review;
-    }
-
     @Override
     public Feedback createFeedback(Feedback feedback) {
         Review review = (Review) feedback;

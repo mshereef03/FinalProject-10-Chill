@@ -4,7 +4,7 @@
 //import com.chill.feedback.command.FeedbackCommandDispatcher;
 //import com.chill.feedback.factories.FeedbackFactory;
 //
-//
+//import com.chill.feedback.factories.ReviewFactory;
 //import com.chill.feedback.models.Thread;
 //import com.chill.feedback.repositories.FeedbackRepository;
 //import org.junit.jupiter.api.BeforeEach;
@@ -26,9 +26,6 @@
 //
 //    @Mock
 //    private FeedbackRepository repo;
-//
-//    @Mock
-//    private FeedbackFactory reviewFactory;
 //
 //    @Mock
 //    private FeedbackCommand upvoteCmd;
@@ -54,7 +51,7 @@
 //		);
 //		FeedbackCommandDispatcher dispatcher =
 //				new FeedbackCommandDispatcher(List.of(upvoteCmd, downvoteCmd));
-//		service = new FeedbackService(repo, List.of(reviewFactory), dispatcher);
+//		service = new FeedbackService(repo, dispatcher);
 //		sampleReview = new Review();
 //        sampleReview.setId(feedbackId);
 //        sampleReview.setComment("Great ride!");
@@ -63,24 +60,24 @@
 //
 //	@Test
 //	void createFeedback_success() {
-//		when(reviewFactory.supports(sampleReview)).thenReturn(true);
-//		when(reviewFactory.createFeedback(sampleReview)).thenReturn(sampleReview);
-//		when(repo.save(sampleReview)).thenReturn(sampleReview);
+//        // tell Mongo to echo back whatever you save
+//        when(repo.save(any(Review.class))).thenReturn(sampleReview);
 //
-//		Feedback result = service.createFeedback(sampleReview);
+//        Feedback result = service.createFeedback(sampleReview);
 //
-//		assertThat(result).isSameAs(sampleReview);
-//		verify(repo).save(sampleReview);
+//        verify(repo).save(any(Review.class));
+//
+//        assertThat(result).isSameAs(sampleReview);
 //	}
 //
-//	@Test
-//	void createFeedback_unsupportedType() {
-//		when(reviewFactory.supports(sampleReview)).thenReturn(false);
-//
-//		assertThatThrownBy(() -> service.createFeedback(sampleReview))
-//				.isInstanceOf(ResponseStatusException.class)
-//				.hasMessageContaining("Unsupported feedback type");
-//	}
+//    @Test
+//    void createFeedback_unsupportedType() {
+//        // e.g. pass in a raw Feedback anonymous subclass
+//        Feedback weird = new Feedback(){{ setComment("x"); }};
+//        assertThatThrownBy(() -> service.createFeedback(weird))
+//                .isInstanceOf(ResponseStatusException.class)
+//                .hasMessageContaining("can not be created");
+//    }
 //
 //	@Test
 //	void getFeedbackById_found() {
@@ -91,9 +88,6 @@
 //
 //		assertThat(result).isSameAs(sampleReview);
 //	}
-//
-//
-//
 //
 //	@Test
 //	void getAllOfType_returnsOnlyThatSubtype() {
@@ -264,7 +258,7 @@
 //
 //    @Test
 //    void unknownCommand_throwsBadRequest() {
-//        FeedbackService emptySvc = new FeedbackService(repo, List.of(reviewFactory), new FeedbackCommandDispatcher(List.of()));
+//        FeedbackService emptySvc = new FeedbackService(repo, new FeedbackCommandDispatcher(List.of()));
 //        assertThatThrownBy(() -> emptySvc.upvoteFeedback(feedbackId, userId))
 //                .isInstanceOf(ResponseStatusException.class)
 //                .hasMessageContaining("Unknown command");
