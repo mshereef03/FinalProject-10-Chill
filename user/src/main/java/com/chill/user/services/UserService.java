@@ -84,10 +84,10 @@ public class UserService {
         DecodedTokenDTO decoded = decodeToken(token);
         String username = decoded.getUsername(); // JWT payload includes username
 
-        UserModel user = users.get(username);
-        if (user == null) {
-            throw new RuntimeException("Invalid token: user does not exist");
-        }
+        UserModel user = users.values().stream()
+                .filter(u -> u.getUsername().equals(username)) // or use getEmail() if needed
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         user.setPassword(newPassword); // In production, hash it
     }
