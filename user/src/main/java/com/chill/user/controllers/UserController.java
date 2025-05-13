@@ -1,12 +1,9 @@
 package com.chill.user.controllers;
 
-import com.chill.user.dto.DecodedTokenDTO;
-import com.chill.user.dto.LoginRequestDTO;
-import com.chill.user.dto.LoginResponseDTO;
+import com.chill.user.dto.*;
 import com.chill.user.services.UserService;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.JwtException;
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,6 +33,19 @@ public class UserController {
         String token = authHeader.substring(7);
         return userService.decodeToken(token);
     }
+
+    @PostMapping("/request-reset")
+    public ResponseEntity<String> requestReset(@RequestBody PasswordResetRequestDTO request) {
+        String resetToken = userService.requestPasswordReset(request.getEmail());
+        return ResponseEntity.ok(resetToken);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody PasswordResetDTO request) {
+        userService.resetPassword(request.getToken(), request.getNewPassword());
+        return ResponseEntity.ok("Password reset successful");
+    }
+
 }
 
 

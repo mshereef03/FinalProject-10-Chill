@@ -7,14 +7,16 @@ public class UserModel {
     private Long id;
     private String username;
     private String password;
+    private String email;
     private List<String> roles; // List of roles like ["ROLE_USER", "ROLE_ADMIN"]
 
     public UserModel() {}
 
-    public UserModel(Long id, String username, String password, List<String> roles) {
+    public UserModel(Long id, String username, String password, String email, List<String> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.email = email;
         this.roles = roles;
     }
 
@@ -41,6 +43,10 @@ public class UserModel {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getEmail() {return email;}
+
+    public void setEmail(String email) {this.email = email;}
 
     public List<String> getRoles() {
         return roles;

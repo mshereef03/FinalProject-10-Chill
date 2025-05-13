@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -62,6 +64,18 @@ public class JwtUtil {
                 body.getExpiration()
         );
     }
+
+    public String generateResetToken(UserModel user) {
+        return Jwts.builder()
+                .setSubject(user.getId().toString())
+                .claim("username", user.getUsername())
+                .claim("roles", user.getRoles())
+                .setIssuedAt(Date.from(Instant.now()))
+                .setExpiration(Date.from(Instant.now().plus(10, ChronoUnit.MINUTES)))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
 }
 
 
