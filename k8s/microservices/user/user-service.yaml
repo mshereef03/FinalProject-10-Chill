@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  type: ClusterIP
+  selector:
+    app: user-service
+  ports:
+    - port: 80       # the port your other pods talk to this service on
+      targetPort: 8080  # the port inside the user-service container
+    - name: SPRING_DATASOURCE_URL
+      value: jdbc:postgresql://postgres-order-db:5432/mydb

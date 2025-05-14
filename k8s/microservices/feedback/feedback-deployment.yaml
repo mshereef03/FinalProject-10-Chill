@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feedback-service
+  namespace: app
+  labels:
+    app: feedback-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: feedback-service
+  template:
+    metadata:
+      labels:
+        app: feedback-service
+    spec:
+      containers:
+        - name: feedback-service
+          image: docker.io/alimadany/feedback-service:0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8082        
+          env: # EVERYTHING BELOW THIS LINE IS WILL BE ADJUSTED
+            - name: SPRING_DATA_MONGODB_URI
+              value: jdbc:postgresql://postgres-feedback-db.db.svc.cluster.local:5432/mydb
+          envFrom:
+            - configMapRef:
+                name: global-config
+            - secretRef:
+                name: global-secrets
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082               
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082              
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
