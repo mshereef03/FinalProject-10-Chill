@@ -1,13 +1,18 @@
 package com.chill.user.models;
 
 import java.util.List;
-
+import jakarta.persistence.*;
+@Entity
+@Table(name = "users")
 public class UserModel {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, unique = true)
     private String username;
     private String password;
     private String email;
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles; // List of roles like ["ROLE_USER", "ROLE_ADMIN"]
 
     public UserModel() {}

@@ -1,10 +1,15 @@
 package com.chill.user.controllers;
 
 import com.chill.user.dto.*;
+import com.chill.user.models.UserModel;
 import com.chill.user.services.UserService;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.ResponseEntity;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -46,6 +51,39 @@ public class UserController {
         return ResponseEntity.ok("Password reset successful");
     }
 
+
+    // Create
+    @PostMapping
+    public UserModel createUser(@RequestBody UserModel user) {
+        return userService.createUser(user);
+    }
+
+    // Read all
+    @GetMapping
+    public List<UserModel> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    // Read one
+    @GetMapping("/{id}")
+    public ResponseEntity<UserModel> getUserById(@PathVariable Long id) {
+        return userService.getUserById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // Update
+    @PutMapping("/{id}")
+    public UserModel updateUser(@PathVariable Long id, @RequestBody UserModel user) {
+        return userService.updateUser(id, user);
+    }
+
+    // Delete
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
 }
 
 
