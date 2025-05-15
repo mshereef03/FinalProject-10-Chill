@@ -1,29 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-service
+  name: user-deployment
   #namespace: app                   # <-- if you’re using namespaces
   labels:
-    app: user-service
+    app: user-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: user-service
+      app: user-deployment
   template:
     metadata:
       labels:
-        app: user-service
+        app: user-deployment
     spec:
       containers:
-        - name: user-service     # match the deployment name
+        - name: user-deployment     # match the deployment name
           image: docker.io/alimadany/user-service:0.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           env: # EVERYTHING BELOW THIS LINE IS WILL BE ADJUSTED
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://postgres-user-db.db.svc.cluster.local:5432/mydb
+              valueFrom:
+                configMapKeyRef:     
+                  name: global-config
+                  key: SPRING_DATASOURCE_URL
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -39,18 +42,18 @@ spec:
                 name: global-config
             - secretRef:
                 name: global-secrets
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8080
-            initialDelaySeconds: 10
-            periodSeconds: 5
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8080
-            initialDelaySeconds: 30
-            periodSeconds: 10
+          # readinessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: 8080
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: 8080
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 10
           resources:
             requests:
               cpu: "100m"
