@@ -7,44 +7,20 @@ import com.chill.user.models.UserModel;
 import com.chill.user.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import com.chill.user.factory.*;
-import java.util.Map;
 
 @Service
 public class UserService {
 
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
-    // temporary simulated user store until db setup
-    private final Map<String, UserModel> users = new HashMap<>();
 
     public UserService(JwtUtil jwtUtil, UserRepository userRepository) {
         this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
-
-        // Simulated user DB entries
-        users.put("testuser@example.com", new UserModel(
-                1L,
-                "testuser",                      // username
-                "test1234",                      // password
-                "testuser@example.com",          // email
-                List.of("ROLE_USER")             // roles
-        ));
-
-        users.put("admin@example.com", new UserModel(
-                2L,
-                "admin",                         // username
-                "adminpass",                     // password
-                "admin@example.com",             // email
-                List.of("ROLE_ADMIN", "ROLE_USER")
-        ));
     }
-
-
-
 
     public String login(String username, String password) {
         // Dummy hardcoded users for now
@@ -125,12 +101,9 @@ public class UserService {
 
 
     public String requestPasswordReset(String email) {
-        // Simulated lookup until db setup
-        System.out.println("email: " + email);
-        UserModel user = users.values().stream()
-                .filter(u -> u.getEmail().equals(email))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("User with email not found"));
+
+        UserModel user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new InvalidCredentialsException("User with email not found"));
 
         return jwtUtil.generateResetToken(user); // This token will expire in e.g., 10 minutes
     }
@@ -139,12 +112,11 @@ public class UserService {
         DecodedTokenDTO decoded = decodeToken(token);
         String username = decoded.getUsername(); // JWT payload includes username
 
-        UserModel user = users.values().stream()
-                .filter(u -> u.getUsername().equals(username)) // or use getEmail() if needed
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        UserModel user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new InvalidCredentialsException("User with email not found"));
 
         user.setPassword(newPassword); // In production, hash it
+        userRepository.save(user);
     }
 
 
