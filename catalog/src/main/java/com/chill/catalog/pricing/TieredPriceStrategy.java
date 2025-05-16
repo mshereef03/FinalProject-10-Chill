@@ -11,10 +11,8 @@ public class TieredPriceStrategy implements PriceStrategy {
 
     @Override
     public double price(MysteryBag bag) {
-        Instant now = Instant.now();
-        int minutes = (int) Duration.between(bag.getReleaseAt(), now).toMinutes();
-        double factor = minutes == 0 ? 1 :
-                        minutes == 1 ? 0.9 :
+        double factor = bag.getSize() == MysteryBag.Size.BIG ? 1 :
+                        bag.getSize() == MysteryBag.Size.MEDIUM ? 15 :
                         0.75;
 
         return bag.getBasePrice() * factor;
