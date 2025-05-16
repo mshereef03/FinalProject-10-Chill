@@ -7,7 +7,11 @@ spring:
 
   data:
     mongodb:
-      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27017/feedbackdb}
+      host: localhost
+      port: 27017
+#      uri: ${SPRING_DATA_MONGODB_URI:mongo://localhost:27017/feedbackdb}
+      uri: mongodb://root:example@localhost:27017/feedbackdb?authSource=admin
+      database: feedbackdb
 
   rabbitmq:
     host: localhost
@@ -23,11 +27,11 @@ eureka:
     prefer-ip-address: true
     hostname: localhost
 
-logging:
-  level:
-    com.chill.api_gateway.filter: INFO
-    org.springframework.cloud.gateway: DEBUG
-    reactor.netty.http.server: DEBUG
-    reactor.netty.http.client: DEBUG
-  file:
-    name: feedback.log
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enable: true
+  show-actuator: true
+  packages-to-scan: com.chill.feedback.controllers

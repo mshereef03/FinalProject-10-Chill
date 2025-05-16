@@ -6,9 +6,11 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class
 		)
+@EnableWebMvc
 public class FeedbackMicroserviceApplication {
 
 	@Bean
@@ -19,5 +21,4 @@ public class FeedbackMicroserviceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FeedbackMicroserviceApplication.class, args);
 	}
-
 }

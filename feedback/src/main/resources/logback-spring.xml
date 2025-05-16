@@ -1,18 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>feedback.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <!-- daily rollover and up to 10MB per file -->
-            <fileNamePattern>feedback.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <maxFileSize>10MB</maxFileSize>
-            <maxHistory>10</maxHistory>
+
+    <!-- make "feedback" your context name -->
+    <springProperty name="appName" source="spring.application.name"/>
+
+    <!-- define a rolling file appender that rolls every minute (or change granularity) -->
+    <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- base file (unused at runtime, but required to exist) -->
+<!--        <file>logs/${appName}.log</file>-->
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--
+              %d{yyyy-MM-dd} will be replaced by date+time.
+              You can change the pattern to include seconds (%d{yyyy-MM-dd_HH-mm-ss}).
+            -->
+            <fileNamePattern>logs/${appName}-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- keep 30 days of history -->
+            <maxHistory>30</maxHistory>
+            <!-- optionally, cap total size -->
+            <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
+
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
+    <!-- route all logging to our rolling file -->
     <root level="INFO">
-        <appender-ref ref="FILE" />
+        <appender-ref ref="ROLLING_FILE" />
     </root>
+
 </configuration>

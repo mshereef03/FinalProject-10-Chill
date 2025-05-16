@@ -1,0 +1,178 @@
+2025-05-16 04:31:56.342 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 04:32:55.294 [Eureka-PeerNodesUpdater] WARN  c.n.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2025-05-16 04:32:56.342 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 04:33:56.343 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 04:34:16.978 [http-nio-8761-exec-1] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 04:34:16.984 [http-nio-8761-exec-6] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 04:34:24.271 [http-nio-8761-exec-3] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 04:34:56.343 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 04:35:56.347 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 4ms
+2025-05-16 04:36:26.960 [http-nio-8761-exec-10] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 04:36:29.993 [http-nio-8761-exec-8] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 04:36:40.039 [http-nio-8761-exec-5] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 04:36:56.360 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 13ms
+2025-05-16 04:37:56.367 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2025-05-16 04:38:56.381 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 12ms
+2025-05-16 04:39:56.391 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 11ms
+2025-05-16 04:40:19.368 [http-nio-8761-exec-5] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 04:40:19.372 [http-nio-8761-exec-1] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 04:40:30.142 [http-nio-8761-exec-2] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 04:40:56.394 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 04:41:56.395 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 04:42:16.256 [http-nio-8761-exec-5] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 04:42:16.260 [http-nio-8761-exec-1] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 04:42:27.953 [http-nio-8761-exec-2] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 04:42:55.224 [ReplicaAwareInstanceRegistry - RenewalThresholdUpdater] INFO  c.n.e.r.PeerAwareInstanceRegistryImpl - Current renewal threshold is : 5
+2025-05-16 04:42:55.300 [Eureka-PeerNodesUpdater] WARN  c.n.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2025-05-16 04:42:56.400 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 5ms
+2025-05-16 04:43:56.402 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 04:44:56.407 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 5ms
+2025-05-16 04:45:56.419 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 11ms
+2025-05-16 04:46:07.951 [http-nio-8761-exec-2] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 04:46:10.980 [http-nio-8761-exec-8] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 04:46:20.502 [http-nio-8761-exec-6] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 04:46:40.665 [http-nio-8761-exec-7] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 04:46:43.699 [http-nio-8761-exec-10] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 04:46:52.119 [http-nio-8761-exec-1] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 04:46:56.420 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2025-05-16 04:47:56.423 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 04:48:23.918 [http-nio-8761-exec-7] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 04:48:26.959 [http-nio-8761-exec-10] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 04:48:38.417 [http-nio-8761-exec-4] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 04:48:56.430 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 6ms
+2025-05-16 04:49:45.799 [http-nio-8761-exec-3] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 04:49:45.802 [http-nio-8761-exec-4] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 04:49:54.076 [http-nio-8761-exec-10] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 04:49:56.446 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 16ms
+2025-05-16 04:50:56.454 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2025-05-16 04:51:56.470 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 16ms
+2025-05-16 04:52:55.304 [Eureka-PeerNodesUpdater] WARN  c.n.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2025-05-16 04:52:56.484 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 14ms
+2025-05-16 04:53:11.802 [http-nio-8761-exec-5] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 04:53:11.805 [http-nio-8761-exec-1] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 04:53:22.248 [http-nio-8761-exec-8] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 04:53:56.489 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 3ms
+2025-05-16 04:54:56.492 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 3ms
+2025-05-16 04:55:56.506 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 13ms
+2025-05-16 04:56:36.219 [http-nio-8761-exec-9] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 04:56:39.260 [http-nio-8761-exec-6] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 04:56:49.351 [http-nio-8761-exec-2] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 04:56:53.235 [http-nio-8761-exec-1] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 04:56:56.267 [http-nio-8761-exec-9] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 04:56:56.507 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 04:57:03.555 [http-nio-8761-exec-8] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 04:57:55.230 [ReplicaAwareInstanceRegistry - RenewalThresholdUpdater] INFO  c.n.e.r.PeerAwareInstanceRegistryImpl - Current renewal threshold is : 5
+2025-05-16 04:57:56.510 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 3ms
+2025-05-16 04:58:56.512 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2025-05-16 04:59:56.513 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2025-05-16 05:00:56.515 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 05:01:56.515 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 08:23:37.816 [Eureka-PeerNodesUpdater] WARN  c.n.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2025-05-16 08:23:39.034 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 12042518ms
+2025-05-16 08:24:39.034 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 08:25:39.037 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 08:26:39.043 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 6ms
+2025-05-16 08:27:39.047 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 3ms
+2025-05-16 08:28:39.050 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 08:29:39.053 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 3ms
+2025-05-16 08:30:39.057 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 3ms
+2025-05-16 08:31:39.065 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2025-05-16 08:32:39.066 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 08:33:37.755 [ReplicaAwareInstanceRegistry - RenewalThresholdUpdater] INFO  c.n.e.r.PeerAwareInstanceRegistryImpl - Current renewal threshold is : 5
+2025-05-16 08:33:37.827 [Eureka-PeerNodesUpdater] WARN  c.n.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2025-05-16 08:33:39.077 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2025-05-16 08:34:39.087 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 9ms
+2025-05-16 08:35:39.099 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 13ms
+2025-05-16 08:36:39.105 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 6ms
+2025-05-16 08:37:39.111 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 5ms
+2025-05-16 08:38:39.119 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2025-05-16 08:39:39.126 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2025-05-16 08:40:39.129 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 08:41:39.137 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 8ms
+2025-05-16 08:42:39.141 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 4ms
+2025-05-16 08:43:37.841 [Eureka-PeerNodesUpdater] WARN  c.n.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2025-05-16 08:43:39.153 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 11ms
+2025-05-16 08:44:39.164 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 12ms
+2025-05-16 08:45:39.168 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 08:46:39.169 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2025-05-16 08:47:39.175 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 5ms
+2025-05-16 08:48:37.755 [ReplicaAwareInstanceRegistry - RenewalThresholdUpdater] INFO  c.n.e.r.PeerAwareInstanceRegistryImpl - Current renewal threshold is : 5
+2025-05-16 08:48:39.181 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 5ms
+2025-05-16 08:49:39.184 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 3ms
+2025-05-16 08:50:39.197 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 13ms
+2025-05-16 08:51:39.202 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 4ms
+2025-05-16 08:52:39.204 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 08:53:37.858 [Eureka-PeerNodesUpdater] WARN  c.n.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2025-05-16 08:53:39.205 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2025-05-16 08:54:39.218 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 13ms
+2025-05-16 08:55:39.239 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 23ms
+2025-05-16 08:56:39.243 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 08:57:39.249 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 6ms
+2025-05-16 08:58:39.262 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 13ms
+2025-05-16 08:59:39.278 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 15ms
+2025-05-16 09:00:39.293 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 15ms
+2025-05-16 09:01:39.298 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 5ms
+2025-05-16 09:02:39.314 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 15ms
+2025-05-16 09:03:37.760 [ReplicaAwareInstanceRegistry - RenewalThresholdUpdater] INFO  c.n.e.r.PeerAwareInstanceRegistryImpl - Current renewal threshold is : 5
+2025-05-16 09:03:37.859 [Eureka-PeerNodesUpdater] WARN  c.n.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2025-05-16 09:03:39.327 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 12ms
+2025-05-16 09:04:39.334 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2025-05-16 09:05:39.337 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 4ms
+2025-05-16 09:06:39.344 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 6ms
+2025-05-16 09:07:39.348 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 3ms
+2025-05-16 09:08:39.357 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 8ms
+2025-05-16 09:09:39.359 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 09:10:39.372 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 13ms
+2025-05-16 09:11:39.382 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2025-05-16 09:12:39.386 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 09:13:37.861 [Eureka-PeerNodesUpdater] WARN  c.n.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2025-05-16 09:13:39.386 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 09:14:39.398 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 12ms
+2025-05-16 09:15:39.404 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 5ms
+2025-05-16 09:16:39.411 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2025-05-16 09:17:39.419 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2025-05-16 09:18:37.767 [ReplicaAwareInstanceRegistry - RenewalThresholdUpdater] INFO  c.n.e.r.PeerAwareInstanceRegistryImpl - Current renewal threshold is : 5
+2025-05-16 09:18:39.429 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2025-05-16 09:19:39.440 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 11ms
+2025-05-16 09:20:39.444 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 3ms
+2025-05-16 09:21:39.458 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 14ms
+2025-05-16 09:22:39.469 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2025-05-16 09:23:37.874 [Eureka-PeerNodesUpdater] WARN  c.n.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2025-05-16 09:23:39.477 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 8ms
+2025-05-16 09:24:39.480 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 09:25:39.481 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2025-05-16 09:26:39.481 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 09:39:24.124 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 710824ms
+2025-05-16 09:40:24.125 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 2ms
+2025-05-16 09:41:24.137 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2025-05-16 09:42:24.144 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 8ms
+2025-05-16 09:43:24.161 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 15ms
+2025-05-16 09:44:24.168 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2025-05-16 09:45:22.410 [ReplicaAwareInstanceRegistry - RenewalThresholdUpdater] INFO  c.n.e.r.PeerAwareInstanceRegistryImpl - Current renewal threshold is : 5
+2025-05-16 09:45:22.518 [Eureka-PeerNodesUpdater] WARN  c.n.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2025-05-16 09:45:24.175 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2025-05-16 09:46:24.178 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 3ms
+2025-05-16 09:47:24.189 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 10ms
+2025-05-16 09:48:24.196 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 7ms
+2025-05-16 09:49:24.203 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 5ms
+2025-05-16 09:50:24.203 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 09:51:24.208 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 4ms
+2025-05-16 09:52:24.215 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 6ms
+2025-05-16 09:53:24.223 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 8ms
+2025-05-16 09:54:24.233 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 8ms
+2025-05-16 09:54:39.580 [http-nio-8761-exec-3] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 09:54:42.661 [http-nio-8761-exec-5] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 09:54:53.389 [http-nio-8761-exec-8] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 09:55:22.526 [Eureka-PeerNodesUpdater] WARN  c.n.eureka.cluster.PeerEurekaNodes - The replica size seems to be empty. Check the route 53 DNS Registry
+2025-05-16 09:55:24.274 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 41ms
+2025-05-16 09:56:24.280 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 5ms
+2025-05-16 09:56:26.042 [http-nio-8761-exec-3] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status DOWN (replication=false)
+2025-05-16 09:56:26.046 [http-nio-8761-exec-5] INFO  c.n.e.r.AbstractInstanceRegistry - Cancelled instance FEEDBACK-SERVICE/localhost:feedback-service:8082 (replication=false)
+2025-05-16 09:56:33.002 [http-nio-8761-exec-1] INFO  c.n.e.r.AbstractInstanceRegistry - Registered instance FEEDBACK-SERVICE/localhost:feedback-service:8082 with status UP (replication=false)
+2025-05-16 09:57:24.292 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 13ms
+2025-05-16 09:58:24.302 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 9ms
+2025-05-16 09:59:24.308 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 5ms
+2025-05-16 10:00:22.417 [ReplicaAwareInstanceRegistry - RenewalThresholdUpdater] INFO  c.n.e.r.PeerAwareInstanceRegistryImpl - Current renewal threshold is : 5
+2025-05-16 10:00:24.309 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 10:01:24.309 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-05-16 10:02:24.309 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms

@@ -5,12 +5,14 @@ import com.chill.feedback.models.Review;
 import com.chill.feedback.models.Thread;
 import com.chill.feedback.models.Complaint;
 import com.chill.feedback.services.FeedbackService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping("/feedbacks")
 public class FeedbackController {

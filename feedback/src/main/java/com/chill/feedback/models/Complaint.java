@@ -1,10 +1,6 @@
 package com.chill.feedback.models;
 
-import com.chill.feedback.models.Feedback;
-import com.chill.feedback.models.Tag;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import jakarta.persistence.Column;
-import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;

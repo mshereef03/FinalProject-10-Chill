@@ -10,6 +10,7 @@
     import com.chill.feedback.models.Replyable;
     import com.chill.feedback.models.Review;
     import com.chill.feedback.repositories.FeedbackRepository;
+    import lombok.extern.slf4j.Slf4j;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;
     import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@
     import com.chill.feedback.models.Thread;
     import com.chill.feedback.models.Complaint;
 
+    @Slf4j
     @Service
     public class FeedbackService {
     

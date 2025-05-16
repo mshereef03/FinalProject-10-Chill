@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: Order and Payment Microservice
+    name: order-service
 
   datasource:
     url: jdbc:postgresql://localhost:5433/mydb
@@ -29,4 +29,10 @@ spring:
     username: guest
     password: guest
 
-
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    hostname: localhost

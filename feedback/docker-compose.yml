@@ -30,6 +30,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb:27017/feedbackdb?authSource=admin
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_BASICAUTH: false

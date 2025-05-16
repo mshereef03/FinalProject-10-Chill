@@ -42,6 +42,7 @@ public abstract class Feedback {
     // Constructors
     public Feedback() {
         this.id = UUID.randomUUID();
+        this.createdAt = new Date();
     }
     public Feedback(UUID userId, UUID vendorId, UUID orderId, String comment) {
         super();
@@ -49,7 +50,6 @@ public abstract class Feedback {
         this.vendorId = vendorId;
         this.orderId = orderId;
         this.comment = comment;
-        this.createdAt = new Date();
     }
 
     // Getters & Setters

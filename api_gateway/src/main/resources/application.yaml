@@ -17,26 +17,22 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-#        - id: user-service
-#          uri: lb://user-service
-#          predicates:
-#            - Path=/users/**
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/users/**
         - id: feedback-service
           uri: lb://feedback-service
           predicates:
             - Path=/feedbacks/**
-#        - id: catalog-service
-#          uri: lb://catalog-service
-#          predicates:
-#            - Path=/catalog-service/**
-#        - id: order-service
-#          uri: lb://order-service
-#          predicates:
-#            - Path=/order-service/**
-#        - id: seller-service
-#          uri: lb://seller-service
-#          predicates:
-#            - Path=/seller-service/**
+        - id: catalog-service
+          uri: lb://catalog-service
+          predicates:
+            - Path=/catalog-service/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order-service/**
 
 eureka:
   client:
@@ -46,11 +42,9 @@ eureka:
     prefer-ip-address: true
     hostname: localhost
 
-logging:
-  level:
-    com.chill.api_gateway.filter: INFO
-    org.springframework.cloud.gateway: DEBUG
-    reactor.netty.http.server: DEBUG
-    reactor.netty.http.client: DEBUG
-  file:
-    name: api_gateway.log
+springdoc:
+  gateway:
+    enabled: true
+    routes:
+      - service-id: feedback-service
+        path: /feedbacks/**
