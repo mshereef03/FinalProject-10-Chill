@@ -28,27 +28,31 @@ public class MysteryBag {
     public enum Status   { PENDING, ACTIVE, SOLD_OUT }
     public enum Size { SMALL, MEDIUM, BIG }
 
+    private int quantity;
+
     // Empty constructor
     public MysteryBag() {
     }
 
     // Constructor with all fields
-    public MysteryBag(String id, List<String> itemIds, double basePrice, Instant releaseAt, Status status, Size size) {
+    public MysteryBag(String id, List<String> itemIds, double basePrice, Instant releaseAt, Status status, Size size, int quantity) {
         this.id = id;
         this.itemIds = itemIds;
         this.basePrice = basePrice;
         this.releaseAt = releaseAt;
         this.status = status;
         this.size = size;
+        this.quantity = quantity;
     }
 
     // Constructor with all fields except id
-    public MysteryBag(List<String> itemIds, double basePrice, Instant releaseAt, Status status, Size size) {
+    public MysteryBag(List<String> itemIds, double basePrice, Instant releaseAt, Status status, Size size, int quantity) {
         this.itemIds = itemIds;
         this.basePrice = basePrice;
         this.releaseAt = releaseAt;
         this.status = status;
         this.size = size;
+        this.quantity = quantity;
     }
 
     // Getters and Setters
@@ -100,6 +104,12 @@ public class MysteryBag {
         this.size = size;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
 

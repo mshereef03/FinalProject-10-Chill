@@ -58,4 +58,22 @@ public class MysteryBagService {
 
         return mysteryBagRepository.save(bag);
     }
+
+    public MysteryBag updateMysteryBagQuantity(String id, int quantity) {
+        MysteryBag bag = getMysteryBagById(id);
+        int newQuantity = bag.getQuantity() - quantity;
+        if (newQuantity < 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Not enough items in stock"
+            );
+        }
+        if(newQuantity == 0) {
+            bag.setStatus(MysteryBag.Status.SOLD_OUT);
+        }
+        bag.setQuantity(newQuantity);
+        mysteryBagRepository.save(bag);
+
+        return bag;
+    }
 }
