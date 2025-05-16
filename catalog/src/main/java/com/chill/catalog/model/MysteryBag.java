@@ -1,9 +1,5 @@
 package com.chill.catalog.model;
 
-// import lombok.Getter;
-//import lombok.NoArgsConstructor;
-//import lombok.RequiredArgsConstructor;
-// import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,10 +7,6 @@ import java.time.Instant;
 import java.util.List;
 
 @Document(collection = "mystery_bags")
-//@NoArgsConstructor
-//@RequiredArgsConstructor
-//@Getter
-//@Setter
 public class MysteryBag {
     @Id
     private String id;
@@ -22,18 +14,15 @@ public class MysteryBag {
     private double basePrice;
     private Status status = Status.PENDING;
     private Size size;
+    private int quantity;
 
     public enum Status   { PENDING, ACTIVE, SOLD_OUT }
     public enum Size { SMALL, MEDIUM, BIG }
 
-    private int quantity;
-
-    // Empty constructor
     public MysteryBag() {
     }
 
-    // Constructor with all fields
-    public MysteryBag(String id, List<String> itemIds, double basePrice, Instant releaseAt, Status status, Size size, int quantity) {
+    public MysteryBag(String id, List<String> itemIds, double basePrice, Status status, Size size, int quantity) {
         this.id = id;
         this.itemIds = itemIds;
         this.basePrice = basePrice;
@@ -42,8 +31,7 @@ public class MysteryBag {
         this.quantity = quantity;
     }
 
-    // Constructor with all fields except id
-    public MysteryBag(List<String> itemIds, double basePrice, Instant releaseAt, Status status, Size size, int quantity) {
+    public MysteryBag(List<String> itemIds, double basePrice, Status status, Size size, int quantity) {
         this.itemIds = itemIds;
         this.basePrice = basePrice;
         this.status = status;
@@ -51,7 +39,6 @@ public class MysteryBag {
         this.quantity = quantity;
     }
 
-    // Getters and Setters
     public String getId() {
         return id;
     }

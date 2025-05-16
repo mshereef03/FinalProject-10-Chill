@@ -35,6 +35,12 @@ public class MysteryBagService {
                 ));
     }
 
+    public MysteryBag createMysteryBag(MysteryBag newBag) {
+        newBag.setStatus(MysteryBag.Status.PENDING);
+        return mysteryBagRepository.save(newBag);
+    }
+
+
     public MysteryBag updateMysteryBag(String id, MysteryBag updatedBag) {
         MysteryBag bag = getMysteryBagById(id);
         bag.setItemIds(updatedBag.getItemIds());

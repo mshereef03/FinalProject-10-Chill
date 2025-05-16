@@ -15,7 +15,6 @@ public class MysteryBagController {
         this.mysteryBagService = mysteryBagService;
     }
 
-
     @GetMapping
     public List<MysteryBag> getAllMysteryBags() {
         return mysteryBagService.getAllMysteryBags();
@@ -24,6 +23,11 @@ public class MysteryBagController {
     @GetMapping("/{id}")
     public MysteryBag getMysteryBagById(@PathVariable String id) {
         return mysteryBagService.getMysteryBagById(id);
+    }
+
+    @PostMapping("/create")
+    public MysteryBag createMysteryBag(@RequestBody MysteryBag bag) {
+        return mysteryBagService.createMysteryBag(bag);
     }
 
     @PutMapping("/{id}")
