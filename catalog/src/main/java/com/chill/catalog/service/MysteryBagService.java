@@ -1,7 +1,9 @@
 package com.chill.catalog.service;
 
+import com.chill.catalog.model.MenuItem;
 import com.chill.catalog.model.MysteryBag;
 import com.chill.catalog.observer.MysteryBagObserver;
+import com.chill.catalog.pricing.PricingEngine;
 import com.chill.catalog.repository.MysteryBagRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -9,18 +11,25 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MysteryBagService {
     private final MysteryBagRepository mysteryBagRepository;
-    private final List<MysteryBagObserver> observers;  // Spring injects your MenuItemService here
+    private final MenuItemService menuItemService;
+    private final MysteryBagObserver observer;  // Spring injects your MenuItemService here
+    private final PricingEngine pricingEngine;
 
     public MysteryBagService(
             MysteryBagRepository mysteryBagRepository,
-            List<MysteryBagObserver> observers
+            MenuItemService menuItemService,
+            MysteryBagObserver observer,
+            PricingEngine pricingEngine
     ) {
         this.mysteryBagRepository    = mysteryBagRepository;
-        this.observers  = observers;
+        this.menuItemService = menuItemService;
+        this.observer  = observer;
+        this.pricingEngine = pricingEngine;
     }
 
     public List<MysteryBag> getAllMysteryBags() {
@@ -36,7 +45,21 @@ public class MysteryBagService {
     }
 
     public MysteryBag createMysteryBag(MysteryBag newBag) {
-        newBag.setStatus(MysteryBag.Status.PENDING);
+        for(String id: newBag.getItemIds()) {
+            Optional<MenuItem> menuItem = menuItemService.getMenuItemById(id);
+            if(menuItem.isEmpty())
+                throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Menu item does not exist"
+                 );
+
+            double menuItemPrice = menuItem.get().getPrice();
+            double bagBasePrice = newBag.getBasePrice();
+            newBag.setBasePrice(bagBasePrice + menuItemPrice);
+        }
+        double finalPrice = pricingEngine.calculatePrice(newBag);
+        newBag.setBasePrice(finalPrice);
+
         return mysteryBagRepository.save(newBag);
     }
 
@@ -58,7 +81,7 @@ public class MysteryBagService {
         bag.setStatus(MysteryBag.Status.ACTIVE);
 
         // notify all observers (MenuItemService will run onPublish)
-        observers.forEach(o -> o.onPublish(bag));
+        observer.onPublish(bag);
 
         return mysteryBagRepository.save(bag);
     }

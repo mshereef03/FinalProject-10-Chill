@@ -12,9 +12,10 @@ public class MysteryBag {
     private String id;
     private List<String> itemIds;
     private double basePrice;
-    private Status status = Status.PENDING;
+    private Status status;
     private Size size;
     private int quantity;
+    private String strategyCode;
 
     public enum Status   { PENDING, ACTIVE, SOLD_OUT }
     public enum Size { SMALL, MEDIUM, BIG }
@@ -22,21 +23,23 @@ public class MysteryBag {
     public MysteryBag() {
     }
 
-    public MysteryBag(String id, List<String> itemIds, double basePrice, Status status, Size size, int quantity) {
+    public MysteryBag(String id, List<String> itemIds, Size size, int quantity, String strategyCode) {
         this.id = id;
         this.itemIds = itemIds;
-        this.basePrice = basePrice;
-        this.status = status;
+        this.basePrice = 0;
+        this.status = Status.PENDING;
         this.size = size;
         this.quantity = quantity;
+        this.strategyCode = strategyCode;
     }
 
-    public MysteryBag(List<String> itemIds, double basePrice, Status status, Size size, int quantity) {
+    public MysteryBag(List<String> itemIds, Size size, int quantity, String strategyCode) {
         this.itemIds = itemIds;
-        this.basePrice = basePrice;
-        this.status = status;
+        this.basePrice = 0;
+        this.status = Status.PENDING;
         this.size = size;
         this.quantity = quantity;
+        this.strategyCode = strategyCode;
     }
 
     public String getId() {
@@ -85,6 +88,15 @@ public class MysteryBag {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+
+    public String getStrategyCode() {
+        return strategyCode;
+    }
+
+    public void setStrategyCode(String strategyCode) {
+        this.strategyCode = strategyCode;
     }
 }
 
