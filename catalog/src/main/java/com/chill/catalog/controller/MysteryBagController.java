@@ -43,4 +43,12 @@ public class MysteryBagController {
     public MysteryBag publishMysteryBag(@PathVariable String id) {
         return mysteryBagService.publishMysteryBag(id);
     }
+
+    @PostMapping("/update_quantity/{id}")
+    public MysteryBag updateMysteryBagQuantity(
+            @PathVariable String id,
+            @RequestParam int quantity
+    ) {
+        return mysteryBagService.updateMysteryBagQuantity(id, quantity);
+    }
 }
