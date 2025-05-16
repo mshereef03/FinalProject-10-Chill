@@ -162,7 +162,6 @@
 //        verify(repo).findComplaintsByUserId(userId);
 //    }
 //
-//
 //	@Test
 //	void getFeedbackById_notFound()
 //	{
@@ -191,8 +190,6 @@
 //		assertThat(((Review)sampleReview).getRating()).isEqualTo(4);
 //		assertThat(result).isSameAs(sampleReview);
 //	}
-//
-//
 //
 //	@Test
 //	void updateFeedback_notFound()
@@ -264,8 +261,6 @@
 //                .hasMessageContaining("Unknown command");
 //    }
 //
-//
-//
 //    @Test
 //    void replyToFeedback_success() {
 //        UUID parentId = UUID.randomUUID();
@@ -287,7 +282,6 @@
 //    }
 //
 //
-//
 //    @Test
 //    void replyToFeedback_parentNotReplyable_throwsBadRequest() {
 //        // Arrange: parent is a Review (not replyable)
@@ -306,10 +300,8 @@
 //        verify(repo, never()).save(any());
 //    }
 //
-//
 //    @Test
 //    void getTopReviewsForVendor_returnsSortedList() {
-//        // Arrange
 //        UUID vendorId = UUID.randomUUID();
 //
 //        Review r1 = new Review();
@@ -322,14 +314,11 @@
 //        r2.setVendorId(vendorId);
 //        r2.setRating(5);
 //
-//        // Note: service delegates directly to repo.findByVendorIdOrderByRatingDesc
 //        when(repo.findByVendorIdOrderByRatingDesc(vendorId))
 //                .thenReturn(List.of(r2, r1));
 //
-//        // Act
 //        List<Review> result = service.getTopReviewsForVendor(vendorId);
 //
-//        // Assert: we got exactly the list in the same order
 //        assertThat(result)
 //                .hasSize(2)
 //                .containsExactly(r2, r1);
@@ -349,5 +338,221 @@
 //        verify(repo).findByVendorIdOrderByRatingDesc(vendorId);
 //    }
 //
+//    @Test
+//    void getLeastReviewsForVendor_returnsSortedList() {
+//        UUID vendorId = UUID.randomUUID();
 //
+//        Review r1 = new Review();
+//        r1.setId(UUID.randomUUID());
+//        r1.setVendorId(vendorId);
+//        r1.setRating(1);
+//
+//        Review r2 = new Review();
+//        r2.setId(UUID.randomUUID());
+//        r2.setVendorId(vendorId);
+//        r2.setRating(4);
+//
+//        when(repo.findByVendorIdOrderByRatingAsc(vendorId))
+//                .thenReturn(List.of(r1, r2));
+//
+//        List<Review> result = service.getLeastReviewsForVendor(vendorId);
+//
+//        assertThat(result)
+//                .hasSize(2)
+//                .containsExactly(r1, r2);
+//        verify(repo).findByVendorIdOrderByRatingAsc(vendorId);
+//    }
+//
+//    @Test
+//    void getLeastReviewsForVendor_noReviews_returnsEmpty() {
+//        UUID vendorId = UUID.randomUUID();
+//        when(repo.findByVendorIdOrderByRatingAsc(vendorId))
+//                .thenReturn(Collections.emptyList());
+//
+//        List<Review> result = service.getLeastReviewsForVendor(vendorId);
+//
+//        assertThat(result).isEmpty();
+//        verify(repo).findByVendorIdOrderByRatingAsc(vendorId);
+//    }
+//
+//    @Test
+//    void getReviewsByUser_returnsOnlyThatUser() {
+//        UUID userId1 = UUID.randomUUID();
+//        UUID userId2 = UUID.randomUUID();
+//
+//        Review r1 = new Review();
+//        r1.setId(UUID.randomUUID());
+//        r1.setUserId(userId);
+//
+//        Review r2 = new Review();
+//        r2.setId(UUID.randomUUID());
+//        r2.setUserId(userId);
+//
+//        Review r3 = new Review();
+//        r3.setId(UUID.randomUUID());
+//        r3.setUserId(userId2);
+//
+//        when(repo.findReviewsByUserId(userId))
+//                .thenReturn(List.of(r1, r2));
+//
+//        List<Review> result = service.getReviewsByUser(userId);
+//
+//        assertThat(result)
+//                .hasSize(2)
+//                .containsExactly(r1, r2);
+//        verify(repo).findReviewsByUserId(userId);
+//    }
+//
+//    @Test
+//    void getTopReviewsByUser_returnsSortedList() {
+//        UUID userId = UUID.randomUUID();
+//
+//        Review low = new Review();
+//        low.setId(UUID.randomUUID());
+//        low.setUserId(userId);
+//        low.setRating(2);
+//
+//        Review high = new Review();
+//        high.setId(UUID.randomUUID());
+//        high.setUserId(userId);
+//        high.setRating(5);
+//
+//        when(repo.findReviewsByUserIdOrderByRatingDesc(userId))
+//                .thenReturn(List.of(high, low));
+//
+//        List<Review> result = service.getTopReviewsByUser(userId);
+//
+//        assertThat(result)
+//                .hasSize(2)
+//                .containsExactly(high, low);
+//        verify(repo).findReviewsByUserIdOrderByRatingDesc(userId);
+//    }
+//
+//    @Test
+//    void getTopReviewsByUser_noReviews_returnsEmpty() {
+//        UUID userId = UUID.randomUUID();
+//        when(repo.findReviewsByUserIdOrderByRatingDesc(userId))
+//                .thenReturn(Collections.emptyList());
+//
+//        List<Review> result = service.getTopReviewsByUser(userId);
+//
+//        assertThat(result).isEmpty();
+//        verify(repo).findReviewsByUserIdOrderByRatingDesc(userId);
+//    }
+//
+//    @Test
+//    void getLeastReviewsByUser_returnsSortedList() {
+//        UUID userId = UUID.randomUUID();
+//
+//        Review low = new Review();
+//        low.setId(UUID.randomUUID());
+//        low.setUserId(userId);
+//        low.setRating(1);
+//
+//        Review high = new Review();
+//        high.setId(UUID.randomUUID());
+//        high.setUserId(userId);
+//        high.setRating(4);
+//
+//        when(repo.findReviewsByUserIdOrderByRatingAsc(userId))
+//                .thenReturn(List.of(low, high));
+//
+//        List<Review> result = service.getLeastReviewsByUser(userId);
+//
+//        assertThat(result)
+//                .hasSize(2)
+//                .containsExactly(low, high);
+//        verify(repo).findReviewsByUserIdOrderByRatingAsc(userId);
+//    }
+//
+//    @Test
+//    void getLeastReviewsByUser_noReviews_returnsEmpty() {
+//        UUID userId = UUID.randomUUID();
+//        when(repo.findReviewsByUserIdOrderByRatingAsc(userId))
+//                .thenReturn(Collections.emptyList());
+//
+//        List<Review> result = service.getLeastReviewsByUser(userId);
+//
+//        assertThat(result).isEmpty();
+//        verify(repo).findReviewsByUserIdOrderByRatingAsc(userId);
+//    }
+//
+//    @Test
+//    void getRootThreadsByUser_returnsOnlyRootThreads() {
+//        UUID userId = UUID.randomUUID();
+//
+//        Thread t1 = new Thread();
+//        t1.setId(UUID.randomUUID());
+//        t1.setUserId(userId);
+//        t1.setParentId(null);
+//
+//        Thread t2 = new Thread();
+//        t2.setId(UUID.randomUUID());
+//        t2.setUserId(userId);
+//        t2.setParentId(null);
+//
+//        Thread t3 = new Thread();
+//        t3.setId(UUID.randomUUID());
+//        t3.setUserId(userId);
+//        t3.setParentId(t2.getId());
+//
+//        when(repo.findRootThreadsByUserId(userId))
+//                .thenReturn(List.of(t1, t2));
+//
+//        List<Thread> result = service.getRootThreadsByUser(userId);
+//
+//        assertThat(result)
+//                .hasSize(2)
+//                .containsExactly(t1, t2);
+//        verify(repo).findRootThreadsByUserId(userId);
+//    }
+//
+//    @Test
+//    void getRootThreadsByUser_noThreads_returnsEmpty() {
+//        UUID userId = UUID.randomUUID();
+//        when(repo.findRootThreadsByUserId(userId))
+//                .thenReturn(Collections.emptyList());
+//
+//        List<Thread> result = service.getRootThreadsByUser(userId);
+//
+//        assertThat(result).isEmpty();
+//        verify(repo).findRootThreadsByUserId(userId);
+//    }
+//
+//    @Test
+//    void getSubThreadsByUser_returnsOnlySubThreads() {
+//        UUID userId = UUID.randomUUID();
+//
+//        Thread t1 = new Thread();
+//        t1.setId(UUID.randomUUID());
+//        t1.setUserId(userId);
+//        t1.setParentId(UUID.randomUUID());
+//
+//        Thread t2 = new Thread();
+//        t2.setId(UUID.randomUUID());
+//        t2.setUserId(userId);
+//        t2.setParentId(null);
+//
+//        when(repo.findSubThreadsByUserId(userId))
+//                .thenReturn(List.of(t1));
+//
+//        List<Thread> result = service.getSubThreadsByUser(userId);
+//
+//        assertThat(result)
+//                .hasSize(1)
+//                .containsExactly(t1);
+//        verify(repo).findSubThreadsByUserId(userId);
+//    }
+//
+//    @Test
+//    void getSubThreadsByUser_noThreads_returnsEmpty() {
+//        UUID userId = UUID.randomUUID();
+//        when(repo.findSubThreadsByUserId(userId))
+//                .thenReturn(Collections.emptyList());
+//
+//        List<Thread> result = service.getSubThreadsByUser(userId);
+//
+//        assertThat(result).isEmpty();
+//        verify(repo).findSubThreadsByUserId(userId);
+//    }
 //}

@@ -31,7 +31,7 @@ public class FeedbackController {
 
     @GetMapping
     public List<Feedback> getAllFeedbacks() {
-        return feedbackService.getAll();
+        return feedbackService.getAllOfType(Feedback.class);
     }
 
     @GetMapping("/reviews")

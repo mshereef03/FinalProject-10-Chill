@@ -37,14 +37,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka-server:8761/eureka
   instance:
     prefer-ip-address: true
-    hostname: localhost
-
-springdoc:
-  gateway:
-    enabled: true
-    routes:
-      - service-id: feedback-service
-        path: /feedbacks/**
+    hostname: eureka-server

@@ -62,10 +62,6 @@
             }
         }
 
-        public  List<Feedback> getAll() {
-            return feedbackRepository.findAll();
-        }
-
         public Feedback getFeedbackById(UUID feedbackId) {
             return findOrFail(feedbackId);
         }

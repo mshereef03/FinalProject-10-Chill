@@ -44,6 +44,7 @@ public abstract class Feedback {
         this.id = UUID.randomUUID();
         this.createdAt = new Date();
     }
+
     public Feedback(UUID userId, UUID vendorId, UUID orderId, String comment) {
         super();
         this.userId = userId;
