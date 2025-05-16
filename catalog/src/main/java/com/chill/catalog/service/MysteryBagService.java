@@ -39,7 +39,6 @@ public class MysteryBagService {
         MysteryBag bag = getMysteryBagById(id);
         bag.setItemIds(updatedBag.getItemIds());
         bag.setBasePrice(updatedBag.getBasePrice());
-        bag.setReleaseAt(updatedBag.getReleaseAt());
         bag.setSize(updatedBag.getSize());
         return mysteryBagRepository.save(bag);
     }
@@ -51,7 +50,6 @@ public class MysteryBagService {
     public MysteryBag publishMysteryBag(String id) {
         MysteryBag bag = getMysteryBagById(id);
         bag.setStatus(MysteryBag.Status.ACTIVE);
-        bag.setReleaseAt(Instant.now());
 
         // notify all observers (MenuItemService will run onPublish)
         observers.forEach(o -> o.onPublish(bag));

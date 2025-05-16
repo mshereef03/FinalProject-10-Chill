@@ -20,7 +20,6 @@ public class MysteryBag {
     private String id;
     private List<String> itemIds;
     private double basePrice;
-    private Instant releaseAt;
     private Status status = Status.PENDING;
     private Size size;
 
@@ -38,7 +37,6 @@ public class MysteryBag {
         this.id = id;
         this.itemIds = itemIds;
         this.basePrice = basePrice;
-        this.releaseAt = releaseAt;
         this.status = status;
         this.size = size;
         this.quantity = quantity;
@@ -48,7 +46,6 @@ public class MysteryBag {
     public MysteryBag(List<String> itemIds, double basePrice, Instant releaseAt, Status status, Size size, int quantity) {
         this.itemIds = itemIds;
         this.basePrice = basePrice;
-        this.releaseAt = releaseAt;
         this.status = status;
         this.size = size;
         this.quantity = quantity;
@@ -77,14 +74,6 @@ public class MysteryBag {
 
     public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;
-    }
-
-    public Instant getReleaseAt() {
-        return releaseAt;
-    }
-
-    public void setReleaseAt(Instant releaseAt) {
-        this.releaseAt = releaseAt;
     }
 
     public Status getStatus() {

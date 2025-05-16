@@ -8,7 +8,7 @@ public class FixedPriceStrategy implements PriceStrategy {
 
     @Override
     public double price(MysteryBag bag) {
-        return bag.getBasePrice();
+        return 10;
     }
 
     @Override
