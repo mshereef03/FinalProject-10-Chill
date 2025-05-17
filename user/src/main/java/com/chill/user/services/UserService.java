@@ -113,7 +113,7 @@ public class UserService {
         String username = decoded.getUsername(); // JWT payload includes username
 
         UserModel user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new InvalidCredentialsException("User with email not found"));
+                .orElseThrow(() -> new InvalidCredentialsException("User with username not found"));
 
         user.setPassword(newPassword); // In production, hash it
         userRepository.save(user);
