@@ -23,13 +23,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-    private Invoker invoker;
     private DiscountContext discountContext;
 
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-        this.invoker = new Invoker();
-    }
+
     @GetMapping("/{orderId}")
     public Order getOrderById(@PathVariable int orderId) {
         Order order = orderService.getOrderById(orderId);
@@ -63,7 +59,7 @@ public class OrderController {
     }
 
     // discount is percentage
-    @PutMapping("/{orderId}/applyPromo}")
+    @PutMapping("/applyPromo/{orderId}")
     public Order applyPromo(@PathVariable int orderId, @RequestBody String code) {
         Order order = orderService.getOrderById(orderId);
         if (order == null) {
@@ -86,7 +82,7 @@ public class OrderController {
 
     }
     // discount is fixed number (money)
-    @PutMapping("/{orderId}/applyBulk}")
+    @PutMapping("/applyBulk/{orderId}")
     public Order applyPromo(@PathVariable int orderId) {
         Order order = orderService.getOrderById(orderId);
         if (order == null) {
