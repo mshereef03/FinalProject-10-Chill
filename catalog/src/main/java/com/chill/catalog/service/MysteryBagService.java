@@ -59,7 +59,7 @@ public class MysteryBagService {
         return mysteryBagRepository.save(bag);
     }
 
-    public MysteryBag updateMysteryBagQuantity(String id, int quantity) {
+    public double updateMysteryBagQuantity(String id, int quantity) {
         MysteryBag bag = getMysteryBagById(id);
         int newQuantity = bag.getQuantity() - quantity;
         if (newQuantity < 0) {
@@ -74,6 +74,6 @@ public class MysteryBagService {
         bag.setQuantity(newQuantity);
         mysteryBagRepository.save(bag);
 
-        return bag;
+        return bag.getBasePrice();
     }
 }

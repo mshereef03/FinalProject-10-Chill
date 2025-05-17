@@ -45,7 +45,7 @@ public class MysteryBagController {
     }
 
     @PostMapping("/update_quantity/{id}")
-    public MysteryBag updateMysteryBagQuantity(
+    public double updateMysteryBagQuantity(
             @PathVariable String id,
             @RequestParam int quantity
     ) {
