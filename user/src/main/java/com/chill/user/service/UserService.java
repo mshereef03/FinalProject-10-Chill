@@ -1,48 +1,42 @@
-package com.chill.user.services;
+package com.chill.user.service;
 
-import com.chill.user.JwtUtil;
+import com.chill.user.security.strategy.AuthenticationStrategy;
+import com.chill.user.security.JwtUtil;
+import com.chill.user.security.strategy.PhonePasswordStrategy;
+import com.chill.user.security.strategy.UsernamePasswordStrategy;
 import com.chill.user.dto.DecodedTokenDTO;
+import com.chill.user.dto.LoginRequestDTO;
 import com.chill.user.exceptions.InvalidCredentialsException;
-import com.chill.user.models.UserModel;
-import com.chill.user.repositories.UserRepository;
+import com.chill.user.model.UserModel;
+import com.chill.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import com.chill.user.factory.*;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
 
     private final JwtUtil jwtUtil;
+    private final UsernamePasswordStrategy userStrategy;
+    private final PhonePasswordStrategy phoneStrategy;
     private final UserRepository userRepository;
 
-    public UserService(JwtUtil jwtUtil, UserRepository userRepository) {
+    public UserService(JwtUtil jwtUtil, UserRepository userRepository, UsernamePasswordStrategy userStrategy, PhonePasswordStrategy phoneStrategy) {
         this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
+        this.userStrategy = userStrategy;
+        this.phoneStrategy = phoneStrategy;
     }
 
-    public String login(String username, String password) {
-        // Dummy hardcoded users for now
-        if ("admin".equals(username) && "adminpass".equals(password)) {
-            UserModel admin = new UserModel();
-            admin.setId(1L);
-            admin.setUsername("admin");
-            admin.setPassword("adminpass");
-            admin.setRoles(List.of("ROLE_ADMIN", "ROLE_USER"));
-            return jwtUtil.generateToken(admin);
-        }
+    public String login(LoginRequestDTO req) {
+        AuthenticationStrategy strat =
+                req.isUsePhoneLogin() ? phoneStrategy : userStrategy;
 
-        if ("user".equals(username) && "userpass".equals(password)) {
-            UserModel user = new UserModel();
-            user.setId(2L);
-            user.setUsername("user");
-            user.setPassword("userpass");
-            user.setRoles(List.of("ROLE_USER"));
-            return jwtUtil.generateToken(user);
-        }
-
-        throw new InvalidCredentialsException("Invalid Credentials !");
+        UserModel user = strat.authenticate(req);
+        return jwtUtil.generateToken(user);
     }
 
     public DecodedTokenDTO decodeToken(String token){
@@ -62,12 +56,17 @@ public class UserService {
             // Fully qualified class name
             String fullClassName = "com.chill.user.factory." + className;
 
+
+
             // Use reflection to load and instantiate the UserCreator
             Class<?> clazz = Class.forName(fullClassName);
             UserCreator creator = (UserCreator) clazz.getDeclaredConstructor().newInstance();
 
             // Use the factory method pattern
             UserModel preparedUser = creator.create(user);
+            System.out.println(preparedUser.getEmail());
+            System.out.println(preparedUser.getPassword());
+            System.out.println(preparedUser.getPhoneNumber());
             return userRepository.save(preparedUser);
 
         } catch (Exception e) {
@@ -119,7 +118,32 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public String requestEmailVerification(String loginToken){
+        DecodedTokenDTO decoded = decodeToken(loginToken);
+        String username = decoded.getUsername();
 
+        UserModel user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new InvalidCredentialsException("User with username not found"));
+
+        return jwtUtil.generateEmailToken(user);
+    }
+
+    public void verifyEmail(String emailToken){
+        DecodedTokenDTO decoded = decodeToken(emailToken);
+        String username = decoded.getUsername();
+
+        UserModel user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new InvalidCredentialsException("User with username not found"));
+
+        user.setEmailVerified(true);
+        userRepository.save(user);
+    }
+
+
+    @Transactional
+    public void clearDatabase() {
+        userRepository.deleteAllInBatch();
+    }
 }
 
 

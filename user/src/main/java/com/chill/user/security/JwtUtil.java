@@ -1,7 +1,7 @@
-package com.chill.user;
+package com.chill.user.security;
 
 import com.chill.user.dto.DecodedTokenDTO;
-import com.chill.user.models.UserModel;
+import com.chill.user.model.UserModel;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,6 +70,16 @@ public class JwtUtil {
                 .setSubject(user.getId().toString())
                 .claim("username", user.getUsername())
                 .claim("roles", user.getRoles())
+                .setIssuedAt(Date.from(Instant.now()))
+                .setExpiration(Date.from(Instant.now().plus(10, ChronoUnit.MINUTES)))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public String generateEmailToken(UserModel user) {
+        return Jwts.builder()
+                .setSubject(user.getId().toString())
+                .claim("username", user.getUsername())
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(Date.from(Instant.now().plus(10, ChronoUnit.MINUTES)))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)

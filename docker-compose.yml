@@ -127,6 +127,8 @@ services:
       PGADMIN_DEFAULT_PASSWORD: 1234
     ports:
       - "5050:80"  # Expose pgAdmin on localhost:5050
+    networks:
+      - chill-network
 
 networks:
   chill-network:

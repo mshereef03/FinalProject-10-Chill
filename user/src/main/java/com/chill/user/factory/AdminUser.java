@@ -1,6 +1,6 @@
 package com.chill.user.factory;
 
-import com.chill.user.models.UserModel;
+import com.chill.user.model.UserModel;
 import java.util.List;
 
 public class AdminUser implements AppUser {

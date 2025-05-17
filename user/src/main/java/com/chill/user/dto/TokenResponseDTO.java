@@ -1,9 +1,9 @@
 package com.chill.user.dto;
 
-public class LoginResponseDTO {
+public class TokenResponseDTO {
     private String token;
 
-    public LoginResponseDTO(String token) {
+    public TokenResponseDTO(String token) {
         this.token = token;
     }
 

@@ -1,4 +1,4 @@
-package com.chill.user.models;
+package com.chill.user.model;
 
 import java.util.List;
 import jakarta.persistence.*;
@@ -10,19 +10,24 @@ public class UserModel {
     private Long id;
     @Column(nullable = false, unique = true)
     private String username;
+    @Column(nullable = false, unique = true)
+    private String phoneNumber;
     private String password;
     private String email;
+    private boolean emailVerified;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles; // List of roles like ["ROLE_USER", "ROLE_ADMIN"]
 
     public UserModel() {}
 
-    public UserModel(Long id, String username, String password, String email, List<String> roles) {
+    public UserModel(Long id, String username, String password, String email, boolean emailVerified, List<String> roles, String phoneNumber) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.emailVerified = emailVerified;
         this.roles = roles;
+        this.phoneNumber = phoneNumber;
     }
 
     public Long getId() {
@@ -59,5 +64,22 @@ public class UserModel {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public boolean isEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
     }
 }
