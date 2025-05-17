@@ -13,6 +13,10 @@ public class PromoCode {
     public PromoCode() {
 
     }
+    public PromoCode(String code, int discount) {
+        this.code=code;
+        this.discount = discount;
+    }
     public PromoCode(int discount) {
         this.discount = discount;
     }

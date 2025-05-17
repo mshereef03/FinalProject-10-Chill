@@ -1,7 +1,7 @@
 package com.chill.order.controller;
 
 import com.chill.order.model.Order;
-import com.chill.order.model.PromoCode;
+import com.chill.order.service.CommandPattern.CancelOrderCommand;
 import com.chill.order.service.CommandPattern.Invoker;
 import com.chill.order.service.CommandPattern.PlaceOrderCommand;
 import com.chill.order.service.OrderService;
@@ -54,20 +54,12 @@ public class OrderController {
     }
     @PostMapping
     public Order placeOrder(@RequestBody Order order) {
-        invoker.setCommand(new PlaceOrderCommand(orderService, order));
-        invoker.executeCommand();
-        return order;
+        return orderService.placeOrder(order);
     }
 
     @DeleteMapping("/{orderId}")
     public Order cancelOrder(@PathVariable int orderId) {
-        Order order = orderService.getOrderById(orderId);
-        if (order == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found!");
-        }
-        invoker.setCommand(new PlaceOrderCommand(orderService, orderId));
-        invoker.undoCommand();
-        return order;
+        return orderService.cancelOrder(orderId);
     }
 
     // discount is percentage

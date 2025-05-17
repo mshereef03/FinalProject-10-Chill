@@ -3,6 +3,9 @@ package com.chill.order.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -17,18 +20,28 @@ public class Order {
     private Cart cart;
 
     public Order() {
+
     }
-    public Order(int id, double price, Cart cart) {
+
+    public Order(int id, Cart cart) {
         this.id = id;
-        this.price = price;
+        this.calculateTotal();
         this.cart = cart;
     }
 
-    public Order(double price, Cart cart) {
-        this.price = price;
+    public Order(Cart cart) {
+        this.calculateTotal();
         this.cart = cart;
     }
 
+    public void calculateTotal(){
+        String items= this.cart.getProductsJson();
+        List<MysteryBagDTO> mysteryBags = cart.convertJsonToList();
+        for(MysteryBagDTO mysteryBag: mysteryBags){
+            this.price+=mysteryBag.getPrice();
+        }
+
+    }
     public int getId() {
         return id;
     }

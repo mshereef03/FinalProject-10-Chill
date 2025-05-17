@@ -1,31 +1,30 @@
 package com.chill.order.service.CommandPattern;
 
 import com.chill.order.model.Order;
+import com.chill.order.repository.OrderRepository;
 import com.chill.order.service.OrderService;
 
 public class CancelOrderCommand implements Command {
-    private final OrderService orderService;
+    private final OrderRepository orderRepository;
     private int orderId;
     private Order order;
 
-    public CancelOrderCommand(OrderService orderService, Order order) {
-        this.orderService = orderService;
+    public CancelOrderCommand(OrderRepository orderRepository, Order order) {
+        this.orderRepository = orderRepository;
         this.order = order;
     }
-    public CancelOrderCommand(OrderService orderService,int orderId) {
-        this.orderService = orderService;
+    public CancelOrderCommand(OrderRepository orderRepository,int orderId) {
+        this.orderRepository = orderRepository;
         this.orderId = orderId;
     }
 
     @Override
     public void execute() {
-
-        orderService.cancelOrder(orderId);
+        orderRepository.deleteById(orderId);
     }
 
     @Override
     public void undo() {
-
-        orderService.placeOrder(order);
+        orderRepository.save(order);
     }
 }

@@ -4,12 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "cart")
@@ -24,6 +21,11 @@ public class Cart {
 
     public Cart() {
 
+    }
+
+    public Cart(int id,Order order){
+        this.id = id;
+        this.order = order;
     }
 
     public Cart(String productJson) {
