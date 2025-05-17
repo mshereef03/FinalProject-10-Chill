@@ -1,46 +1,58 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: catalog-service
-  namespace: app
+  name: catalog-deployment
   labels:
-    app: catalog-service
+    app: catalog-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: catalog-service
+      app: catalog-deployment
   template:
     metadata:
       labels:
-        app: catalog-service
+        app: catalog-deployment
     spec:
       containers:
-        - name: catalog-service
+        - name: catalog-deployment
           image: docker.io/alimadany/catalog-service:0.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8083        
           env: # EVERYTHING BELOW THIS LINE IS WILL BE ADJUSTED
-            - name: SPRING_DATA_MONGODB_URI
-              value: jdbc:postgresql://postgres-catalog-db.db.svc.cluster.local:5432/mydb
+            - name: SPRING_DATASOURCE_MONGO_URL_CATALOG
+              valueFrom:
+                configMapKeyRef:     
+                  name: global-config
+                  key: SPRING_DATASOURCE_MONGO_URL_CATALOG
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: global-secrets
+                  key: MONGO_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: global-secrets
+                  key: MONGO_PASSWORD
           envFrom:
             - configMapRef:
                 name: global-config
             - secretRef:
                 name: global-secrets
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8083                
-            initialDelaySeconds: 10
-            periodSeconds: 5
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8083                 
-            initialDelaySeconds: 30
-            periodSeconds: 10
+          # readinessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: 8083                
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: 8083                 
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 10
           resources:
             requests:
               cpu: "100m"

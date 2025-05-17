@@ -4,5 +4,12 @@ metadata:
   name: global-config
 data:
   SPRING_PROFILES_ACTIVE: k8s
-  SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/customer_db
+  SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/customer_db #change URL to postgres then replace the global config pod
+  SPRING_DATASOURCE_MONGO_URL: mongodb://root:example@mongo:27017/mydb?authSource=admin
+  SPRING_DATASOURCE_MONGO_URL_CATALOG: mongodb://root:example@mongo:27018/mydb?authSource=admin
+  SPRING_MICROSERVICE_FEEDBACK: http://feedback-service:80/api/v1/customer
+
+ # (client (url feedback - inject variable) user -> feedback (controller -> exposed global)
+
+  # mongodb://mongo_user:1234@localhost:27017/mydb?authSource=admin
   # add any other non-sensitive defaults here
