@@ -10,8 +10,13 @@ spring:
     username: postgres_user
     password: 1234
     driver-class-name: org.postgresql.Driver
+  cache:
+    type: redis
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
 
-  # JPA & Hibernate Configuration
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -28,5 +33,7 @@ spring:
     port: 5672
     username: guest
     password: guest
+
+
 
 
