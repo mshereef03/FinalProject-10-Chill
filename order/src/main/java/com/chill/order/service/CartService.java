@@ -27,6 +27,9 @@ public class CartService {
     }
     @CachePut(value = "cart_cache", key = "#cart.id")
     public Cart addCart(Cart cart) {
+        if (cart.getId() == 0) {
+            cart = new Cart();
+        }
         return cartRepository.save(cart);
     }
     @CacheEvict(value = "cart_cache", key = "#cartId")

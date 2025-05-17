@@ -1,9 +1,13 @@
 package com.chill.order.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,18 +18,26 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "mysteryBags", columnDefinition = "jsonb")  // Use jsonb to store the list as JSON
+    @Column(name = "mystery_bags", columnDefinition = "jsonb")  // Use jsonb to store the list as JSON
+    @JdbcTypeCode(SqlTypes.JSON)
     private String productsJson;
     @OneToOne(mappedBy = "cart")
+    @JsonIgnore
     private Order order;
 
     public Cart() {
+        this.productsJson = "[]";
 
     }
 
+    public Cart(int id) {
+        this.id = id;
+        this.productsJson = "[]";
+    }
     public Cart(int id,Order order){
         this.id = id;
         this.order = order;
+        this.productsJson = "[]";
     }
 
     public Cart(String productJson) {

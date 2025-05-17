@@ -32,7 +32,7 @@ public class CartController {
 
     }
     @PostMapping
-    public Cart addCart(Cart cart) {
+    public Cart addCart(@RequestBody Cart cart) {
         return cartService.addCart(cart);
     }
     @PutMapping

@@ -1,12 +1,16 @@
 package com.chill.order.service.StrategyPattern;
 
+import com.chill.order.model.MysteryBagDTO;
 import com.chill.order.model.Order;
+
+import java.util.List;
 
 public class BulkDiscountStrategy implements DiscountStrategy {
     @Override
     public double applyDiscount(Order order, double discount) {
         double price= order.getPrice();
-        int items=order.getCart().getProducts().size();
+        List<MysteryBagDTO> mysteryBagList = order.getCart().convertJsonToList();
+        int items=mysteryBagList.size();
         double totalDiscount;
         switch(items){
             case 1: totalDiscount=0;

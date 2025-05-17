@@ -1,5 +1,6 @@
 package com.chill.order.config;
 
+import com.chill.order.model.Cart;
 import jakarta.persistence.Cache;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +24,7 @@ public class RedisCacheConfig {
                 .disableCachingNullValues()
                 .serializeValuesWith(
                         RedisSerializationContext.SerializationPair.fromSerializer(
-                                new Jackson2JsonRedisSerializer<>(Object.class)));
+                                new Jackson2JsonRedisSerializer<>(Cart.class)));
 
         return RedisCacheManager.builder(redisConnectionFactory)
                 .cacheDefaults(defaultConfig)

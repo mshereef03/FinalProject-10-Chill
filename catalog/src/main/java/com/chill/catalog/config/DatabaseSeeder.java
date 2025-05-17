@@ -89,7 +89,7 @@ public class DatabaseSeeder {
 
             // --- 3) Test publishing it right away ---
             MysteryBag published = mysteryBagService.publishMysteryBag(bag.getId());
-            logger.info(">>> Published bag " + published.getId() + " at " + published.getReleaseAt());
+            logger.info(">>> Published bag " + published.getId() );
             logger.info(">>> Post-publish status: " + published.getStatus());
 
             // --- 4) Log remaining quantities of those items ---

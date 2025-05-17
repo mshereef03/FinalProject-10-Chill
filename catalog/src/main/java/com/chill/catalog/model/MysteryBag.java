@@ -32,6 +32,15 @@ public class MysteryBag {
         this.quantity = quantity;
         this.strategyCode = strategyCode;
     }
+    public MysteryBag(String id, List<String> itemIds, int quantity, String strategyCode) {
+        this.id = id;
+        this.itemIds = itemIds;
+        this.basePrice = 0;
+        this.status = Status.PENDING;
+        this.size = size;
+        this.quantity = quantity;
+        this.strategyCode = strategyCode;
+    }
 
     public MysteryBag(List<String> itemIds, Size size, int quantity, String strategyCode) {
         this.itemIds = itemIds;
