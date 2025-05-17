@@ -7,7 +7,7 @@ public class MysteryBagDTO {
     public MysteryBagDTO() {
     }
 
-    public MysteryBagDTO( String id, double price) {
+    public MysteryBagDTO( String id, int price) {
         this.id = id;
         this.basePrice = price;
     }

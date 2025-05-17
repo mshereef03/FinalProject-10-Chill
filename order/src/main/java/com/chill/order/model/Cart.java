@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "cart")
@@ -49,9 +51,15 @@ public class Cart {
     public void setId(int id) {
         this.id = id;
     }
+    public String getProductsJson() {
+        return productsJson;
+    }
+    public void setProductsJson(String productsJson) {
+        this.productsJson = productsJson;
+    }
 
 
-    private String convertListToJson(List<MysteryBagDTO> products) {
+    public String convertListToJson(List<MysteryBagDTO> products) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(products);  // Convert List<MysteryBagDTO> to JSON string
@@ -61,14 +69,16 @@ public class Cart {
         }
     }
 
-    private List<MysteryBagDTO> convertJsonToList(String productsJson) {
+    public List<MysteryBagDTO> convertJsonToList() {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(productsJson, new TypeReference<List<MysteryBagDTO>>() {
+            return mapper.readValue(this.productsJson, new TypeReference<List<MysteryBagDTO>>() {
             });  // Convert JSON string back to List<MysteryBagDTO>
         } catch (IOException e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
+
     }
+
 }

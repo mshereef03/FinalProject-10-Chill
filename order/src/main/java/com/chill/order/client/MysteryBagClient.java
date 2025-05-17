@@ -5,9 +5,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "mysterybag-service", url = "http://mysterybag-service/api/mysterybags")
+@FeignClient(name = "catalog", url = "http://catalog/update_quantity/{id}")
 public interface MysteryBagClient {
 
     @GetMapping("/{id}")
-    MysteryBagDTO getMysteryBag(@PathVariable("id") Long mysteryBagId);
+    double getMysteryBag(@PathVariable("id") Long mysteryBagId);
 }
