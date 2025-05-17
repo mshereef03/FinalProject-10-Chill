@@ -19,7 +19,7 @@ public class CartService {
 
     @Autowired
     private CartRepository cartRepository;
-
+    @Autowired
     private MysteryBagClient mysteryBagClient;
 
     public List<Cart> findAllCarts() {
@@ -62,6 +62,7 @@ public class CartService {
             throw new RuntimeException("Error fetching mystery bag: " + e.getMessage());
         }
     }
+
 
 
 }
