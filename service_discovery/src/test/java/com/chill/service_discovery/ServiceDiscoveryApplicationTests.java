@@ -1,10 +1,10 @@
-package com.chill.feedback;
+package com.chill.service_discovery;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FeedbackMicroserviceApplicationTests {
+class ServiceDiscoveryApplicationTests {
 
 	@Test
 	void contextLoads() {

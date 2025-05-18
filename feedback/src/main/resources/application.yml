@@ -3,14 +3,14 @@ server:
 
 spring:
   application:
-    name: Feedback Microservice
+    name: feedback-service
 
   data:
     mongodb:
       host: localhost
       port: 27017
-      uri: mongodb://mongo_user:1234@localhost:27018/mydb?authSource=admin
-      database: mydb
+      uri: ${SPRING_DATA_MONGODB_URI}
+      database: feedbackdb
 
   rabbitmq:
     host: localhost
@@ -18,4 +18,30 @@ spring:
     username: guest
     password: guest
 
+eureka:
+  client:
+    enabled: true
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+  instance:
+    prefer-ip-address: true
+    hostname: eureka-server
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    prometheus:
+      enabled: true
+
+sprgingdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enable: true
+  show-actuator: true
+  packages-to-scan: com.chill.feedback.controllers

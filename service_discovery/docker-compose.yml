@@ -1,0 +1,16 @@
+services:
+  eureka-server:
+    container_name: eureka-server
+    hostname: eureka-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    restart: always
+    networks:
+      - chill-network
+
+networks:
+  chill-network:
+    driver: bridge

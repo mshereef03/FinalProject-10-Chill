@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: Seller Catalog Microservice
+    name: catalog-service
 
   data:
     mongodb:
@@ -12,5 +12,10 @@ spring:
       uri: mongodb://mongo_user:1234@localhost:27017/mydb?authSource=admin
       database: mydb
 
-
-
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
