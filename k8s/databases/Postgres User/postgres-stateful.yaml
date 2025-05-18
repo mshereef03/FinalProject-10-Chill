@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: postgres-order
+  name: postgres-user
 spec:
-  serviceName: "postgres-order"
+  serviceName: "postgres-user"
   replicas: 1
   selector:
     matchLabels:
@@ -14,10 +14,10 @@ spec:
         app: postgres
     spec:
       containers:
-        - name: postgres-order
+        - name: postgres-user
           image: postgres
           ports:
-            - containerPort: 5433
+            - containerPort: 5432
           env:
             - name: POSTGRES_DB
               valueFrom:

@@ -6,8 +6,8 @@ metadata:
     app: mongo
 spec:
   ports:
-    - port: 27018
-      targetPort: 27018
+    - port: 27017
+      targetPort: 27017
   clusterIP: None  # Headless service
   selector:
     app: mongo

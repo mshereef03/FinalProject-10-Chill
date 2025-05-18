@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mongo
+  name: mongo-feedback
 spec:
-  serviceName: "mongo"  # Must match headless service
+  serviceName: "mongo-feedback"  # Must match headless service
   replicas: 1  # Can scale to more for replica set
   selector:
     matchLabels:
@@ -14,10 +14,10 @@ spec:
         app: mongo
     spec:
       containers:
-        - name: mongo
+        - name: mongo-feedback
           image: mongo
           ports:
-            - containerPort: 27017
+            - containerPort: 27018
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:

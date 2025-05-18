@@ -2,13 +2,10 @@ spring:
   application:
     name: User Microservice
 
-server:
-  port: 8080
-
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/mydb
+    username: postgres_user
+    password: 1234
     driver-class-name: org.postgresql.Driver
 
 # JPA & Hibernate Configuration
@@ -24,7 +21,11 @@ server:
         use_sql_comments: true
 
   rabbitmq:
-    host: rabbitmq
+    host: localhost
     port: 5672
     username: guest
     password: guest
+
+jwt:
+  secret: c/F3DavoWPdjxTuB1Gu8rdMrNM/lCoOi3rVLeXzuO7w=
+  expiration-ms: 3600000

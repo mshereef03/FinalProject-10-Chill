@@ -21,26 +21,21 @@ spec:
           ports:
             - containerPort: 8083        
           env: # EVERYTHING BELOW THIS LINE IS WILL BE ADJUSTED
-            - name: SPRING_DATASOURCE_MONGO_URL_CATALOG
+            - name: SPRING_DATA_MONGODB_URI
               valueFrom:
                 configMapKeyRef:     
                   name: global-config
-                  key: SPRING_DATASOURCE_MONGO_URL_CATALOG
-            - name: SPRING_DATASOURCE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: global-secrets
-                  key: MONGO_USER
-            - name: SPRING_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: global-secrets
-                  key: MONGO_PASSWORD
-          envFrom:
-            - configMapRef:
-                name: global-config
-            - secretRef:
-                name: global-secrets
+                  key: MongoDb_Url_Catalog
+            # - name: SPRING_DATASOURCE_USERNAME
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: global-secrets
+            #       key: MONGO_USER
+            # - name: SPRING_DATASOURCE_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: global-secrets
+            #       key: MONGO_PASSWORD
           # readinessProbe:
           #   httpGet:
           #     path: /actuator/health

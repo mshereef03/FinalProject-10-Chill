@@ -8,7 +8,7 @@ spring:
   data:
     mongodb:
       host: localhost
-      port: 27017
+      port: 27018
       uri: mongodb://mongo_user:1234@localhost:27018/mydb?authSource=admin
       database: mydb
 
