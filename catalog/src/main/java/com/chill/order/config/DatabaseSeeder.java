@@ -1,25 +1,24 @@
-package com.chill.catalog.config;
+package com.chill.order.config;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.chill.catalog.model.MysteryBag;
-import com.chill.catalog.repository.MysteryBagRepository;
-import com.chill.catalog.service.MysteryBagService;
+import com.chill.order.model.MysteryBag;
+import com.chill.order.repository.MysteryBagRepository;
+import com.chill.order.service.MysteryBagService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.chill.catalog.model.MenuItem;
-import com.chill.catalog.repository.MenuItemRepository;
+import com.chill.order.model.MenuItem;
+import com.chill.order.repository.MenuItemRepository;
 
 @Configuration
 public class DatabaseSeeder {
     
     private static final Logger logger = Logger.getLogger(DatabaseSeeder.class.getName());
-
     @Bean
     @Profile("!prod") // Don't run in production
     public CommandLineRunner initDatabase(MenuItemRepository menuItemRepository, MysteryBagRepository mysteryBagRepository,

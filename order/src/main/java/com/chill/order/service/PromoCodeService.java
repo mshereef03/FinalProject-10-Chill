@@ -23,9 +23,7 @@ public class PromoCodeService {
         }
     }
 
-    public PromoCode addPromoCode(int discount){
-        PromoCode promoCode = new PromoCode();
-        promoCode.setDiscount(discount);
+    public PromoCode addPromoCode(PromoCode promoCode){
         return promoCodeRepository.save(promoCode);
     }
     public void deletePromoCode(String code){

@@ -1,7 +1,7 @@
-package com.chill.catalog.controller;
+package com.chill.order.controller;
 
-import com.chill.catalog.model.MysteryBag;
-import com.chill.catalog.service.MysteryBagService;
+import com.chill.order.model.MysteryBag;
+import com.chill.order.service.MysteryBagService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

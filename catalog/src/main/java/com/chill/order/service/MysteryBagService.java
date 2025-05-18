@@ -1,10 +1,10 @@
-package com.chill.catalog.service;
+package com.chill.order.service;
 
-import com.chill.catalog.model.MenuItem;
-import com.chill.catalog.model.MysteryBag;
-import com.chill.catalog.observer.MysteryBagObserver;
-import com.chill.catalog.pricing.PricingEngine;
-import com.chill.catalog.repository.MysteryBagRepository;
+import com.chill.order.model.MenuItem;
+import com.chill.order.model.MysteryBag;
+import com.chill.order.observer.MysteryBagObserver;
+import com.chill.order.pricing.PricingEngine;
+import com.chill.order.repository.MysteryBagRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

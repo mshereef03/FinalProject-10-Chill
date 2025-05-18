@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 @Table(name = "promocode")
 public class PromoCode {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String code;
     int discount;
     public PromoCode() {

@@ -4,6 +4,7 @@ import com.chill.order.model.PromoCode;
 import com.chill.order.service.PromoCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,8 +25,12 @@ public class PromoCodeController {
         }
     }
     @PostMapping
-    public PromoCode addPromoCode (@RequestBody int discount){
-        return promoCodeService.addPromoCode(discount);
+    public ResponseEntity<PromoCode> addPromoCode(@RequestBody PromoCode promoCode) {
+        if (promoCode.getCode() == null || promoCode.getDiscount() == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid PromoCode data!");
+        }
+        PromoCode savedPromoCode = promoCodeService.addPromoCode(promoCode);
+        return new ResponseEntity<>(savedPromoCode, HttpStatus.CREATED);
     }
 
     @PutMapping

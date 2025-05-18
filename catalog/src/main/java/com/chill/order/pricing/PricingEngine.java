@@ -1,6 +1,6 @@
-package com.chill.catalog.pricing;
+package com.chill.order.pricing;
 
-import com.chill.catalog.model.MysteryBag;
+import com.chill.order.model.MysteryBag;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
