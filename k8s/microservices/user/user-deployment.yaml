@@ -37,6 +37,21 @@ spec:
                 secretKeyRef:
                   name: global-secrets
                   key: POSTGRES_PASSWORD
+            - name: SPRING_RABBITMQ_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: global-config
+                  key: RabbitMQ_Host
+            - name: SPRING_RABBITMQ_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: global-secrets
+                  key: RabbitMQ_Username
+            - name: SPRING_RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: global-secrets
+                  key: RabbitMQ_Password
             # - name: SPRING_MICROSERVICE_FEEDBACK_URL
             #   valueFrom:
             #     configMapKeyRef:
