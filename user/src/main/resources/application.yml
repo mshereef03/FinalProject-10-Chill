@@ -33,3 +33,7 @@ eureka:
   instance:
     prefer-ip-address: true
     hostname: localhost
+
+jwt:
+  secret: c/F3DavoWPdjxTuB1Gu8rdMrNM/lCoOi3rVLeXzuO7w=
+  expiration-ms: 3600000
