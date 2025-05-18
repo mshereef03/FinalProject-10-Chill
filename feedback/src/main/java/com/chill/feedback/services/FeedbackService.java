@@ -51,11 +51,6 @@
             }
         }
 
-        @RabbitListener(queues = RabbitMQConfig.FEEDBACK_QUEUE)
-        public void receiveFeedbackMessage(Feedback feedback) {
-            feedbackRepository.save(feedback);
-            System.out.println("Feedback created successfully with ID: " + feedback.getId());
-        }
 
         public Feedback createFeedback(Feedback feedback) {
             try {

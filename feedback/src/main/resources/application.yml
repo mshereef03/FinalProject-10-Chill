@@ -1,4 +1,3 @@
-SPRING_DATA_MONGODB_URI: mongodb://mongo_user:1234@localhost:27017/mydb?authSource=admin
 
 server:
   port: 8083
@@ -11,7 +10,7 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      uri:  "mongodb://mongo_user:1234@mongo_feedback_db:27017/mydb?authSource=admin"
+      uri:  "mongodb://mongo_user:1234@localhost:27017/mydb?authSource=admin"
       database: feedbackdb
 
   rabbitmq:

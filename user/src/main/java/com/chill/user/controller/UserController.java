@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -113,6 +114,17 @@ public class UserController {
     public ResponseEntity<Void> submitFeedback(@RequestBody FeedbackDTO feedback) {
         producer.sendFeedback(feedback);
         return ResponseEntity.accepted().build();
+    }
+
+    @GetMapping("/debug")
+    public Map<String,String> echoHeaders(
+            @RequestHeader(value="X-Username", required=false) String user,
+            @RequestHeader(value="X-Roles",    required=false) String roles
+    ) {
+        return Map.of(
+                "X-Username", user,
+                "X-Roles",    roles
+        );
     }
 }
 
