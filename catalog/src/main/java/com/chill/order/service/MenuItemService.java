@@ -1,15 +1,15 @@
-package com.chill.catalog.service;
+package com.chill.order.service;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.chill.catalog.model.MysteryBag;
-import com.chill.catalog.observer.MysteryBagObserver;
+import com.chill.order.model.MysteryBag;
+import com.chill.order.observer.MysteryBagObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.chill.catalog.model.MenuItem;
-import com.chill.catalog.repository.MenuItemRepository;
+import com.chill.order.model.MenuItem;
+import com.chill.order.repository.MenuItemRepository;
 
 @Service
 public class MenuItemService implements MysteryBagObserver {

@@ -1,4 +1,4 @@
-package com.chill.catalog.controller;
+package com.chill.order.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chill.catalog.model.MenuItem;
-import com.chill.catalog.service.MenuItemService;
+import com.chill.order.model.MenuItem;
+import com.chill.order.service.MenuItemService;
 
 @RestController
 @RequestMapping("/catalog/menu-items")

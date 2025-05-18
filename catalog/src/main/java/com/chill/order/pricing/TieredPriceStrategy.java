@@ -1,10 +1,7 @@
-package com.chill.catalog.pricing;
+package com.chill.order.pricing;
 
-import com.chill.catalog.model.MysteryBag;
+import com.chill.order.model.MysteryBag;
 import org.springframework.stereotype.Component;
-
-import java.time.Duration;
-import java.time.Instant;
 
 @Component
 public class TieredPriceStrategy implements PriceStrategy {
