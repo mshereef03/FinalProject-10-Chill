@@ -50,7 +50,7 @@ public class CartService {
     @CachePut(value = "cart_cache", key = "#cartId")
     public void addMysteryBagToCart(int cartId, String mysteryBagId) {
         try {
-            double price = mysteryBagClient.getMysteryBag(mysteryBagId);
+            double price = mysteryBagClient.getMysteryBag(mysteryBagId,1);
 
             MysteryBagDTO mysteryBag = new MysteryBagDTO(mysteryBagId, price);
 
