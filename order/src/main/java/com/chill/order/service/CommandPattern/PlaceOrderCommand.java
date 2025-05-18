@@ -20,7 +20,9 @@ public class PlaceOrderCommand implements Command {
 
     @Override
     public void execute() {
-        orderRepository.save(order);
+        order.calculateTotal();
+        System.out.println("Saving order with price: " + order.getPrice());
+        orderRepository.saveAndFlush(order);
     }
 
     @Override

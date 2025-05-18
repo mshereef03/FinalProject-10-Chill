@@ -4,6 +4,7 @@ import com.chill.order.repository.OrderRepository;
 import com.chill.order.service.CommandPattern.CancelOrderCommand;
 import com.chill.order.service.CommandPattern.Invoker;
 import com.chill.order.service.CommandPattern.PlaceOrderCommand;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,8 @@ public class OrderService { // this acts as my receiver for the command pattern
         return orderRepository.findAll();
     }
 
-    public Order placeOrder(@RequestBody Order order) {
+    @Transactional
+    public Order placeOrder(Order order) {
         invoker.setCommand(new PlaceOrderCommand(orderRepository, order));
         invoker.executeCommand();
         return order;
@@ -42,7 +44,7 @@ public class OrderService { // this acts as my receiver for the command pattern
 
     public Order cancelOrder(int orderId) {
         Optional<Order> order = orderRepository.findById(orderId);
-        if (!order.isPresent()) {
+        if (order.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found!");
         }
         Order fetchedOrder= order.get();

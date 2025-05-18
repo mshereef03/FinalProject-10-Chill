@@ -28,19 +28,24 @@ public class Order {
 
     public Order(int id, Cart cart) {
         this.id = id;
-        this.calculateTotal();
         this.cart = cart;
+        this.calculateTotal();
     }
 
     public Order(Cart cart) {
-        this.calculateTotal();
         this.cart = cart;
+        this.cart.setOrder(this);  // Bidirectional relationship
+        calculateTotal();  // Now returns the calculated price
+        System.out.println("Calculated price: " + this.price);
     }
 
     public void calculateTotal(){
         String items= this.cart.getProductsJson();
+        System.out.println("Items:" + items);
         List<MysteryBagDTO> mysteryBags = cart.convertJsonToList();
+        System.out.println("Items in cart: "+mysteryBags.size());
         for(MysteryBagDTO mysteryBag: mysteryBags){
+            System.out.println("Price: "+mysteryBag.getPrice());
             this.price+=mysteryBag.getPrice();
         }
 
