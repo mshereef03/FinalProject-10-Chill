@@ -59,7 +59,6 @@ public class CartController {
    @PostMapping("/addToCart/{id}")
     public void addMysteryBagToCart(@PathVariable String id, @RequestBody int cartId) {
        try{
-
            cartService.addMysteryBagToCart(cartId,id);
        }
        catch(Exception e){

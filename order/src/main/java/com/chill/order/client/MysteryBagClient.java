@@ -6,9 +6,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient( name = "catalog", url  = "http://catalog_service:8080")
+//@FeignClient(name = "catalog", url = "http://catalog_service:8080")
+//public interface MysteryBagClient {
+//
+//    @PostMapping("/catalog/mystery-bags/update_quantity/{id}")
+//    double getMysteryBag(@PathVariable("id") String mysteryBagId, @RequestParam("quantity") int quantity);
+//}
+@FeignClient(name = "catalog-service", url = "http://catalogService:8080",path = "/catalog/mystery-bags")
 public interface MysteryBagClient {
-
-    @PostMapping("/catalog/mystery-bags/update_quantity/{id}")
-    double getMysteryBag(@PathVariable("id") String mysteryBagId, @RequestParam("quantity") int quantity);
+    @PostMapping("/update_quantity/{id}")
+    double getMysteryBag(@PathVariable("id") String id, @RequestParam("quantity") int quantity);
 }
