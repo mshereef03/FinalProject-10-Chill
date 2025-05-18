@@ -75,7 +75,7 @@ services:
       - chill-network
 
   # MICROSERVICES
-  user_service:
+  user-service:
     build: ./user
     container_name: user-service
     hostname: user-service
@@ -90,7 +90,7 @@ services:
     networks:
       - chill-network
 
-#  order_service:
+#  order-service:
 #    build: ./order
 #    ports:
 #      - "8081:8081"
@@ -103,7 +103,7 @@ services:
 #    networks:
 #      - chill-network
 #
-#  catalog_service:
+#  catalog-service:
 #    build: ./catalog
 #    ports:
 #      - "8082:8082"
@@ -136,6 +136,11 @@ services:
       - "9091:9091"
     networks:
       - chill-network
+    environment:
+      USER_URI: user-service:8080
+      ORDER_URI: order-service:8081
+      CATALOG_URI: catalog-service:8082
+      FEEDBACK_URI: feedback-service:8083
 
   # MESSAGE QUEUE
   rabbitmq:

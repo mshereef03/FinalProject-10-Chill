@@ -2148,3 +2148,97 @@ Original Stack Trace:
 		at java.base/java.lang.Thread.run(Thread.java:1575)
 2025-05-18 16:36:00.222 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
 2025-05-18 16:36:00.228 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-05-18 16:36:04.259 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-05-18 16:36:04.305 [main] INFO  c.c.a.ApiGatewayApplication - Starting ApiGatewayApplication using Java 23 with PID 6616 (D:\MET\Semester 10\[CSEN1002] Scalable\Project\Repos\feedback-service\FinalProject-10-Chill\api_gateway\target\classes started by mazen in D:\MET\Semester 10\[CSEN1002] Scalable\Project\Repos\feedback-service\FinalProject-10-Chill\api_gateway)
+2025-05-18 16:36:04.306 [main] INFO  c.c.a.ApiGatewayApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-18 16:36:04.871 [main] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=5a70904d-7e33-3e1a-9a14-24bb6ec79554
+2025-05-18 16:36:05.033 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 9091 (http)
+2025-05-18 16:36:05.041 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-9091"]
+2025-05-18 16:36:05.044 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-05-18 16:36:05.044 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [After]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Before]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Between]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Cookie]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Header]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Host]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Method]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Path]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Query]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [ReadBody]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [RemoteAddr]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Weight]
+2025-05-18 16:36:05.542 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2025-05-18 16:36:05.959 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-9091"]
+2025-05-18 16:36:05.976 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 9091 (http)
+2025-05-18 16:36:06.024 [main] INFO  c.c.a.ApiGatewayApplication - Started ApiGatewayApplication in 2.091 seconds (process running for 2.568)
+2025-05-18 16:36:11.404 [http-nio-9091-exec-1] INFO  c.c.api_gateway.filter.LoggingFilter - Incoming request: GET /feedbacks
+2025-05-18 16:36:34.818 [http-nio-9091-exec-3] INFO  c.c.api_gateway.filter.LoggingFilter - Incoming request: GET /feedbacks
+2025-05-18 16:36:41.750 [reactor-http-nio-2] INFO  c.c.api_gateway.filter.LoggingFilter - Response status for /feedbacks: 500
+2025-05-18 16:37:04.838 [reactor-http-nio-3] INFO  c.c.api_gateway.filter.LoggingFilter - Response status for /feedbacks: 500
+2025-05-18 16:38:30.777 [http-nio-9091-exec-6] INFO  c.c.api_gateway.filter.LoggingFilter - Incoming request: DELETE /users/clear
+2025-05-18 16:38:30.804 [reactor-http-nio-4] INFO  c.c.api_gateway.filter.LoggingFilter - Response status for /users/clear: 204
+2025-05-18 16:38:32.747 [http-nio-9091-exec-8] INFO  c.c.api_gateway.filter.LoggingFilter - Incoming request: DELETE /users/clear
+2025-05-18 16:38:32.764 [reactor-http-nio-4] INFO  c.c.api_gateway.filter.LoggingFilter - Response status for /users/clear: 204
+2025-05-18 16:38:43.543 [http-nio-9091-exec-1] INFO  c.c.api_gateway.filter.LoggingFilter - Incoming request: GET /feedbacks
+2025-05-18 16:39:13.572 [reactor-http-nio-5] INFO  c.c.api_gateway.filter.LoggingFilter - Response status for /feedbacks: 500
+2025-05-18 16:41:09.327 [http-nio-9091-exec-5] INFO  c.c.api_gateway.filter.LoggingFilter - Incoming request: GET /feedbacks
+2025-05-18 16:41:09.335 [reactor-http-nio-6] ERROR o.s.b.a.w.r.e.AbstractErrorWebExceptionHandler - [6b0c9942]  500 Server Error for HTTP GET "/feedbacks"
+io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: getsockopt: localhost/127.0.0.1:8083
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	*__checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	*__checkpoint ⇢ HTTP GET "/feedbacks" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:1062)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:336)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:339)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:784)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:732)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:998)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+2025-05-18 16:41:12.126 [http-nio-9091-exec-6] INFO  c.c.api_gateway.filter.LoggingFilter - Incoming request: GET /feedbacks
+2025-05-18 16:41:42.266 [reactor-http-nio-7] INFO  c.c.api_gateway.filter.LoggingFilter - Response status for /feedbacks: 500
+2025-05-18 16:43:07.763 [http-nio-9091-exec-8] INFO  c.c.api_gateway.filter.LoggingFilter - Incoming request: GET /feedbacks
+2025-05-18 16:43:37.919 [reactor-http-nio-8] INFO  c.c.api_gateway.filter.LoggingFilter - Response status for /feedbacks: 500
+2025-05-18 16:47:56.645 [http-nio-9091-exec-10] INFO  c.c.api_gateway.filter.LoggingFilter - Incoming request: GET /feedbacks
+2025-05-18 16:47:56.790 [reactor-http-nio-9] INFO  c.c.api_gateway.filter.LoggingFilter - Response status for /feedbacks: 200
+2025-05-18 16:48:09.424 [http-nio-9091-exec-5] INFO  c.c.api_gateway.filter.LoggingFilter - Incoming request: GET /feedbacks
+2025-05-18 16:48:09.440 [reactor-http-nio-9] INFO  c.c.api_gateway.filter.LoggingFilter - Response status for /feedbacks: 200
+2025-05-18 16:54:01.891 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-05-18 16:54:01.901 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-05-18 16:54:07.268 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-05-18 16:54:07.297 [main] INFO  c.c.a.ApiGatewayApplication - Starting ApiGatewayApplication using Java 23 with PID 31632 (D:\MET\Semester 10\[CSEN1002] Scalable\Project\Repos\feedback-service\FinalProject-10-Chill\api_gateway\target\classes started by mazen in D:\MET\Semester 10\[CSEN1002] Scalable\Project\Repos\feedback-service\FinalProject-10-Chill\api_gateway)
+2025-05-18 16:54:07.297 [main] INFO  c.c.a.ApiGatewayApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-18 16:54:07.855 [main] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=fbf50637-f97f-3370-ac5e-ee2aa8e59531
+2025-05-18 16:54:08.027 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 9091 (http)
+2025-05-18 16:54:08.037 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-9091"]
+2025-05-18 16:54:08.039 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-05-18 16:54:08.039 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [After]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Before]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Between]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Cookie]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Header]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Host]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Method]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Path]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Query]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [ReadBody]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [RemoteAddr]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Weight]
+2025-05-18 16:54:08.587 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2025-05-18 16:54:08.837 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-9091"]
+2025-05-18 16:54:08.848 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 9091 (http)
+2025-05-18 16:54:08.895 [main] INFO  c.c.a.ApiGatewayApplication - Started ApiGatewayApplication in 1.94 seconds (process running for 2.396)
+2025-05-18 17:10:22.702 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-05-18 17:10:22.715 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
