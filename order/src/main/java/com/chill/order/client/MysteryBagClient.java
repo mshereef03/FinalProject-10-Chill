@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "catalog", url = "http://catalog/update_quantity/{id}")
 public interface MysteryBagClient {
 
-    @GetMapping("/{id}")
+    @PostMapping("/{id}")
     double getMysteryBag(@PathVariable("id") String mysteryBagId);
 }
