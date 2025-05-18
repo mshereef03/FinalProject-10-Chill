@@ -1,10 +1,12 @@
 package com.chill.api_gateway.filter;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
@@ -13,11 +15,20 @@ import reactor.core.publisher.Mono;
 @Component
 public class TokenValidationFilter implements GlobalFilter, Ordered {
 
+    @Value("${USER_URI:localhost:8080}") String userBaseUri;
+
     // WebClient can be injected/configured via builder if you wish.
     private final WebClient webClient = WebClient.create();
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+
+
+        String path = exchange.getRequest().getURI().getPath();
+        if (path.startsWith("/users") || path.startsWith("/feedbacks")) {
+            return chain.filter(exchange);
+        }
+
         // 1) Get “Authorization” header from incoming request
         String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
@@ -31,7 +42,7 @@ public class TokenValidationFilter implements GlobalFilter, Ordered {
         return webClient.get()
                 // Note: “user-service” is the Eureka‐registered service ID
                 // and Gateway’s default port‐mapping (container→ container) is 8080.
-                .uri("http://user-service:8080/users/verify-token")
+                .uri("http://"+userBaseUri+"/users/verify-token")
                 .header(HttpHeaders.AUTHORIZATION, authHeader)
                 .retrieve()
                 .onStatus(status -> status.value() == 401 || status.value() == 403, clientResp -> {
@@ -40,11 +51,16 @@ public class TokenValidationFilter implements GlobalFilter, Ordered {
                     return exchange.getResponse().setComplete()
                             .then(Mono.error(new RuntimeException("Token invalid")));
                 })
-                .bodyToMono(Void.class)
-                // We don't actually need the body; if verify-token returns a DTO, you can use .bodyToMono(DecodedTokenDTO.class)
-                .flatMap(ignored -> {
-                    // 3) If user-service returned 200 (valid token), proceed with routing
-                    return chain.filter(exchange);
+                .bodyToMono(DecodedTokenDTO.class)        // <–– deserialize here
+                .flatMap(tokenDto -> {
+                    // 3) mutate the request to add headers
+                    ServerHttpRequest mutatedReq = exchange.getRequest().mutate()
+                            .header("X-Username", tokenDto.getUsername())
+                            .header("X-Roles", String.join(",", tokenDto.getRoles()))
+                            .build();
+
+                    // 4) continue with the mutated exchange
+                    return chain.filter(exchange.mutate().request(mutatedReq).build());
                 });
     }
 

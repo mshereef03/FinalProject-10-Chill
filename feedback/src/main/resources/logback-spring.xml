@@ -4,6 +4,13 @@
     <!-- make "feedback" your context name -->
     <springProperty name="appName" source="spring.application.name"/>
 
+    <!-- <<< ADD THIS APPENDER DEFINITION >>> -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <!-- define a rolling file appender that rolls every minute (or change granularity) -->
     <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- base file (unused at runtime, but required to exist) -->
@@ -28,6 +35,7 @@
 
     <!-- route all logging to our rolling file -->
     <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
         <appender-ref ref="ROLLING_FILE" />
     </root>
 

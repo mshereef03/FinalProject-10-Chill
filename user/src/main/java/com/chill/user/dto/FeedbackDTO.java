@@ -1,91 +1,57 @@
 package com.chill.user.dto;
 
-import com.chill.user.model.Tag;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+
+import java.util.Date;
 import java.util.UUID;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FeedbackDTO {
-    // Feedback
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+    private String type;
     private UUID id;
     private UUID userId;
     private UUID vendorId;
     private UUID orderId;
-    String comment;
-    Tag tag;
+    private String comment;
+    private Date createdAt;
 
-    int rating;
+    // only present when type == REVIEW
+    private Integer rating;
 
-    UUID parentId;
+    // only present when type == THREAD
+    private UUID parentId;
 
     // Constructors
-    public FeedbackDTO() {}
-    public FeedbackDTO(UUID id, UUID userId, UUID vendorId, UUID orderId, String comment, Tag tag, int rating, UUID parentId) {
+    public FeedbackDTO() {
+        // default
+    }
+
+    public FeedbackDTO(String type, UUID id, UUID userId, UUID vendorId, UUID orderId, String comment, Date createdAt) {
+        this.type = type;
         this.id = id;
         this.userId = userId;
         this.vendorId = vendorId;
         this.orderId = orderId;
         this.comment = comment;
-        this.tag = tag;
-        this.rating = rating;
-        this.parentId = parentId;
-    }
-    public FeedbackDTO(UUID userId, UUID vendorId, UUID orderId, String comment, Tag tag, int rating, UUID parentId) {
-        this.userId = userId;
-        this.vendorId = vendorId;
-        this.orderId = orderId;
-        this.comment = comment;
-        this.tag = tag;
-        this.rating = rating;
-        this.parentId = parentId;
+        this.createdAt = createdAt;
     }
 
-    // Getters and Setters
-    public UUID getParentId() {
-        return parentId;
+    // Getters & Setters
+    public UUID getId() {
+        return id;
     }
 
-    public void setParentId(UUID parentId) {
-        this.parentId = parentId;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public Tag getTag() {
-        return tag;
-    }
-
-    public void setTag(Tag tag) {
-        this.tag = tag;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public UUID getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(UUID orderId) {
-        this.orderId = orderId;
-    }
-
-    public UUID getVendorId() {
-        return vendorId;
-    }
-
-    public void setVendorId(UUID vendorId) {
-        this.vendorId = vendorId;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public UUID getUserId() {
@@ -96,11 +62,36 @@ public class FeedbackDTO {
         this.userId = userId;
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getVendorId() {
+        return vendorId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setVendorId(UUID vendorId) {
+        this.vendorId = vendorId;
     }
+
+    public UUID getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(UUID orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
 }
