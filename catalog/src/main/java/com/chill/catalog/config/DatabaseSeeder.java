@@ -81,7 +81,7 @@ public class DatabaseSeeder {
 
             MysteryBag bag = new MysteryBag();
             bag.setItemIds(someIds);
-            bag.setBasePrice(9.99);
+            bag.setPrice(9.99);
             bag.setSize(MysteryBag.Size.MEDIUM);
             // status is PENDING by default
             bag = mysteryBagRepository.save(bag);
@@ -89,7 +89,7 @@ public class DatabaseSeeder {
 
             // --- 3) Test publishing it right away ---
             MysteryBag published = mysteryBagService.publishMysteryBag(bag.getId());
-            logger.info(">>> Published bag " + published.getId() );
+            logger.info(">>> Published bag " + published.getId());
             logger.info(">>> Post-publish status: " + published.getStatus());
 
             // --- 4) Log remaining quantities of those items ---

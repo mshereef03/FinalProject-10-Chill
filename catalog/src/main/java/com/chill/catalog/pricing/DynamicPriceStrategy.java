@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class DynamicPriceStrategy implements PriceStrategy{
     @Override
     public double price(MysteryBag bag) {
-        return bag.getBasePrice() * 0.8;
+        return bag.getPrice() * 0.8;
     }
 
     @Override

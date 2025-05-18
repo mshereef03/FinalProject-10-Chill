@@ -13,7 +13,7 @@ public class PromoCodeService {
     @Autowired
     private PromoCodeRepository promoCodeRepository;
 
-    public int getDiscountByPromoCode(@PathVariable String code){
+    public int getDiscountByPromoCode(String code){
         Optional<PromoCode> promo= promoCodeRepository.findById(code);
         if(promo.isPresent()){
             return promo.get().getDiscount();

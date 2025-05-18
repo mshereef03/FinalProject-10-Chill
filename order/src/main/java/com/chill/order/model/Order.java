@@ -34,9 +34,7 @@ public class Order {
 
     public Order(Cart cart) {
         this.cart = cart;
-        this.cart.setOrder(this);  // Bidirectional relationship
-        calculateTotal();  // Now returns the calculated price
-        System.out.println("Calculated price: " + this.price);
+        this.calculateTotal();
     }
 
     public void calculateTotal(){

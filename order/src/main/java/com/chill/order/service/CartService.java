@@ -63,7 +63,7 @@ public class CartService {
 
             products.add(mysteryBag);
             cart.setProductsJson(cart.convertListToJson(products));
-            System.out.println(cart.getProductsJson());
+
             return cartRepository.save(cart);
 
 

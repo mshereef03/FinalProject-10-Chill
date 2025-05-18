@@ -1,10 +1,11 @@
 package com.chill.order.service;
+import com.chill.order.model.Cart;
 import com.chill.order.model.Order;
+import com.chill.order.repository.CartRepository;
 import com.chill.order.repository.OrderRepository;
 import com.chill.order.service.CommandPattern.CancelOrderCommand;
 import com.chill.order.service.CommandPattern.Invoker;
 import com.chill.order.service.CommandPattern.PlaceOrderCommand;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class OrderService { // this acts as my receiver for the command pattern
 
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CartRepository cartRepository;
     Invoker invoker= new Invoker();
 
     public OrderService(OrderRepository orderRepository) {
@@ -28,8 +31,13 @@ public class OrderService { // this acts as my receiver for the command pattern
         return orderRepository.findAll();
     }
 
-    @Transactional
-    public Order placeOrder(Order order) {
+    public Order placeOrder( Order order) {
+        System.out.println("Cart ? place order service" + (order.getCart() == null ));
+        if (order.getCart() != null) {
+            Cart freshCart = cartRepository.findById(order.getCart().getId())
+                    .orElseThrow(() -> new RuntimeException("Cart not found"));
+            order.setCart(freshCart);
+        }
         invoker.setCommand(new PlaceOrderCommand(orderRepository, order));
         invoker.executeCommand();
         return order;

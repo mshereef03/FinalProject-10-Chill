@@ -20,6 +20,11 @@ public class MysteryBagController {
         return mysteryBagService.getAllMysteryBags();
     }
 
+    @GetMapping("/published")
+    public List<MysteryBag> getPublishedMysteryBags() {
+        return mysteryBagService.getPublishedMysteryBags();
+    }
+
     @GetMapping("/{id}")
     public MysteryBag getMysteryBagById(@PathVariable String id) {
         return mysteryBagService.getMysteryBagById(id);
@@ -41,6 +46,11 @@ public class MysteryBagController {
     @DeleteMapping("/{id}")
     public void deleteMysteryBag(@PathVariable String id) {
         mysteryBagService.deleteMysteryBag(id);
+    }
+
+    @DeleteMapping
+    public void deleteMysteryBags() {
+        mysteryBagService.deleteMysteryBags();
     }
 
     @PostMapping("/publish/{id}")

@@ -3,7 +3,6 @@ import com.chill.order.model.Cart;
 import com.chill.order.model.Order;
 import com.chill.order.service.CartService;
 import com.chill.order.service.OrderService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,10 +70,10 @@ public class CartController {
 
 
    @PostMapping("/checkout/{cartId}")
-   @Transactional
-    public void checkout(@PathVariable int cartId) {
+
+    public Order checkout(@PathVariable int cartId) {
         Optional<Cart> cart= cartService.findCartById(cartId);
-        System.out.println("Sent id:" + cartId);
+
         if(cart.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cart Id not found!");
         }
@@ -83,8 +82,9 @@ public class CartController {
         Order order = new Order();
         order.setCart(foundCart);
         order.calculateTotal();
+        System.out.println("Cart ? checkout controller" + (order.getCart() == null ));
 //        Order savedOrder=
-        orderService.placeOrder(order);
+        return orderService.placeOrder(order);
 //        foundCart.setOrder(order);
 //        cartService.updateCart(foundCart);
 

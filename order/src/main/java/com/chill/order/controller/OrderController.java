@@ -1,6 +1,8 @@
 package com.chill.order.controller;
 
+import com.chill.order.model.Cart;
 import com.chill.order.model.Order;
+import com.chill.order.repository.CartRepository;
 import com.chill.order.service.CommandPattern.CancelOrderCommand;
 import com.chill.order.service.CommandPattern.Invoker;
 import com.chill.order.service.CommandPattern.PlaceOrderCommand;
@@ -24,7 +26,13 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private CartRepository cartRepository;
+
     private DiscountContext discountContext;
+
+    @Autowired
+    PromoCodeService promoCodeService;
 
 
     @GetMapping("/{orderId}")
@@ -51,6 +59,7 @@ public class OrderController {
     }
     @PostMapping
     public Order placeOrder(@RequestBody Order order) {
+        System.out.println(order);
         return orderService.placeOrder(order);
     }
 
@@ -66,9 +75,10 @@ public class OrderController {
         if (order == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found!");
         }
-        PromoCodeService promoCodeService = new PromoCodeService();
+
         int discount;
         try{
+            System.out.println("Promocode Code: " + code);
             discount= promoCodeService.getDiscountByPromoCode(code);
             discountContext = new DiscountContext(new PromoCodeStrategy());
             double discountedPrice = discountContext.applyDiscount(order, discount);
@@ -88,6 +98,11 @@ public class OrderController {
         Order order = orderService.getOrderById(orderId);
         if (order == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found!");
+        }
+        if (order.getCart() != null) {
+            Cart freshCart = cartRepository.findById(order.getCart().getId())
+                    .orElseThrow(() -> new RuntimeException("Cart not found"));
+            order.setCart(freshCart);
         }
             discountContext = new DiscountContext(new BulkDiscountStrategy());
             double discountedPrice = discountContext.applyDiscount(order, 25);
