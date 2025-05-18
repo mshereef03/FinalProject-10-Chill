@@ -36,6 +36,8 @@ services:
 
   mongo_feedback_db:
     image: mongo
+    hostname: mongo_feedback_db
+    container_name: mongo_feedback_db
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo_user
@@ -50,7 +52,7 @@ services:
     image: mongo-express
     restart: always
     ports:
-      - "8081:8081"
+      - "8085:8081"
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: mongo_user
       ME_CONFIG_MONGODB_ADMINPASSWORD: 1234
@@ -73,7 +75,7 @@ services:
       - chill-network
 
   # MICROSERVICES
-  user_service:
+  user-service:
     build: ./user
     container_name: user-service
     hostname: user-service
@@ -85,14 +87,13 @@ services:
       SPRING_DATASOURCE_PASSWORD: 1234
     depends_on:
       - postgres_user_db
-      - eureka-server
     networks:
       - chill-network
 
-#  order_service:
+#  order-service:
 #    build: ./order
 #    ports:
-#      - "8081:8080"
+#      - "8081:8081"
 #    environment:
 #      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_order_db:5432/mydb
 #      SPRING_DATASOURCE_USERNAME: postgres_user
@@ -102,10 +103,10 @@ services:
 #    networks:
 #      - chill-network
 #
-#  catalog_service:
+#  catalog-service:
 #    build: ./catalog
 #    ports:
-#      - "8082:8080"
+#      - "8082:8082"
 #    environment:
 #      SPRING_DATA_MONGODB_URI: "mongodb://mongo_user:1234@mongo_catalog_db:27017/mydb?authSource=admin"
 #    depends_on:
@@ -118,23 +119,11 @@ services:
     container_name: feedback-service
     hostname: feedback-service
     ports:
-      - "8083:8082"
+      - "8083:8083"
     environment:
       SPRING_DATA_MONGODB_URI: "mongodb://mongo_user:1234@mongo_feedback_db:27017/mydb?authSource=admin"
     depends_on:
       - mongo_feedback_db
-      - eureka-server
-    networks:
-      - chill-network
-
-  # SERVICE DISCOVERY
-  eureka-server:
-    build: ./service_discovery
-    container_name: eureka-server
-    hostname: eureka-server
-    ports:
-      - "8761:8761"
-    restart: always
     networks:
       - chill-network
 
@@ -144,11 +133,14 @@ services:
     container_name: api-gateway-service
     hostname: api-gateway-service
     ports:
-      - "9091:8080"
-    depends_on:
-      - eureka-server
+      - "9091:9091"
     networks:
       - chill-network
+    environment:
+      USER_URI: user-service:8080
+      ORDER_URI: order-service:8081
+      CATALOG_URI: catalog-service:8082
+      FEEDBACK_URI: feedback-service:8083
 
   # MESSAGE QUEUE
   rabbitmq:
