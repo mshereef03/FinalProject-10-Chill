@@ -3,7 +3,6 @@ package com.chill.catalog.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Instant;
 import java.util.List;
 
 @Document(collection = "mystery_bags")
@@ -11,7 +10,7 @@ public class MysteryBag {
     @Id
     private String id;
     private List<String> itemIds;
-    private double basePrice;
+    private double price;
     private Status status;
     private Size size;
     private int quantity;
@@ -26,7 +25,7 @@ public class MysteryBag {
     public MysteryBag(String id, List<String> itemIds, Size size, int quantity, String strategyCode) {
         this.id = id;
         this.itemIds = itemIds;
-        this.basePrice = 0;
+        this.price = 0;
         this.status = Status.PENDING;
         this.size = size;
         this.quantity = quantity;
@@ -35,7 +34,7 @@ public class MysteryBag {
 
     public MysteryBag(List<String> itemIds, Size size, int quantity, String strategyCode) {
         this.itemIds = itemIds;
-        this.basePrice = 0;
+        this.price = 0;
         this.status = Status.PENDING;
         this.size = size;
         this.quantity = quantity;
@@ -58,12 +57,12 @@ public class MysteryBag {
         this.itemIds = itemIds;
     }
 
-    public double getBasePrice() {
-        return basePrice;
+    public double getPrice() {
+        return price;
     }
 
-    public void setBasePrice(double basePrice) {
-        this.basePrice = basePrice;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public Status getStatus() {

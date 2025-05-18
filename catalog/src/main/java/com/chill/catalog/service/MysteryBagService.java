@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +16,7 @@ import java.util.Optional;
 public class MysteryBagService {
     private final MysteryBagRepository mysteryBagRepository;
     private final MenuItemService menuItemService;
-    private final MysteryBagObserver observer;  // Spring injects your MenuItemService here
+    private final MysteryBagObserver observer;
     private final PricingEngine pricingEngine;
 
     public MysteryBagService(
@@ -36,6 +35,11 @@ public class MysteryBagService {
         return mysteryBagRepository.findAll();
     }
 
+    public List<MysteryBag> getPublishedMysteryBags() {
+        List<MysteryBag> mysteryBags = mysteryBagRepository.findAll();
+        return mysteryBags.stream().filter(mysteryBag -> mysteryBag.getStatus()== MysteryBag.Status.ACTIVE).toList();
+    }
+
     public MysteryBag getMysteryBagById(String id) {
         return mysteryBagRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -44,36 +48,58 @@ public class MysteryBagService {
                 ));
     }
 
-    public MysteryBag createMysteryBag(MysteryBag newBag) {
-        for(String id: newBag.getItemIds()) {
+    private double getBagPrice(MysteryBag bag){
+        double price = 0;
+        for(String id: bag.getItemIds()) {
             Optional<MenuItem> menuItem = menuItemService.getMenuItemById(id);
             if(menuItem.isEmpty())
                 throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "Menu item does not exist"
-                 );
+                        HttpStatus.NOT_FOUND,
+                        "Menu item does not exist"
+                );
 
             double menuItemPrice = menuItem.get().getPrice();
-            double bagBasePrice = newBag.getBasePrice();
-            newBag.setBasePrice(bagBasePrice + menuItemPrice);
+            price+= menuItemPrice;
         }
-        double finalPrice = pricingEngine.calculatePrice(newBag);
-        newBag.setBasePrice(finalPrice);
-
-        return mysteryBagRepository.save(newBag);
+        return price;
     }
 
+    public MysteryBag createMysteryBag(MysteryBag newBag) {
+        if(newBag.getQuantity() <= 0)
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Mystery bag quantity should be more than 0"
+            );
+
+        newBag.setPrice(getBagPrice(newBag));
+
+        try {
+            double finalPrice = pricingEngine.calculatePrice(newBag);
+            newBag.setPrice(finalPrice);
+            return mysteryBagRepository.save(newBag);
+        }
+        catch (Exception e){
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "This strategy does not exist"
+            );
+        }
+    }
 
     public MysteryBag updateMysteryBag(String id, MysteryBag updatedBag) {
         MysteryBag bag = getMysteryBagById(id);
         bag.setItemIds(updatedBag.getItemIds());
-        bag.setBasePrice(updatedBag.getBasePrice());
+        bag.setPrice(updatedBag.getPrice());
         bag.setSize(updatedBag.getSize());
         return mysteryBagRepository.save(bag);
     }
 
     public void deleteMysteryBag(String id) {
         mysteryBagRepository.deleteById(id);
+    }
+
+    public void deleteMysteryBags() {
+        mysteryBagRepository.deleteAll();
     }
 
     public MysteryBag publishMysteryBag(String id) {
@@ -98,9 +124,12 @@ public class MysteryBagService {
         if(newQuantity == 0) {
             bag.setStatus(MysteryBag.Status.SOLD_OUT);
         }
+        if(newQuantity > 0) {
+            bag.setStatus(MysteryBag.Status.ACTIVE);
+        }
         bag.setQuantity(newQuantity);
         mysteryBagRepository.save(bag);
 
-        return bag.getBasePrice();
+        return bag.getPrice();
     }
 }
