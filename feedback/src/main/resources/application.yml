@@ -1,5 +1,7 @@
+SPRING_DATA_MONGODB_URI: mongodb://mongo_user:1234@localhost:27017/mydb?authSource=admin
+
 server:
-  port: 8082
+  port: 8083
 
 spring:
   application:
@@ -17,15 +19,6 @@ spring:
     port: 5672
     username: guest
     password: guest
-
-eureka:
-  client:
-    enabled: true
-    service-url:
-      defaultZone: http://eureka-server:8761/eureka
-  instance:
-    prefer-ip-address: true
-    hostname: eureka-server
 
 management:
   endpoints:

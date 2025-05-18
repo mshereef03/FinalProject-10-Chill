@@ -1,5 +1,11 @@
+# Env
+USER_URI: localhost:8080
+ORDER_URI: localhost:8081
+CATALOG_URI: localhost:8082
+FEEDBACK_URI: localhost:8083
+
 server:
-  port: 8080
+  port: 9091
 
 spring:
   main:
@@ -17,27 +23,19 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        - id: user-service
-          uri: lb://user-service
+        - id: users
+          uri: http://${USER_URI}
           predicates:
             - Path=/users/**
-        - id: feedback-service
-          uri: lb://feedback-service
+        - id: orders
+          uri: http://${ORDER_URI}
+          predicates:
+            - Path=/orders/**
+        - id: catalogs
+          uri: http://${CATALOG_URI}
+          predicates:
+            - Path=/catalogs/**
+        - id: feedbacks
+          uri: http://${FEEDBACK_URI}
           predicates:
             - Path=/feedbacks/**
-        - id: catalog-service
-          uri: lb://catalog-service
-          predicates:
-            - Path=/catalog-service/**
-        - id: order-service
-          uri: lb://order-service
-          predicates:
-            - Path=/order-service/**
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka-server:8761/eureka
-  instance:
-    prefer-ip-address: true
-    hostname: eureka-server

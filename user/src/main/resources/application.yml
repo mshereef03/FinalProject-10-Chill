@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: user-service
@@ -25,14 +28,6 @@ spring:
     port: 5672
     username: guest
     password: guest
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-  instance:
-    prefer-ip-address: true
-    hostname: localhost
 
 jwt:
   secret: c/F3DavoWPdjxTuB1Gu8rdMrNM/lCoOi3rVLeXzuO7w=

@@ -72,13 +72,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!--	Service Discovery		-->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-			<version>4.2.1</version>
-		</dependency>
-
 		<!--	Logging		-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
