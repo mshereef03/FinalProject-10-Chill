@@ -63,8 +63,7 @@ public class MysteryBagController {
             @PathVariable String id,
             @RequestParam int quantity
     ) {
-        System.out.println("Mystery Id: " + id);
-        System.out.println("Quantity: " + quantity);
+
         return mysteryBagService.updateMysteryBagQuantity(id, quantity);
     }
 }
