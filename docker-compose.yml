@@ -72,6 +72,7 @@ services:
     build: ./catalog
     ports:
       - "8082:8080"
+    container_name: catalogService
     environment:
       SPRING_DATA_MONGODB_URI: "mongodb://mongo_user:1234@mongo_catalog_db:27017/mydb?authSource=admin"
     depends_on:
