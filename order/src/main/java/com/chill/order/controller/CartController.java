@@ -67,6 +67,16 @@ public class CartController {
        }
        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cart to add mysterbag to not found!");
    }
+  @PostMapping("/removeFromCart/{id}")
+    public Cart removeFromCart(@PathVariable String id, @RequestBody int cartId) {
+       try{
+           return cartService.removeMysteryBagFromCart(cartId,id);
+       }
+       catch(Exception e){
+           System.out.println("Cannot find mysterybag: "+e.getMessage());
+       }
+       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cart to add mysterbag to not found!");
+   }
 
 
    @PostMapping("/checkout/{cartId}")

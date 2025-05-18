@@ -71,6 +71,42 @@ public class CartService {
             throw new RuntimeException("Error fetching mystery bag: " + e.getMessage());
         }
     }
+    @CachePut(value = "cart_cache", key = "#cartId")
+    public Cart removeMysteryBagFromCart(int cartId, String mysteryBagId) {
+
+        try {
+
+            double price = mysteryBagClient.getMysteryBag(mysteryBagId,(-1));
+
+            Cart cart = cartRepository.findById(cartId)
+                    .orElseThrow(() -> new RuntimeException("Cart not found"));
+
+
+            List<MysteryBagDTO> products = cart.getProducts();
+            System.out.println("Before: " +products.size());
+            for (int i = 0; i < products.size(); i++) {
+                if (products.get(i).getId().equals(mysteryBagId)) {
+                    products.remove(i);
+                    break;
+                }
+            }
+            System.out.println("After: " +products.size());
+            String productsJson = cart.convertListToJson(products);
+
+
+            cart.setProductsJson(productsJson);
+
+            return cartRepository.save(cart);
+
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching mystery bag: " + e.getMessage());
+        }
+    }
+
+
+
+
 
 
 
