@@ -1,0 +1,41 @@
+# Env
+#USER_URI: localhost:8080
+#ORDER_URI: localhost:8081
+#CATALOG_URI: localhost:8082
+#FEEDBACK_URI: localhost:8083
+
+server:
+  port: 9091
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      httpserver:
+        wiretap: true
+      httpclient:
+        wiretap: true
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: users
+          uri: http://${USER_URI:localhost:8080}
+          predicates:
+            - Path=/users/**
+        - id: orders
+          uri: http://${ORDER_URI:localhost:8081}
+          predicates:
+            - Path=/orders/**
+        - id: catalogs
+          uri: http://${CATALOG_URI:localhost:8082}
+          predicates:
+            - Path=/catalogs/**
+        - id: feedbacks
+          uri: http://${FEEDBACK_URI:localhost:8083}
+          predicates:
+            - Path=/feedbacks/**

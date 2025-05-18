@@ -1,16 +1,17 @@
+
 server:
-  port: 8082
+  port: 8083
 
 spring:
   application:
-    name: Feedback Microservice
+    name: feedback-service
 
   data:
     mongodb:
       host: localhost
       port: 27017
-      uri: mongodb://mongo_user:1234@localhost:27018/mydb?authSource=admin
-      database: mydb
+      uri:  "mongodb://mongo_user:1234@localhost:27017/mydb?authSource=admin"
+      database: feedbackdb
 
   rabbitmq:
     host: localhost
@@ -18,4 +19,21 @@ spring:
     username: guest
     password: guest
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    prometheus:
+      enabled: true
 
+sprgingdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enable: true
+  show-actuator: true
+  packages-to-scan: com.chill.feedback.controllers

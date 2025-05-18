@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: Order and Payment Microservice
+    name: order-service
 
   datasource:
     url: jdbc:postgresql://localhost:5433/mydb
@@ -33,7 +33,3 @@ spring:
     port: 5672
     username: guest
     password: guest
-
-
-
-

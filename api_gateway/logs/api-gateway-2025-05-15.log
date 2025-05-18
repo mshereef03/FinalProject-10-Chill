@@ -1,0 +1,52 @@
+2025-05-15 23:53:01.871 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-05-15 23:53:01.940 [main] INFO  c.c.a.ApiGatewayApplication - Starting ApiGatewayApplication using Java 23 with PID 17276 (D:\MET\Semester 10\[CSEN1002] Scalable\Project\Final Project\FinalProject-10-Chill\api_gateway\target\classes started by mazen in D:\MET\Semester 10\[CSEN1002] Scalable\Project\Final Project\FinalProject-10-Chill\api_gateway)
+2025-05-15 23:53:01.941 [main] INFO  c.c.a.ApiGatewayApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-15 23:53:03.048 [main] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=343a4f75-d120-32b6-a483-cb2708292ca9
+2025-05-15 23:53:03.380 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-05-15 23:53:03.395 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-05-15 23:53:03.397 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-05-15 23:53:03.397 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-05-15 23:53:04.780 [main] INFO  o.s.cloud.commons.util.InetUtils - Cannot determine local hostname
+2025-05-15 23:53:05.836 [main] INFO  o.s.cloud.commons.util.InetUtils - Cannot determine local hostname
+2025-05-15 23:53:06.378 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [After]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Before]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Between]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Cookie]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Header]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Host]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Method]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Path]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Query]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [ReadBody]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [RemoteAddr]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Weight]
+2025-05-15 23:53:06.379 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2025-05-15 23:53:07.683 [main] INFO  o.s.cloud.commons.util.InetUtils - Cannot determine local hostname
+2025-05-15 23:53:07.729 [main] INFO  o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses RestTemplate.
+2025-05-15 23:53:07.770 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-05-15 23:53:07.845 [main] INFO  o.s.c.n.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2025-05-15 23:53:07.871 [main] INFO  c.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2025-05-15 23:53:07.874 [main] INFO  c.n.d.s.r.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2025-05-15 23:53:07.886 [main] INFO  c.netflix.discovery.DiscoveryClient - Disable delta property : false
+2025-05-15 23:53:07.887 [main] INFO  c.netflix.discovery.DiscoveryClient - Single vip registry refresh property : null
+2025-05-15 23:53:07.887 [main] INFO  c.netflix.discovery.DiscoveryClient - Force full registry fetch : false
+2025-05-15 23:53:07.887 [main] INFO  c.netflix.discovery.DiscoveryClient - Application is null : false
+2025-05-15 23:53:07.887 [main] INFO  c.netflix.discovery.DiscoveryClient - Registered Applications size is zero : true
+2025-05-15 23:53:07.887 [main] INFO  c.netflix.discovery.DiscoveryClient - Application version is -1: true
+2025-05-15 23:53:07.887 [main] INFO  c.netflix.discovery.DiscoveryClient - Getting all instance registry info from the eureka server
+2025-05-15 23:53:08.506 [main] INFO  c.netflix.discovery.DiscoveryClient - The response status is 200
+2025-05-15 23:53:08.506 [main] INFO  c.netflix.discovery.DiscoveryClient - Starting heartbeat executor: renew interval is: 30
+2025-05-15 23:53:08.512 [main] INFO  c.n.discovery.InstanceInfoReplicator - InstanceInfoReplicator onDemand update allowed rate per min is 4
+2025-05-15 23:53:08.512 [main] INFO  c.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1747342388512 with initial instances count: 1
+2025-05-15 23:53:08.520 [main] INFO  o.s.c.n.e.s.EurekaServiceRegistry - Registering application API-GATEWAY with eureka with status UP
+2025-05-15 23:53:08.528 [main] INFO  c.netflix.discovery.DiscoveryClient - Saw local status change event StatusChangeEvent [timestamp=1747342388528, current=UP, previous=STARTING]
+2025-05-15 23:53:08.536 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_API-GATEWAY/localhost:api-gateway:8080: registering service...
+2025-05-15 23:53:08.660 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_API-GATEWAY/localhost:api-gateway:8080 - registration status: 204
+2025-05-15 23:53:08.748 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-05-15 23:53:08.788 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http)
+2025-05-15 23:53:08.788 [main] INFO  o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 8080
+2025-05-15 23:53:09.818 [main] INFO  o.s.cloud.commons.util.InetUtils - Cannot determine local hostname
+2025-05-15 23:53:10.827 [main] INFO  o.s.cloud.commons.util.InetUtils - Cannot determine local hostname
+2025-05-15 23:53:10.851 [main] INFO  c.c.a.ApiGatewayApplication - Started ApiGatewayApplication in 10.758 seconds (process running for 11.684)
+2025-05-15 23:58:07.893 [AsyncResolver-bootstrap-executor-%d] INFO  c.n.d.s.r.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
