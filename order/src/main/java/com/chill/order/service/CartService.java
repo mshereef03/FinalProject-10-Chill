@@ -48,7 +48,7 @@ public class CartService {
     }
 
     @CachePut(value = "cart_cache", key = "#cartId")
-    public void addMysteryBagToCart(int cartId, String mysteryBagId) {
+    public Cart addMysteryBagToCart(int cartId, String mysteryBagId) {
         System.out.println("MystId: "+ mysteryBagId);
         System.out.println("CartId: "+ cartId);
         try {
@@ -63,11 +63,11 @@ public class CartService {
 
             List<MysteryBagDTO> products = cart.getProducts();
             System.out.println("Size: " + products.size());
-//            List<MysteryBagDTO> products = cart.convertJsonToList();
             products.add(mysteryBag);
             cart.setProductsJson(cart.convertListToJson(products));
             System.out.println(cart.getProductsJson());
-            cartRepository.save(cart);
+            return cartRepository.save(cart);
+
 
         } catch (Exception e) {
             throw new RuntimeException("Error fetching mystery bag: " + e.getMessage());
