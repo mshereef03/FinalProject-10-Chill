@@ -61,7 +61,9 @@ public class MysteryBagService {
             double menuItemPrice = menuItem.get().getPrice();
             price+= menuItemPrice;
         }
-        return price;
+
+        bag.setPrice(price);
+        return pricingEngine.calculatePrice(bag);
     }
 
     public MysteryBag createMysteryBag(MysteryBag newBag) {
@@ -71,26 +73,30 @@ public class MysteryBagService {
                     "Mystery bag quantity should be more than 0"
             );
 
-        newBag.setPrice(getBagPrice(newBag));
-
-        try {
-            double finalPrice = pricingEngine.calculatePrice(newBag);
-            newBag.setPrice(finalPrice);
-            return mysteryBagRepository.save(newBag);
-        }
-        catch (Exception e){
+        if(!pricingEngine.knows(newBag.getStrategyCode()))
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "This strategy does not exist"
             );
-        }
+
+        newBag.setStatus(MysteryBag.Status.PENDING);
+        newBag.setPrice(getBagPrice(newBag));
+
+        return mysteryBagRepository.save(newBag);
     }
 
     public MysteryBag updateMysteryBag(String id, MysteryBag updatedBag) {
         MysteryBag bag = getMysteryBagById(id);
+        if(bag.getStatus() == MysteryBag.Status.SOLD_OUT && updatedBag.getQuantity() > 0)
+            bag.setStatus(MysteryBag.Status.ACTIVE);
+
         bag.setItemIds(updatedBag.getItemIds());
-        bag.setPrice(updatedBag.getPrice());
         bag.setSize(updatedBag.getSize());
+        bag.setStrategyCode(updatedBag.getStrategyCode());
+        bag.setPrice(getBagPrice(bag));
+        bag.setSize(updatedBag.getSize());
+        bag.setQuantity(updatedBag.getQuantity());
+
         return mysteryBagRepository.save(bag);
     }
 
