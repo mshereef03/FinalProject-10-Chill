@@ -1,5 +1,6 @@
 package com.chill.feedback;
 
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 		DataSourceAutoConfiguration.class,
 		RabbitAutoConfiguration.class
 })
+@EnableRabbit
 public class FeedbackMicroserviceApplication {
 
 	@Bean
