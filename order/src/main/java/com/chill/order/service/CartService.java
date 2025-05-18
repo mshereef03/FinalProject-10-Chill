@@ -50,15 +50,20 @@ public class CartService {
     @CachePut(value = "cart_cache", key = "#cartId")
     public void addMysteryBagToCart(int cartId, String mysteryBagId) {
         try {
-            double price = mysteryBagClient.getMysteryBag(Long.parseLong(mysteryBagId));
+            double price = mysteryBagClient.getMysteryBag(mysteryBagId);
+
             MysteryBagDTO mysteryBag = new MysteryBagDTO(mysteryBagId, price);
 
             Cart cart = cartRepository.findById(cartId)
                     .orElseThrow(() -> new RuntimeException("Cart not found"));
+            System.out.println("ID: " + mysteryBagId);
 
-            List<MysteryBagDTO> products = cart.convertJsonToList();
+            List<MysteryBagDTO> products = cart.getProducts();
+            System.out.println("Size: " + products.size());
+//            List<MysteryBagDTO> products = cart.convertJsonToList();
             products.add(mysteryBag);
             cart.setProductsJson(cart.convertListToJson(products));
+            System.out.println(cart.getProductsJson());
             cartRepository.save(cart);
 
         } catch (Exception e) {

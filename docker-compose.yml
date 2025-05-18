@@ -24,8 +24,7 @@ services:
     networks:
       - chill-network
   redis:
-    image: redis:7-alpine
-    container_name: redis-cache
+    image: redis
     ports:
       - "6379:6379"
     networks:
