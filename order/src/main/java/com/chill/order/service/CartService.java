@@ -47,7 +47,7 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    @CachePut(value = "cart_cache", key = "#cartId")
+    @CachePut(value = "cart_cache", key = "#cartId")    
     public void addMysteryBagToCart(int cartId, String mysteryBagId) {
         try {
             double price = mysteryBagClient.getMysteryBag(mysteryBagId,1);
