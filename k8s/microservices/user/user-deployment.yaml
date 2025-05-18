@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: user-deployment     # match the deployment name
-          image: docker.io/alimadany/user-service:0.1
+          image: docker.io/alimadany/user-service:0.2
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -37,16 +37,11 @@ spec:
                 secretKeyRef:
                   name: global-secrets
                   key: POSTGRES_PASSWORD
-            - name: SPRING_MICROSERVICE_FEEDBACK_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: global-config
-                  key: SPRING_MICROSERVICE_FEEDBACK_URL
-          envFrom:
-            - configMapRef:
-                name: global-config
-            - secretRef:
-                name: global-secrets
+            # - name: SPRING_MICROSERVICE_FEEDBACK_URL
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: global-config
+            #       key: SPRING_MICROSERVICE_FEEDBACK_URL
           # readinessProbe:
           #   httpGet:
           #     path: /actuator/health

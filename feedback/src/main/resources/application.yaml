@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 8082
 
 spring:
   application:
@@ -7,15 +7,13 @@ spring:
 
   data:
     mongodb:
-     # host: mongo_feedback_db
-      #port: 27017
-      uri: ${SPRING_DATASOURCE_MONGO_URL} # :mongodb://root:example@mongo:27017/mydb?authSource=admin for default value when locally tesyting
-      #database: mydb
+      host: localhost
+      port: 27017
+      uri: mongodb://mongo_user:1234@localhost:27018/mydb?authSource=admin
+      database: mydb
 
   rabbitmq:
     host: localhost
     port: 5672
     username: guest
     password: guest
-
-
