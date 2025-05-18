@@ -9,8 +9,10 @@
     import com.chill.feedback.models.Feedback;
     import com.chill.feedback.models.Replyable;
     import com.chill.feedback.models.Review;
+    import com.chill.feedback.rabbitmq.RabbitMQConfig;
     import com.chill.feedback.repositories.FeedbackRepository;
     import lombok.extern.slf4j.Slf4j;
+    import org.springframework.amqp.rabbit.annotation.RabbitListener;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;
     import org.springframework.stereotype.Service;
@@ -47,6 +49,12 @@
             } else {
                 throw new Exception("Error! Unknown feedback type!");
             }
+        }
+
+        @RabbitListener(queues = RabbitMQConfig.FEEDBACK_QUEUE)
+        public void receiveFeedbackMessage(Feedback feedback) {
+            feedbackRepository.save(feedback);
+            System.out.println("Feedback created successfully with ID: " + feedback.getId());
         }
 
         public Feedback createFeedback(Feedback feedback) {

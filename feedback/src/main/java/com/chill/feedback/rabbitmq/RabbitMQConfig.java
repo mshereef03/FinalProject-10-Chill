@@ -32,7 +32,6 @@ public class RabbitMQConfig {
                 .with(FEEDBACK_ROUTING_KEY);
     }
 
-    // Jackson message converter for automatic JSON (de)serialization, supports polymorphism via annotations
     @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();

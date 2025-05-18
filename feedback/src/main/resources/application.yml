@@ -9,7 +9,7 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      uri: ${SPRING_DATA_MONGODB_URI}
+      uri:  "mongodb://mongo_user:1234@mongo_feedback_db:27017/mydb?authSource=admin"
       database: feedbackdb
 
   rabbitmq:

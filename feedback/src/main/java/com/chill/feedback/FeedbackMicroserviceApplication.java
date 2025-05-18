@@ -12,8 +12,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication(exclude = {
-		DataSourceAutoConfiguration.class,
-		RabbitAutoConfiguration.class
+		DataSourceAutoConfiguration.class
+
 })
 @EnableRabbit
 public class FeedbackMicroserviceApplication {
