@@ -27,7 +27,17 @@ eureka:
     prefer-ip-address: true
     hostname: eureka-server
 
-springdoc:
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    prometheus:
+      enabled: true
+
+sprgingdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
