@@ -1,0 +1,21 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: Feedback Microservice
+
+  data:
+    mongodb:
+     # host: mongo_feedback_db
+      #port: 27017
+      uri: ${SPRING_DATASOURCE_MONGO_URL} # :mongodb://root:example@mongo:27017/mydb?authSource=admin for default value when locally tesyting
+      #database: mydb
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+
