@@ -57,11 +57,11 @@ public class OrderController {
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Order to update not found!");
     }
-    @PostMapping
-    public Order placeOrder(@RequestBody Order order) {
-        System.out.println(order);
-        return orderService.placeOrder(order);
-    }
+//    @PostMapping
+//    public Order placeOrder(@RequestBody Order order) {
+//        System.out.println(order);
+//        return orderService.placeOrder(order);
+//    }
 
     @DeleteMapping("/{orderId}")
     public Order cancelOrder(@PathVariable int orderId) {

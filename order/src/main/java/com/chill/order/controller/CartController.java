@@ -80,8 +80,7 @@ public class CartController {
 
 
    @PostMapping("/checkout/{cartId}")
-
-    public Order checkout(@PathVariable int cartId) {
+    public Order checkout(@PathVariable int cartId, @RequestHeader(value="X-Username", required=false) String user) {
         Optional<Cart> cart= cartService.findCartById(cartId);
 
         if(cart.isEmpty()) {
@@ -90,13 +89,11 @@ public class CartController {
 
         Cart foundCart= cart.get();
         Order order = new Order();
+        order.setUserId(user);
         order.setCart(foundCart);
         order.calculateTotal();
         System.out.println("Cart ? checkout controller" + (order.getCart() == null ));
-//        Order savedOrder=
         return orderService.placeOrder(order);
-//        foundCart.setOrder(order);
-//        cartService.updateCart(foundCart);
 
    }
 }

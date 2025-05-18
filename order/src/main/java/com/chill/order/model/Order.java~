@@ -67,11 +67,5 @@ public class Order {
     public void setCart(Cart cart) {
         this.cart = cart;
     }
-    public String getUserId() {
-        return userId;
-    }
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
 }
