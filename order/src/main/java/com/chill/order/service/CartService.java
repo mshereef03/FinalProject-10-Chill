@@ -42,11 +42,12 @@ public class CartService {
             for(MysteryBagDTO mysteryBag:mysteryBags) {
                 mysteryBagClient.getMysteryBag(mysteryBag.getId(),(-1));
             }
-            cartRepository.deleteById(cartId);
             if(cart.get().getOrder()!=null){
                 int orderId=cart.get().getOrder().getId();
                 orderService.cancelOrder(orderId);
             }
+            cartRepository.deleteById(cartId);
+
 
         }
         else{
