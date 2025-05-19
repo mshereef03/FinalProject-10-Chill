@@ -21,6 +21,8 @@ public class CartService {
     private CartRepository cartRepository;
     @Autowired
     private MysteryBagClient mysteryBagClient;
+    @Autowired
+    private OrderService orderService;
 
     public List<Cart> findAllCarts() {
         return cartRepository.findAll();
@@ -41,6 +43,11 @@ public class CartService {
                 mysteryBagClient.getMysteryBag(mysteryBag.getId(),(-1));
             }
             cartRepository.deleteById(cartId);
+            if(cart.get().getOrder()!=null){
+                int orderId=cart.get().getOrder().getId();
+                orderService.cancelOrder(orderId);
+            }
+
         }
         else{
             throw new RuntimeException("Cart not found");
