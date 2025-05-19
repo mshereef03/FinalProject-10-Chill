@@ -86,9 +86,9 @@ public class CartController {
         if(cart.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cart Id not found!");
         }
-        else if(cart.get().getProducts().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Order something to checkout!");
-        }
+       else if (cart.get().getProducts() == null || cart.get().getProducts().isEmpty()) {
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cart must contain at least one mystery bag to checkout!");
+       }
 
         Cart foundCart= cart.get();
         Order order = new Order();
