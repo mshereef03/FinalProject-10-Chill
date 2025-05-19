@@ -1,11 +1,9 @@
 server:
-  port: 8080
-  error:
-    include-message: always
+  port: 8082
 
 spring:
   application:
-    name: Seller Catalog Microservice
+    name: catalog-service
 
   data:
     mongodb:
@@ -13,6 +11,3 @@ spring:
       port: 27017
       uri: mongodb://mongo_user:1234@localhost:27017/catalog?authSource=admin
       database: catalog
-
-
-

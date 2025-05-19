@@ -1,6 +1,9 @@
+server:
+  port: 8080
+
 spring:
   application:
-    name: User Microservice
+    name: user-service
 
   datasource:
     url: jdbc:postgresql://localhost:5432/mydb
@@ -25,3 +28,7 @@ spring:
     port: 5672
     username: guest
     password: guest
+
+jwt:
+  secret: c/F3DavoWPdjxTuB1Gu8rdMrNM/lCoOi3rVLeXzuO7w=
+  expiration-ms: 3600000
