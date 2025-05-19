@@ -4,7 +4,7 @@ metadata:
   name: global-config
 data:
   SPRING_PROFILES_ACTIVE: k8s
-  Postgres_Url_User: jdbc:postgresql://postgres:5432/customer_db #change URL to postgres then replace the global config pod
+  Postgres_Url_User: jdbc:postgresql://postgres:5432/mydb #change URL to postgres then replace the global config pod
   Postgres_Url_Order : jdbc:postgresql://postgres:5433/mydb
   MongoDb_Url_Feedback: mongodb://root:example@mongo:27018/mydb?authSource=admin
   MongoDb_Url_Catalog: mongodb://root:example@mongo:27017/mydb?authSource=admin
