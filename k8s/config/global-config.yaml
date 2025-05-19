@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: global-config
+data:
+  SPRING_PROFILES_ACTIVE: k8s
+  Postgres_Url_User: jdbc:postgresql://postgres:5432/customer_db #change URL to postgres then replace the global config pod
+  Postgres_Url_Order : jdbc:postgresql://postgres:5433/mydb
+  MongoDb_Url_Feedback: mongodb://root:example@mongo:27018/mydb?authSource=admin
+  MongoDb_Url_Catalog: mongodb://root:example@mongo:27017/mydb?authSource=admin
+  Redis_Host: redis
+  Redis_Port: "6379"
+  RabbitMQ_Host: rabbitmq
+  RabbitMQ_Username: guest
+ 
+  # Microservice_Feedback: http://feedbacks:8083/feedbacks
+  # Microservice_Catalog:
+  # Microservice_Order:
+  # Microservice_User:
+
+
+
+  # mongodb://mongo_user:1234@localhost:27017/mydb?authSource=admin
+  # add any other non-sensitive defaults here
+
+

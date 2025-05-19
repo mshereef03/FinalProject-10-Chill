@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-deployment
+  labels:
+    app: catalog-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalog-deployment
+  template:
+    metadata:
+      labels:
+        app: catalog-deployment
+    spec:
+      containers:
+        - name: catalog-deployment
+          image: docker.io/alimadany/catalog-service:0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8083        
+          env: # EVERYTHING BELOW THIS LINE IS WILL BE ADJUSTED
+            - name: SPRING_DATA_MONGODB_URI
+              valueFrom:
+                configMapKeyRef:     
+                  name: global-config
+                  key: MongoDb_Url_Catalog
+
+          # readinessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: 8083                
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: 8083                 
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 10
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

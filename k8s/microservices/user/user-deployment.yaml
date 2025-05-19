@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-deployment
+  #namespace: app                   # <-- if you’re using namespaces
+  labels:
+    app: user-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-deployment
+  template:
+    metadata:
+      labels:
+        app: user-deployment
+    spec:
+      containers:
+        - name: user-deployment     # match the deployment name
+          image: docker.io/alimadany/user-service:0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env: # EVERYTHING BELOW THIS LINE IS WILL BE ADJUSTED
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:     
+                  name: global-config
+                  key: Postgres_Url_User #from configMap
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: global-secrets
+                  key: POSTGRES_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: global-secrets
+                  key: POSTGRES_PASSWORD
+            - name: SPRING_RABBITMQ_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: global-config
+                  key: RabbitMQ_Host
+            - name: SPRING_RABBITMQ_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: global-config
+                  key: RabbitMQ_Username
+            - name: SPRING_RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: global-secrets
+                  key: RabbitMQ_Password
+            - name: FEEDBACK_SERVICE_URL
+              value: http://feedbacks:8083/feedbacks
+            # - name: SPRING_MICROSERVICE_FEEDBACK_URL
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: global-config
+            #       key: SPRING_MICROSERVICE_FEEDBACK_URL
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

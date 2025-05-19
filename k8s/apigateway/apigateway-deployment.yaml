@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apigateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apigateway-service
+  template:
+    metadata:
+      labels:
+        app: apigateway-service
+    spec:
+      containers:
+        - name: apigateway-service
+          image: docker.io/alimadany/apigateway-service:0.1
+          ports:
+            - containerPort: 9091
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: SPRING_MAIN_WEB_APPLICATION_TYPE
+              value: reactive
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_0_ID
+
+              value: users
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_0_URI
+              value: http://users:8080
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_0_PREDICATES_0
+              value: Path=/users/**
+
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_1_ID
+              value: orders
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_1_URI
+              value: http://orders:8081
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_1_PREDICATES_0
+              value: Path=/orders/**
+
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_2_ID
+              value: carts
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_2_URI
+              value: http://carts:8081
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0
+              value: Path=/carts/**
+              
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_3_ID
+              value: promos
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_3_URI
+              value: http://promos:8081
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_3_PREDICATES_0
+              value: Path=/promos/**
+
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_4_ID
+              value: catalogs
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_4_URI
+              value: http://catalogs:8082
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_4_PREDICATES_0
+              value: Path=/catalogs/**
+
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_5_ID
+              value: feedbacks
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_5_URI
+              value: http://feedbacks:8083
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_5_PREDICATES_0
+              value: Path=/feedbacks/**
+              
