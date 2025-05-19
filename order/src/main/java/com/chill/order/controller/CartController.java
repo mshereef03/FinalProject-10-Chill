@@ -1,4 +1,5 @@
 package com.chill.order.controller;
+import com.chill.order.client.MysteryBagClient;
 import com.chill.order.model.Cart;
 import com.chill.order.model.Order;
 import com.chill.order.service.CartService;
@@ -18,6 +19,7 @@ public class CartController {
     private CartService cartService;
     @Autowired
     private OrderService orderService;
+
 
     @GetMapping
     public List<Cart> getAllCarts(){
@@ -48,12 +50,10 @@ public class CartController {
 
     @DeleteMapping("/{cartId}")
     public void deleteCartByID(@PathVariable int cartId) {
-        Cart cart = getCartById(cartId);
-        if(cart!=null) {
-
-        cartService.deleteCart(cartId);
+        try{
+            cartService.deleteCart(cartId);
         }
-        else {
+        catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cart to delete not found!");
         }
     }
