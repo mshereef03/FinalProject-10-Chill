@@ -21,6 +21,7 @@ public class CartService {
     private CartRepository cartRepository;
     @Autowired
     private MysteryBagClient mysteryBagClient;
+    @Autowired OrderService orderService;
 
     public List<Cart> findAllCarts() {
         return cartRepository.findAll();
@@ -34,7 +35,26 @@ public class CartService {
     }
     @CacheEvict(value = "cart_cache", key = "#cartId")
     public void deleteCart(int cartId) {
-        cartRepository.deleteById(cartId);
+        Optional<Cart> cart= cartRepository.findById(cartId);
+        if (cart.isPresent()) {
+            List<MysteryBagDTO> mysteryBags= cart.get().getProducts();
+            for(MysteryBagDTO mysteryBag:mysteryBags) {
+                mysteryBagClient.getMysteryBag(mysteryBag.getId(),(-1));
+            }
+            if(cart.get().getOrder()!=null){
+                int orderId=cart.get().getOrder().getId();
+                orderService.cancelOrder(orderId);
+            }
+            cartRepository.deleteById(cartId);
+
+
+        }
+        else{
+            throw new RuntimeException("Cart not found");
+        }
+
+
+
     }
 
     @Cacheable(value = "cart_cache", key = "#cartId")
