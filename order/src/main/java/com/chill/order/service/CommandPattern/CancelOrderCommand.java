@@ -1,11 +1,14 @@
 package com.chill.order.service.CommandPattern;
 
 import com.chill.order.model.Order;
+import com.chill.order.repository.CartRepository;
 import com.chill.order.repository.OrderRepository;
 import com.chill.order.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class CancelOrderCommand implements Command {
     private final OrderRepository orderRepository;
+
     private int orderId;
     private Order order;
 
