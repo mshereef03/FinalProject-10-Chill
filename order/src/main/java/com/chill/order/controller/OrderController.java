@@ -1,8 +1,10 @@
 package com.chill.order.controller;
 
 import com.chill.order.model.Cart;
+import com.chill.order.model.MysteryBagDTO;
 import com.chill.order.model.Order;
 import com.chill.order.repository.CartRepository;
+import com.chill.order.service.CartService;
 import com.chill.order.service.CommandPattern.CancelOrderCommand;
 import com.chill.order.service.CommandPattern.Invoker;
 import com.chill.order.service.CommandPattern.PlaceOrderCommand;
@@ -33,6 +35,9 @@ public class OrderController {
 
     @Autowired
     PromoCodeService promoCodeService;
+
+    @Autowired
+    private CartService cartService;
 
 
     @GetMapping("/{orderId}")
@@ -65,7 +70,20 @@ public class OrderController {
 
     @DeleteMapping("/{orderId}")
     public Order cancelOrder(@PathVariable int orderId) {
-        return orderService.cancelOrder(orderId);
+        try
+        {
+            Order order2 = orderService.getOrderById(orderId);
+            orderService.cancelOrder(orderId);
+            Cart cart = order2.getCart();
+            int cartId = cart.getId();
+            List<MysteryBagDTO> products = cart.getProducts();
+            for (MysteryBagDTO product : products) {
+                cartService.removeMysteryBagFromCart(cartId, product.getId());
+            }
+            return order2;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     // discount is percentage
