@@ -5,5 +5,5 @@ metadata:
   namespace: chill
 data:
   # MongoDB connection string (using the headless Service’s DNS for pod-0)
-  SPRING_DATA_MONGODB_URI: "mongodb://mongo_user:1234@mongo-feedback-db:27017/feedbackdb?authSource=admin"
+  SPRING_DATA_MONGODB_URI: "mongodb://mongo_user:1234@mongo-feedback-db:27017/mydb?authSource=admin"
   SPRING_RABBITMQ_HOST: "rabbitmq"

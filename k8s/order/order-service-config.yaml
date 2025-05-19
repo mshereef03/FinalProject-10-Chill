@@ -5,7 +5,17 @@ metadata:
   namespace: chill
 data:
   SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-order-db:5432/mydb"
-  SPRING_DATASOURCE_USERNAME: "postgres_user"
-  SPRING_DATASOURCE_PASSWORD: "1234"
   SPRING_DATA_REDIS_HOST: "redis"
   CATALOG_SERVICE_URL: "catalog-service:8082"
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: order-service-secret
+  namespace: chill
+type: Opaque
+stringData:
+  SPRING_DATASOURCE_USERNAME: "postgres_user"
+  SPRING_DATASOURCE_PASSWORD: "1234"

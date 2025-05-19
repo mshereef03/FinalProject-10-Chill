@@ -21,9 +21,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: order-service-config
-          # if you created a secret:
-          #- secretRef:
-          #    name: order-service-secret
+            - secretRef:
+                name: order-service-secret
 
 ---
 apiVersion: v1
