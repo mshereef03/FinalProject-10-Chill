@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-gateway-config
+  namespace: chill
+data:
+  # these point at your other services by DNS name and port
+  USER_URI:    "user-service:8080"
+  ORDER_URI:   "order-service:8081"
+  CATALOG_URI: "catalog-service:8082"
+  FEEDBACK_URI: "feedback-service:8083"

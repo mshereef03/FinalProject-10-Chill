@@ -1,0 +1,55 @@
+# 2) Headless Service for postgres-order-db
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-order-db
+  namespace: chill
+  labels:
+    app: postgres-order-db
+spec:
+  clusterIP: None
+  selector:
+    app: postgres-order-db
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+
+---
+# 3) StatefulSet for postgres-order-db with PVC-backed storage
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-order-db
+  namespace: chill
+spec:
+  serviceName: postgres-order-db     # must match the headless Service name
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-order-db         # must match template.labels
+  template:
+    metadata:
+      labels:
+        app: postgres-order-db       # picked up by Service.selector & StatefulSet.selector
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14
+          ports:
+            - name: postgres
+              containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: postgres-order-db-secret
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data           # used by volumeMounts.name
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi

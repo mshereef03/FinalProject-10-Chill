@@ -1,0 +1,9 @@
+# ConfigMap for catalog-service
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: catalog-service-config
+  namespace: chill
+data:
+  # point at your new MongoDB headless Service; port 27017 is default
+  SPRING_DATA_MONGODB_URI: "mongodb://mongo_user:1234@mongo-catalog-db:27017/mydb?authSource=admin"
