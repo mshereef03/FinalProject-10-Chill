@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/catalog/mystery-bags")
+@RequestMapping("/catalogs/mystery-bags")
 public class MysteryBagController {
 
     private final MysteryBagService mysteryBagService;

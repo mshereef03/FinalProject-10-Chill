@@ -31,6 +31,14 @@ spring:
           uri: http://${ORDER_URI:localhost:8081}
           predicates:
             - Path=/orders/**
+        - id: carts
+          uri: http://${ORDER_URI:localhost:8081}
+          predicates:
+            - Path=/carts/**
+        - id: promos
+          uri: http://${ORDER_URI:localhost:8081}
+          predicates:
+            - Path=/promos/**
         - id: catalogs
           uri: http://${CATALOG_URI:localhost:8082}
           predicates:
@@ -39,3 +47,4 @@ spring:
           uri: http://${FEEDBACK_URI:localhost:8083}
           predicates:
             - Path=/feedbacks/**
+

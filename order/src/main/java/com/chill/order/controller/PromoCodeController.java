@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/promo")
+@RequestMapping("/promos")
 public class PromoCodeController {
     @Autowired
     PromoCodeService promoCodeService;

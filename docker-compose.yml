@@ -11,27 +11,27 @@ services:
     networks:
       - chill-network
 
-  #  postgres_order_db:
-  #    image: postgres
-  #    environment:
-  #      POSTGRES_DB: mydb
-  #      POSTGRES_USER: postgres_user
-  #      POSTGRES_PASSWORD: 1234
-  #    ports:
-  #      - "5433:5432"
-  #    networks:
-  #      - chill-network
-  #
-  #  mongo_catalog_db:
-  #    image: mongo
-  #    restart: always
-  #    environment:
-  #      MONGO_INITDB_ROOT_USERNAME: mongo_user
-  #      MONGO_INITDB_ROOT_PASSWORD: 1234
-  #    ports:
-  #      - "27018:27017"
-  #    networks:
-  #      - chill-network
+  postgres_order_db:
+    image: postgres
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: postgres_user
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5433:5432"
+    networks:
+      - chill-network
+
+  mongo_catalog_db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo_user
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+    ports:
+      - "27018:27017"
+    networks:
+      - chill-network
 
   mongo_feedback_db:
     image: mongo
@@ -46,8 +46,15 @@ services:
     networks:
       - chill-network
 
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - chill-network
+
   # DATABASE INTERFACE
-  mongo-express:
+  mongo_express:
     image: mongo-express
     restart: always
     ports:
@@ -76,7 +83,6 @@ services:
   # MICROSERVICES
   user-service:
     build: ./user
-    container_name: user-service
     hostname: user-service
     ports:
       - "8080:8080"
@@ -84,43 +90,48 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_user_db:5432/mydb
       SPRING_DATASOURCE_USERNAME: postgres_user
       SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_RABBITMQ_HOST: rabbitmq
     depends_on:
       - postgres_user_db
     networks:
       - chill-network
 
-  #  order-service:
-  #    build: ./order
-  #    ports:
-  #      - "8081:8081"
-  #    environment:
-  #      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_order_db:5432/mydb
-  #      SPRING_DATASOURCE_USERNAME: postgres_user
-  #      SPRING_DATASOURCE_PASSWORD: 1234
-  #    depends_on:
-  #      - postgres_order_db
-  #    networks:
-  #      - chill-network
-  #
-  #  catalog-service:
-  #    build: ./catalog
-  #    ports:
-  #      - "8082:8082"
-  #    environment:
-  #      SPRING_DATA_MONGODB_URI: "mongodb://mongo_user:1234@mongo_catalog_db:27017/mydb?authSource=admin"
-  #    depends_on:
-  #      - mongo_catalog_db
-  #    networks:
-  #      - chill-network
+  order-service:
+    container_name: order_service
+    build: ./order
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_order_db:5432/mydb
+      SPRING_DATASOURCE_USERNAME: postgres_user
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATA_REDIS_HOST: redis
+      CATALOG_SERVICE_URL: catalog-service:8082
+    depends_on:
+      - postgres_order_db
+      - redis
+    networks:
+      - chill-network
+
+  catalog-service:
+    build: ./catalog
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATA_MONGODB_URI: "mongodb://mongo_user:1234@mongo_catalog_db:27017/mydb?authSource=admin"
+    depends_on:
+      - mongo_catalog_db
+    networks:
+      - chill-network
 
   feedback-service:
     build: ./feedback
-    container_name: feedback-service
     hostname: feedback-service
     ports:
       - "8083:8083"
     environment:
       SPRING_DATA_MONGODB_URI: "mongodb://mongo_user:1234@mongo_feedback_db:27017/mydb?authSource=admin"
+      SPRING_RABBITMQ_HOST: rabbitmq
     depends_on:
       - mongo_feedback_db
     networks:
@@ -129,7 +140,6 @@ services:
   # API GATEWAY
   api-gateway-service:
     build: ./api_gateway
-    container_name: api-gateway-service
     hostname: api-gateway-service
     ports:
       - "9091:9091"

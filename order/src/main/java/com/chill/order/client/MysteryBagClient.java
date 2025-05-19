@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 //    @PostMapping("/catalog/mystery-bags/update_quantity/{id}")
 //    double getMysteryBag(@PathVariable("id") String mysteryBagId, @RequestParam("quantity") int quantity);
 //}
-@FeignClient(name = "catalog-service", url = "http://catalogService:8080",path = "/catalog/mystery-bags")
+@FeignClient(name = "catalog-service", url = "${catalog.service.url}",path = "/catalogs/mystery-bags")
 public interface MysteryBagClient {
     @PostMapping("/update_quantity/{id}")
     double getMysteryBag(@PathVariable("id") String id, @RequestParam("quantity") int quantity);
