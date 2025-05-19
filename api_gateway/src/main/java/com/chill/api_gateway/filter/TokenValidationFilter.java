@@ -25,7 +25,7 @@ public class TokenValidationFilter implements GlobalFilter, Ordered {
 
 
         String path = exchange.getRequest().getURI().getPath();
-        if (path.startsWith("/users") || path.startsWith("/feedbacks")) {
+        if (!path.startsWith("/carts/checkout")) {
             return chain.filter(exchange);
         }
 
