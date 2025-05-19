@@ -18,9 +18,10 @@ public class PricingEngine {
     public double calculatePrice(MysteryBag bag) {
         String strategyCode = bag.getStrategyCode();
         PriceStrategy strategy = strategies.get(strategyCode);
-        if (strategy == null) {
-            throw new IllegalArgumentException("Unknown pricing code: " + strategyCode);
-        }
         return strategy.price(bag);
+    }
+
+    public boolean knows(String strategy){
+        return strategies.get(strategy)!=null;
     }
 }
