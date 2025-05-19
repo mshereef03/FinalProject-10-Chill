@@ -1,0 +1,55 @@
+# Headless Service to expose each Mongo pod’s DNS
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-feedback-db
+  namespace: chill
+  labels:
+    app: mongo-feedback-db
+spec:
+  clusterIP: None
+  selector:
+    app: mongo-feedback-db
+  ports:
+    - name: mongodb
+      port: 27017
+      targetPort: 27017
+
+---
+# StatefulSet for MongoDB with 1 replica and PVC-backed storage
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo-feedback-db
+  namespace: chill
+spec:
+  serviceName: mongo-feedback-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-feedback-db
+  template:
+    metadata:
+      labels:
+        app: mongo-feedback-db
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:5.0
+          ports:
+            - name: mongodb
+              containerPort: 27017
+          envFrom:
+            - secretRef:
+                name: mongo-feedback-db-secret
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi
