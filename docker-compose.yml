@@ -87,12 +87,6 @@ services:
     networks:
       - chill-network
 
-  redisinsight:
-    image: redis/redisinsight:latest
-    container_name: redisInsight
-    ports:
-      - "5540:5540"
-    restart: always
 
   # MICROSERVICES
   user-service:
