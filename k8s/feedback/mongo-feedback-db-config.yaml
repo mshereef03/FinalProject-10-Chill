@@ -1,0 +1,11 @@
+# Secret for MongoDB root user & database
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongo-feedback-db-secret
+  namespace: chill
+type: Opaque
+stringData:
+  MONGO_INITDB_DATABASE:    "feedbackdb"
+  MONGO_INITDB_ROOT_USERNAME: "mongo_user"
+  MONGO_INITDB_ROOT_PASSWORD: "1234"

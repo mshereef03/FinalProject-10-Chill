@@ -1,0 +1,41 @@
+# Service for catalog-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-service
+  namespace: chill
+spec:
+  selector:
+    app: catalog-service
+  ports:
+    - name: http
+      port: 8082
+      targetPort: 8082
+
+---
+
+# Deployment for catalog-service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-service
+  namespace: chill
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalog-service
+  template:
+    metadata:
+      labels:
+        app: catalog-service
+    spec:
+      containers:
+        - name: catalog-service
+          image: mshereef/catalog-service:1.0
+          ports:
+            - containerPort: 8082
+          envFrom:
+            - configMapRef:
+                name: catalog-service-config
+

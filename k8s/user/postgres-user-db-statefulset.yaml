@@ -1,0 +1,55 @@
+# Headless Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-user-db
+  namespace: chill
+  labels:
+    app: postgres-user-db
+spec:
+  clusterIP: None
+  selector:
+    app: postgres-user-db
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+
+---
+# StatefulSet with PVC-backed storage
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-user-db
+  namespace: chill
+spec:
+  serviceName: postgres-user-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-user-db
+  template:
+    metadata:
+      labels:
+        app: postgres-user-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14
+          ports:
+            - name: postgres
+              containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: postgres-user-db-secret
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi
