@@ -4,14 +4,16 @@ metadata:
   name: global-config
 data:
   SPRING_PROFILES_ACTIVE: k8s
-  Postgres_Url_User: jdbc:postgresql://postgres:5432/mydb #change URL to postgres then replace the global config pod
-  Postgres_Url_Order : jdbc:postgresql://postgres:5433/mydb
-  MongoDb_Url_Feedback: mongodb://root:example@mongo:27018/mydb?authSource=admin
-  MongoDb_Url_Catalog: mongodb://root:example@mongo:27017/mydb?authSource=admin
+  Postgres_Url_User: jdbc:postgresql://postgres_user:5432/mydb #change URL to postgres then replace the global config pod
+  Postgres_Url_Order : jdbc:postgresql://postgres-order:5433/mydb
+  MongoDb_Url_Feedback: mongodb://root:example@mongo-catalog:27018/mydb?authSource=admin
+  MongoDb_Url_Catalog: mongodb://root:example@mongo-feedback:27017/mydb?authSource=admin
   Redis_Host: redis
   Redis_Port: "6379"
   RabbitMQ_Host: rabbitmq
   RabbitMQ_Username: guest
+
+  #updated
  
   # Microservice_Feedback: http://feedbacks:8083/feedbacks
   # Microservice_Catalog:

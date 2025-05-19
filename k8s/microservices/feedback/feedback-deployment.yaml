@@ -31,29 +31,29 @@ spec:
                 configMapKeyRef:
                   name: global-config
                   key: RabbitMQ_Host
-            - name: SPRING_RABBITMQ_USERNAME
-              valueFrom:
-                configMapKeyRef:
-                  name: global-config
-                  key: RabbitMQ_Username
-            - name: SPRING_RABBITMQ_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: global-secrets
-                  key: RabbitMQ_Password
+            # - name: SPRING_RABBITMQ_USERNAME
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: global-config
+            #       key: RabbitMQ_Username
+            # - name: SPRING_RABBITMQ_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: global-secrets
+            #       key: RabbitMQ_Password
 
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8083
-            initialDelaySeconds: 10
-            periodSeconds: 5
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8083
-            initialDelaySeconds: 30
-            periodSeconds: 10
+          # readinessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: 8083
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: 8083
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 10
           resources:
             requests:
               cpu: "100m"
