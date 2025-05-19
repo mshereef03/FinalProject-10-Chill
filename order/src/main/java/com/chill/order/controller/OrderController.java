@@ -72,14 +72,15 @@ public class OrderController {
     public Order cancelOrder(@PathVariable int orderId) {
         try
         {
-            Order order = orderService.cancelOrder(orderId);
-            Cart cart = order.getCart();
+            Order order2 = orderService.getOrderById(orderId);
+            orderService.cancelOrder(orderId);
+            Cart cart = order2.getCart();
             int cartId = cart.getId();
             List<MysteryBagDTO> products = cart.getProducts();
             for (MysteryBagDTO product : products) {
                 cartService.removeMysteryBagFromCart(cartId, product.getId());
             }
-            return order;
+            return order2;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
