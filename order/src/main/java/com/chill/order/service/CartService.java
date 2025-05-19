@@ -33,6 +33,7 @@ public class CartService {
         }
         return cartRepository.save(cart);
     }
+
     @CacheEvict(value = "cart_cache", key = "#cartId")
     public void deleteCart(int cartId) {
         Optional<Cart> cart= cartRepository.findById(cartId);
@@ -55,7 +56,10 @@ public class CartService {
 
 
 
-    }
+
+
+
+}
 
     @Cacheable(value = "cart_cache", key = "#cartId")
     public Optional<Cart> findCartById(int cartId) {
