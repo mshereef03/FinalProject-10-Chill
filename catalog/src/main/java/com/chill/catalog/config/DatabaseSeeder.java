@@ -81,11 +81,23 @@ public class DatabaseSeeder {
 
             MysteryBag bag = new MysteryBag();
             bag.setItemIds(someIds);
-            bag.setPrice(9.99);
+            bag.setPrice(9.95);
             bag.setSize(MysteryBag.Size.MEDIUM);
+            bag.setQuantity(10);
+            bag.setStrategyCode("fixed");
+
+            MysteryBag bag_1 = new MysteryBag();
+            bag_1.setItemIds(someIds);
+            bag_1.setPrice(9.95);
+            bag_1.setSize(MysteryBag.Size.MEDIUM);
+            bag_1.setQuantity(0);
+            bag_1.setStrategyCode("fixed");
+            bag_1.setStatus(MysteryBag.Status.SOLD_OUT);
             // status is PENDING by default
             bag = mysteryBagRepository.save(bag);
             logger.info(">>> Seeded MysteryBag with ID " + bag.getId() + " referring to items " + someIds);
+
+            bag_1 = mysteryBagRepository.save(bag_1);
 
             // --- 3) Test publishing it right away ---
             MysteryBag published = mysteryBagService.publishMysteryBag(bag.getId());

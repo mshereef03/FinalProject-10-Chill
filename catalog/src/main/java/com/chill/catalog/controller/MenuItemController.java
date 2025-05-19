@@ -20,7 +20,7 @@ import com.chill.catalog.model.MenuItem;
 import com.chill.catalog.service.MenuItemService;
 
 @RestController
-@RequestMapping("/catalog/menu-items")
+@RequestMapping("/catalogs/menu-items")
 public class MenuItemController {
 
     private final MenuItemService menuItemService;
