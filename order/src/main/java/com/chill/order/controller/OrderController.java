@@ -74,28 +74,21 @@ public class OrderController {
 
     @DeleteMapping("/{orderId}")
     public Order cancelOrder(@PathVariable int orderId) {
-        try {
-            Order order = orderService.cancelOrder(orderId); // command pattern inside service
+        try
+        {
+            Order order = orderService.cancelOrder(orderId);
             Cart cart = order.getCart();
             int cartId = cart.getId();
-
-            // Update inventory
             List<MysteryBagDTO> products = cart.getProducts();
             for (MysteryBagDTO product : products) {
-                mysteryBagClient.getMysteryBag(product.getId(), -1);
+                mysteryBagClient.getMysteryBag(product.getId(),(-1));
             }
-
-            if (cartService.findCartById(cartId).isPresent()) {
-                cartService.deleteCart(cartId);
-            }
-
+            cartService.deleteCart(cartId);
             return order;
-
         } catch (Exception e) {
-            throw new RuntimeException("Error canceling order!");
+            throw new RuntimeException(e.getMessage());
         }
     }
-
 
     // discount is percentage
     @PutMapping("/applyPromo/{orderId}")
