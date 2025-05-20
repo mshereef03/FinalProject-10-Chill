@@ -78,12 +78,12 @@ public class OrderController {
         {
             Order order = orderService.cancelOrder(orderId);
             Cart cart = order.getCart();
-            int cartId = cart.getId();
+//            int cartId = cart.getId();
             List<MysteryBagDTO> products = cart.getProducts();
             for (MysteryBagDTO product : products) {
                 mysteryBagClient.getMysteryBag(product.getId(),(-1));
             }
-            cartService.deleteCart(cartId);
+//            cartService.deleteCart(cartId);
             return order;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
