@@ -3,6 +3,7 @@ package com.chill.order.service;
 import com.chill.order.client.MysteryBagClient;
 import com.chill.order.model.Cart;
 import com.chill.order.model.MysteryBagDTO;
+import com.chill.order.model.Order;
 import com.chill.order.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -47,8 +48,14 @@ public class CartService {
         for (MysteryBagDTO bag : mysteryBags) {
             mysteryBagClient.getMysteryBag(bag.getId(), -1);
         }
-
-        cartRepository.deleteById(cartId);
+        Order order = cart.getOrder();
+        if(order!=null){
+            int id= order.getId();
+            orderService.cancelOrder(id);
+       }
+    else{
+            cartRepository.deleteById(cartId);
+    }
     }
 
 
