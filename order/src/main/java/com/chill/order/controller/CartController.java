@@ -1,5 +1,4 @@
 package com.chill.order.controller;
-import com.chill.order.client.MysteryBagClient;
 import com.chill.order.model.Cart;
 import com.chill.order.model.Order;
 import com.chill.order.service.CartService;
@@ -19,7 +18,6 @@ public class CartController {
     private CartService cartService;
     @Autowired
     private OrderService orderService;
-
 
     @GetMapping
     public List<Cart> getAllCarts(){
@@ -79,16 +77,16 @@ public class CartController {
    }
 
 
-   @PostMapping("/checkout/{cartId}")
+    @PostMapping("/checkout/{cartId}")
     public Order checkout(@PathVariable int cartId, @RequestHeader(value="X-Username", required=false) String user) {
         Optional<Cart> cart= cartService.findCartById(cartId);
 
         if(cart.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cart Id not found!");
         }
-       else if (cart.get().getProducts() == null || cart.get().getProducts().isEmpty()) {
-           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cart must contain at least one mystery bag to checkout!");
-       }
+        else if (cart.get().getProducts() == null || cart.get().getProducts().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cart must contain at least one mystery bag to checkout!");
+        }
 
         Cart foundCart= cart.get();
         Order order = new Order();
@@ -98,5 +96,5 @@ public class CartController {
         System.out.println("Cart ? checkout controller" + (order.getCart() == null ));
         return orderService.placeOrder(order);
 
-   }
+    }
 }

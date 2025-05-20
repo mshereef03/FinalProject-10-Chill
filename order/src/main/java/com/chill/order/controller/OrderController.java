@@ -32,16 +32,16 @@ public class OrderController {
     @Autowired
     private CartRepository cartRepository;
 
-    @Autowired
-    private CartService cartService;
-
     private DiscountContext discountContext;
 
     @Autowired
     PromoCodeService promoCodeService;
 
     @Autowired
-    MysteryBagClient mysteryBagClient;
+    private CartService cartService;
+
+    @Autowired
+    private MysteryBagClient mysteryBagClient;
 
 
     @GetMapping("/{orderId}")
@@ -74,8 +74,8 @@ public class OrderController {
 
     @DeleteMapping("/{orderId}")
     public Order cancelOrder(@PathVariable int orderId) {
-       try
-       {
+        try
+        {
             Order order = orderService.cancelOrder(orderId);
             Cart cart = order.getCart();
             int cartId = cart.getId();
@@ -85,9 +85,9 @@ public class OrderController {
             }
             cartService.deleteCart(cartId);
             return order;
-       } catch (Exception e) {
-           throw new RuntimeException(e.getMessage());
-       }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     // discount is percentage
