@@ -46,18 +46,16 @@ public class CartService {
                 int orderId=cart.get().getOrder().getId();
                 orderService.cancelOrder(orderId);
             }
+        Optional<Cart> checkIfCartExistsAgain= cartRepository.findById(cartId);
+        if(checkIfCartExistsAgain.isPresent()){
             cartRepository.deleteById(cartId);
-
-
         }
         else{
             throw new RuntimeException("Cart not found");
+        }}
+        else{
+            throw new RuntimeException("Cart not found");
         }
-
-
-
-
-
 
 }
 
