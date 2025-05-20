@@ -79,12 +79,15 @@ public class CartController {
    }
 
 
-   @PostMapping("/checkout/{cartId}")
+    @PostMapping("/checkout/{cartId}")
     public Order checkout(@PathVariable int cartId, @RequestHeader(value="X-Username", required=false) String user) {
         Optional<Cart> cart= cartService.findCartById(cartId);
 
         if(cart.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cart Id not found!");
+        }
+        else if (cart.get().getProducts() == null || cart.get().getProducts().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cart must contain at least one mystery bag to checkout!");
         }
 
         Cart foundCart= cart.get();
@@ -95,5 +98,5 @@ public class CartController {
         System.out.println("Cart ? checkout controller" + (order.getCart() == null ));
         return orderService.placeOrder(order);
 
-   }
+    }
 }
