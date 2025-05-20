@@ -48,12 +48,10 @@ public class CartController {
 
     @DeleteMapping("/{cartId}")
     public void deleteCartByID(@PathVariable int cartId) {
-        Cart cart = getCartById(cartId);
-        if(cart!=null) {
-
-        cartService.deleteCart(cartId);
+        try{
+            cartService.deleteCart(cartId);
         }
-        else {
+        catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cart to delete not found!");
         }
     }
