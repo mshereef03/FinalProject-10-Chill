@@ -43,23 +43,14 @@ public class CartService {
         }
 
         Cart cart = cartOptional.get();
-
         List<MysteryBagDTO> mysteryBags = cart.getProducts();
-        for(MysteryBagDTO mysteryBag : mysteryBags) {
-            mysteryBagClient.getMysteryBag(mysteryBag.getId(), -1);
-        }
-
-        if(cart.getOrder() != null){
-            int orderId = cart.getOrder().getId();
-            orderService.cancelOrder(orderId);
-            cartOptional = cartRepository.findById(cartId);
-            if(cartOptional.isEmpty()) {
-                return;
-            }
+        for (MysteryBagDTO bag : mysteryBags) {
+            mysteryBagClient.getMysteryBag(bag.getId(), -1);
         }
 
         cartRepository.deleteById(cartId);
     }
+
 
 
     @Cacheable(value = "cart_cache", key = "#cartId")

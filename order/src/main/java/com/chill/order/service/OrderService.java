@@ -9,7 +9,6 @@ import com.chill.order.service.CommandPattern.PlaceOrderCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -51,13 +50,14 @@ public class OrderService { // this acts as my receiver for the command pattern
     }
 
     public Order cancelOrder(int orderId) {
-        Optional<Order> order = orderRepository.findById(orderId);
-        if (order.isEmpty()) {
+        Optional<Order> orderOpt = orderRepository.findById(orderId);
+        if (orderOpt.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found!");
         }
-        Order fetchedOrder= order.get();
+        Order order = orderOpt.get();
         invoker.setCommand(new CancelOrderCommand(orderRepository, orderId));
         invoker.executeCommand();
-        return fetchedOrder;
+        return order;
     }
+
 }
