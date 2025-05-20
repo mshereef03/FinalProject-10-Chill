@@ -36,28 +36,31 @@ public class CartService {
 
     @CacheEvict(value = "cart_cache", key = "#cartId")
     public void deleteCart(int cartId) {
-        Optional<Cart> cart= cartRepository.findById(cartId);
-        if (cart.isPresent()) {
-            List<MysteryBagDTO> mysteryBags= cart.get().getProducts();
-            for(MysteryBagDTO mysteryBag:mysteryBags) {
-                mysteryBagClient.getMysteryBag(mysteryBag.getId(),(-1));
-            }
-            if(cart.get().getOrder()!=null){
-                int orderId=cart.get().getOrder().getId();
-                orderService.cancelOrder(orderId);
-            }
-        Optional<Cart> checkIfCartExistsAgain= cartRepository.findById(cartId);
-        if(checkIfCartExistsAgain.isPresent()){
-            cartRepository.deleteById(cartId);
-        }
-        else{
-            throw new RuntimeException("Cart not found");
-        }}
-        else{
+        Optional<Cart> cartOptional = cartRepository.findById(cartId);
+
+        if (cartOptional.isEmpty()) {
             throw new RuntimeException("Cart not found");
         }
 
-}
+        Cart cart = cartOptional.get();
+
+        List<MysteryBagDTO> mysteryBags = cart.getProducts();
+        for(MysteryBagDTO mysteryBag : mysteryBags) {
+            mysteryBagClient.getMysteryBag(mysteryBag.getId(), -1);
+        }
+
+        if(cart.getOrder() != null){
+            int orderId = cart.getOrder().getId();
+            orderService.cancelOrder(orderId);
+            cartOptional = cartRepository.findById(cartId);
+            if(cartOptional.isEmpty()) {
+                return;
+            }
+        }
+
+        cartRepository.deleteById(cartId);
+    }
+
 
     @Cacheable(value = "cart_cache", key = "#cartId")
     public Optional<Cart> findCartById(int cartId) {
