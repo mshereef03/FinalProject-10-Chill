@@ -83,7 +83,13 @@ public class OrderController {
             for (MysteryBagDTO product : products) {
                 mysteryBagClient.getMysteryBag(product.getId(),(-1));
             }
-            cartService.deleteCart(cartId);
+            if(cartService.findCartById(cartId).isPresent()) {
+                cartService.deleteCart(cartId);
+            }
+            else{
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Cart not found!");
+            }
+
             return order;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
