@@ -1,5 +1,6 @@
 package com.chill.order.controller;
 
+import com.chill.order.client.MysteryBagClient;
 import com.chill.order.model.Cart;
 import com.chill.order.model.MysteryBagDTO;
 import com.chill.order.model.Order;
@@ -39,6 +40,9 @@ public class OrderController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private MysteryBagClient mysteryBagClient;
+
 
     @GetMapping("/{orderId}")
     public Order getOrderById(@PathVariable int orderId) {
@@ -72,15 +76,15 @@ public class OrderController {
     public Order cancelOrder(@PathVariable int orderId) {
         try
         {
-            Order order2 = orderService.getOrderById(orderId);
-            orderService.cancelOrder(orderId);
-            Cart cart = order2.getCart();
-            int cartId = cart.getId();
+            Order order = orderService.cancelOrder(orderId);
+            Cart cart = order.getCart();
+//            int cartId = cart.getId();
             List<MysteryBagDTO> products = cart.getProducts();
             for (MysteryBagDTO product : products) {
-                cartService.removeMysteryBagFromCart(cartId, product.getId());
+                mysteryBagClient.getMysteryBag(product.getId(),(-1));
             }
-            return order2;
+//            cartService.deleteCart(cartId);
+            return order;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

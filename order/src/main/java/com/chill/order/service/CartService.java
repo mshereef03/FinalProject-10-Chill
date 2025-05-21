@@ -3,6 +3,7 @@ package com.chill.order.service;
 import com.chill.order.client.MysteryBagClient;
 import com.chill.order.model.Cart;
 import com.chill.order.model.MysteryBagDTO;
+import com.chill.order.model.Order;
 import com.chill.order.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -21,6 +22,7 @@ public class CartService {
     private CartRepository cartRepository;
     @Autowired
     private MysteryBagClient mysteryBagClient;
+    @Autowired OrderService orderService;
 
     public List<Cart> findAllCarts() {
         return cartRepository.findAll();
@@ -32,10 +34,31 @@ public class CartService {
         }
         return cartRepository.save(cart);
     }
+
     @CacheEvict(value = "cart_cache", key = "#cartId")
     public void deleteCart(int cartId) {
-        cartRepository.deleteById(cartId);
+        Optional<Cart> cartOptional = cartRepository.findById(cartId);
+
+        if (cartOptional.isEmpty()) {
+            throw new RuntimeException("Cart not found");
+        }
+
+        Cart cart = cartOptional.get();
+        List<MysteryBagDTO> mysteryBags = cart.getProducts();
+        for (MysteryBagDTO bag : mysteryBags) {
+            mysteryBagClient.getMysteryBag(bag.getId(), -1);
+        }
+        Order order = cart.getOrder();
+        if(order!=null){
+            int id= order.getId();
+            orderService.cancelOrder(id);
+       }
+    else{
+            cartRepository.deleteById(cartId);
     }
+    }
+
+
 
     @Cacheable(value = "cart_cache", key = "#cartId")
     public Optional<Cart> findCartById(int cartId) {
