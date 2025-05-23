@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: mshereef/api-gateway:1.0
+          image: mshereef/api-gateway:2.0
           ports:
             - containerPort: 9091
           envFrom:

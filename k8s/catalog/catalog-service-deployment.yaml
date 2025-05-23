@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: catalog-service
-          image: mshereef/catalog-service:1.0
+          image: mshereef/catalog-service:2.0
           ports:
             - containerPort: 8082
           envFrom:

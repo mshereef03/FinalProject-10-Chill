@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: mshereef/user-service:1.0
+          image: mshereef/user-service:2.0
           ports:
             - containerPort: 8080
           envFrom:
