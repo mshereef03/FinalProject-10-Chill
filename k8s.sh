@@ -112,6 +112,7 @@ case $COMMAND in
 
       # collect all the background PIDs so we can clean them up
       PIDS=()
+      trap 'echo; echo "➤ Cleaning up…"; kill "${PIDS[@]:-}" >/dev/null 2>&1' INT HUP EXIT
 
       for svc in "${SERVICES[@]}"; do
         case $svc in
@@ -155,9 +156,6 @@ case $COMMAND in
         # capture the PID of that background job
         PIDS+=($!)
       done
-
-      # when the user hits Ctrl+C, kill all the port-forwards
-      trap 'echo; echo "➤ Stopping port-forwards…"; kill "${PIDS[@]}" 2>/dev/null; exit' INT
 
       # wait blocks here until all background port-forwards exit (i.e. you ^C)
       wait
