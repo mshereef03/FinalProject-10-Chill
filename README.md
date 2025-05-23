@@ -1,4 +1,4 @@
-# FinalProject-10-Chill
+# Too Good To Throw
 
 This project, **Too Good to Throw**, is a microservices-based application aimed at reducing food waste by connecting vendors with shoppers through discounted "Mystery Bags" of surplus food.
 
@@ -20,11 +20,10 @@ Key features:
 The application consists of the following microservices, each containerized with Docker and deployable to Kubernetes:
 
 - **api-gateway**: Handles incoming requests and routes them to the appropriate service.
-- **user-auth**: Manages user accounts, authentication (login/logout), password reset, and email verification.
+- **user**: Manages user accounts, authentication (login/logout), password reset, and email verification.
 - **catalog**: Allows vendors to create, schedule, and publish Mystery Bag offers with dynamic pricing. Supports search and filtering.
-- **order-payment**: Handles order reservations, payment processing via Stripe, refunds, and credit card validation.
+- **order**: Handles order reservations, payment processing via Stripe, refunds, and credit card validation.
 - **feedback**: Collects and manages different types of feedback (reviews, complaints, questions), supports vendor replies, sorting, and upvotes.
-- **notification**: Sends real-time alerts and reminders to users about new deals or order updates.
 
 ## Getting Started
 
