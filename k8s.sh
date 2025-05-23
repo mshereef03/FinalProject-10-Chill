@@ -122,7 +122,7 @@ case $COMMAND in
             ;;
           order)
             echo "  • postgres-order-db → localhost:5433"
-            kubectl port-forward svc/order-postgres-db 5433:5432 -n "$NAMESPACE" \
+            kubectl port-forward svc/postgres-order-db 5433:5432 -n "$NAMESPACE" \
               >/dev/null 2>&1 &
             echo "  • redis → localhost:6379"
             kubectl port-forward svc/redis 6379:6379 -n "$NAMESPACE" \
@@ -137,13 +137,13 @@ case $COMMAND in
               >/dev/null 2>&1 &
             ;;
           feedback)
-            echo "  • feedback-mongo-db → localhost:27017"
+            echo "  • mongo-feedback-db → localhost:27017"
             kubectl port-forward svc/mongo-feedback-db 27017:27017 -n "$NAMESPACE" \
               >/dev/null 2>&1 &
             ;;
           catalog)
-            echo "  • feedback-catalog-db → localhost:8000"
-            kubectl port-forward svc/mongo-feedback-db 27018:27017 -n "$NAMESPACE" \
+            echo "  • mongo-catalog-db → localhost:27018"
+            kubectl port-forward svc/mongo-catalog-db 27018:27017 -n "$NAMESPACE" \
               >/dev/null 2>&1 &
             ;;
           *)
