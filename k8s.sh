@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ALL_SERVICES=(api-gateway catalog feedback messaging order user)
+ALL_SERVICES=(api-gateway catalog feedback order user)
 K8S_DIR="./k8s"
 NAMESPACE="chill"
 PORT_FORWARD=false
@@ -15,7 +15,7 @@ Usage: $0 <up|down|restart> [-s svc1,svc2,...] [-p] [-h]
   restart   down, then up
 
   -s  comma-list of services to include (default: all)
-  -p  after rollouts, open port-forward to api-gateway-service on localhost:9091
+  -p  open port-forwarding to api-gateway and databases
   -h  show this help
 EOF
   exit 1
@@ -108,8 +108,59 @@ case $COMMAND in
 
     if $PORT_FORWARD; then
       echo
-      echo "➤ Port-forwarding api-gateway → localhost:9091"
-      kubectl port-forward svc/api-gateway-service 9091:9091 -n "$NAMESPACE"
+      echo "➤ Starting port-forwards (Ctrl+C to stop)…"
+
+      # collect all the background PIDs so we can clean them up
+      PIDS=()
+
+      for svc in "${SERVICES[@]}"; do
+        case $svc in
+          api-gateway)
+            echo "  • api-gateway → localhost:9091"
+            kubectl port-forward svc/api-gateway-service 9091:9091 -n "$NAMESPACE" \
+              >/dev/null 2>&1 &
+            ;;
+          order)
+            echo "  • postgres-order-db → localhost:5433"
+            kubectl port-forward svc/order-postgres-db 5433:5432 -n "$NAMESPACE" \
+              >/dev/null 2>&1 &
+            echo "  • redis → localhost:6379"
+            kubectl port-forward svc/redis 6379:6379 -n "$NAMESPACE" \
+              >/dev/null 2>&1 &
+            ;;
+          user)
+            echo "  • postgres-user-db → localhost:5432"
+            kubectl port-forward svc/postgres-user-db 5432:5432 -n "$NAMESPACE" \
+              >/dev/null 2>&1 &
+            echo "  • rabbtimq → localhost:15672"
+            kubectl port-forward svc/rabbitmq 15672:15672 -n "$NAMESPACE" \
+              >/dev/null 2>&1 &
+            ;;
+          feedback)
+            echo "  • feedback-mongo-db → localhost:27017"
+            kubectl port-forward svc/mongo-feedback-db 27017:27017 -n "$NAMESPACE" \
+              >/dev/null 2>&1 &
+            ;;
+          catalog)
+            echo "  • feedback-catalog-db → localhost:8000"
+            kubectl port-forward svc/mongo-feedback-db 27018:27017 -n "$NAMESPACE" \
+              >/dev/null 2>&1 &
+            ;;
+          *)
+            # no port-forward for other svcs
+            continue
+            ;;
+        esac
+
+        # capture the PID of that background job
+        PIDS+=($!)
+      done
+
+      # when the user hits Ctrl+C, kill all the port-forwards
+      trap 'echo; echo "➤ Stopping port-forwards…"; kill "${PIDS[@]}" 2>/dev/null; exit' INT
+
+      # wait blocks here until all background port-forwards exit (i.e. you ^C)
+      wait
     fi
     ;;
 
